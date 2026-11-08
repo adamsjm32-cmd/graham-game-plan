@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Spelling Reps: Quality Checks</title>
+<title>Reps: Quality Checks</title>
 <style>
 :root{--bg:#f6f7f4;--ink:#122033;--ok:#1f7a45;--bad:#c8553d;--line:#d5dccf}
 @media (prefers-color-scheme: dark){:root{--bg:#0b131f;--ink:#eef2f7;--ok:#3cc177;--bad:#ef7a62;--line:#24354d}}
@@ -16,7 +16,7 @@ iframe{border:1px solid var(--line);width:100%;height:420px;margin-top:10px}
 </style>
 </head>
 <body>
-<h1>Spelling Reps: Quality Checks</h1>
+<h1>Reps (spelling + math): Quality Checks</h1>
 <p>These checks run in a separate test save, so the player's real data is never touched.</p>
 <div id="summary" data-done="0">Running…</div>
 <ul id="out"></ul>
@@ -183,9 +183,9 @@ async function main(){
     G.ui.coachTab='data'; G.render(); G.act('makebackup'); const code=q('#backup').value;
     q('#restore').value=code; G.act('restore'); if(!q('.overlay')) errs.push('restore did not ask to confirm');
     G.act('confirmok'); if(G.S.settings.weeklyCap!==7) errs.push('restore failed');
-    if(G.weeklySummary().split('\n').length!==4) errs.push('weekly summary is not 4 lines');
+    if(G.weeklySummary().split('\n').length!==5) errs.push('weekly summary is not 5 lines');
     G.act('coachclose');
-    report('7. Coach Room needs the PIN; edits take effect; CSV builds; backup code restores; weekly summary has 4 lines', !errs.length, errs.join('\n'));
+    report('7. Coach Room needs the PIN; edits take effect; CSV builds; backup code restores; weekly summary has 5 lines (with math)', !errs.length, errs.join('\n'));
   }catch(e){ report('7. Coach Room', false, e.stack); }
 
   // 8. No forbidden words in the game
@@ -429,6 +429,154 @@ async function main(){
     G.GSync.setCfg(null); G.GSync.status='off'; W.history.replaceState(null,'',W.location.pathname+'?test=1'); W.fetch=realFetch;
     report('Google Drive sync. Wrong key refused; saves to Drive; picks up newer play from the other device; refuses stale overwrites; one link sets up a new device', !errs.length, errs.join('\n'));
   }catch(e){ report('Google Drive sync', false, e.stack); }
+
+
+  // ================= MATH REPS =================
+  const M = G.MATH;
+  const answerMath = (txt)=>{ G.SES.rep.ans=String(txt); G.SES.rep.t0 = W.performance.now(); M.mathSubmit(); };
+  const ansOf = ()=>G.SES.rep.pr.ans;
+  function runCheck(deck, fn){ M.startMathCheck(deck); let g=0; while(G.SES && G.SES.mode==='mathcheck' && g++<200){ const f=G.SES.queue[G.SES.idx]; answerMath(fn(f, G.SES.rep.pr)); } }
+
+  try{
+    const errs=[]; const by=d=>M.FACTS.filter(f=>f.deck===d).length;
+    if(by('mul')!==66) errs.push('times deck has '+by('mul')+' facts');
+    if(by('div')!==66) errs.push('division deck has '+by('div')+' facts');
+    if(by('fdp')!==14) errs.push('fraction deck has '+by('fdp')+' facts');
+    if(new Set(M.FACTS.map(f=>f.k)).size!==M.FACTS.length) errs.push('duplicate fact keys');
+    for(let x=2;x<=12;x++) for(let y=2;y<=12;y++){ const s=M.strategy(x,y); if(!new RegExp('\\b'+(x*y)+'\\.$').test(s.text)) errs.push('strategy for '+x+'×'+y+' does not end with '+(x*y)+': '+s.text); }
+    M.FACTS.filter(f=>f.deck==='fdp').forEach(f=>{ if(Math.abs(Number(f.pct)/100-Number(f.dec))>1e-9) errs.push(f.k+' decimal and percent disagree'); if(f.d!==3 && Math.abs(Number(f.dec)-f.n/f.d)>1e-9) errs.push(f.k+' decimal wrong'); });
+    report('Math 1. Decks: 66 times facts, 66 division families, 14 fraction facts; every strategy works out to the right answer', !errs.length, errs.join('\n'));
+  }catch(e){ report('Math 1. Decks', false, e.stack); }
+
+  try{
+    const errs=[]; const F=M.FACT, g=(k,kind,a)=>M.gradeMath(F[k], {kind, ans: kind==='num'?a:''}, a);
+    const half=F['f1/2'], third=F['f1/3'], twoth=F['f2/3'];
+    const gr=(f,kind,a)=>M.gradeMath(f,{kind},a);
+    ['0.5','.5','0.50'].forEach(a=>{ if(!gr(half,'f2d',a).ok) errs.push('1/2 as decimal should accept '+a); });
+    if(gr(half,'f2d','5').ok) errs.push('1/2 as decimal accepted 5');
+    if(!gr(half,'f2p','50').ok) errs.push('1/2 as percent rejected 50');
+    if(!gr(third,'f2d','0.33').ok || !gr(third,'f2d','.333').ok) errs.push('1/3 decimal rounding not accepted');
+    if(gr(third,'f2d','0.3').ok) errs.push('1/3 accepted 0.3');
+    if(!gr(twoth,'f2p','67').ok || !gr(twoth,'f2p','66.7').ok) errs.push('2/3 percent rounding not accepted');
+    const s=gr(half,'p2f','2/4'); if(s.ok || !s.simplify) errs.push('2/4 for 1/2 should say simplify');
+    if(!gr(half,'p2f','1/2').ok) errs.push('1/2 fraction rejected');
+    const m=M.makePrompt(F['m7x8']); if(!M.gradeMath(F['m7x8'], m, '56').ok || M.gradeMath(F['m7x8'], m, '54').ok) errs.push('times grading wrong');
+    const d=M.makePrompt(F['d7x8']); if(!M.gradeMath(F['d7x8'], d, d.ans).ok || d.ans!==String(56/d.dv)) errs.push('division prompt/answer wrong');
+    report('Math 2. Grading: decimals with or without the 0, rounding for thirds, fractions must be simplest (with a "simplify" note)', !errs.length, errs.join('\n'));
+  }catch(e){ report('Math 2. Grading', false, e.stack); }
+
+  try{
+    const errs=[]; reset({onboarded:true}); G.S.settings.weeklyCap=1000; G.save();
+    const before=G.S.bank.wallet+G.S.bank.vault;
+    const known=new Set(M.deckFacts('mul').filter(f=>f.a<=5).map(f=>f.k));
+    runCheck('mul', (f,pr)=> known.has(f.k) ? pr.ans : '1');
+    if(G.ui.screen!=='mcheckResults') errs.push('no results screen after the Speed Check');
+    if(G.S.bank.wallet+G.S.bank.vault!==before) errs.push('Speed Check changed money');
+    const c=G.S.math.checks.mul; if(!c || c.length!==1 || c[0].fast!==known.size) errs.push('check record wrong: '+JSON.stringify(c&&c[0]&&{fast:c[0].fast,ok:c[0].ok}));
+    if(M.factStatus('m2x3')!=='fast') errs.push('a fast fact did not skip ahead');
+    if(M.factStatus('m7x8')!=='new') errs.push('a missed fact is not a training fact');
+    if(D.body.innerText.indexOf('Your training starts with')<0) errs.push('no training plan on results');
+    // pause and resume
+    G.act('home'); M.startMathCheck('div'); answerMath('1'); answerMath('1'); G.act('mpause');
+    if(!G.S.math.checkCur || G.S.math.checkCur.idx!==2) errs.push('paused Speed Check did not save its place');
+    M.startMathCheck('div'); if(G.SES.idx!==2) errs.push('Speed Check did not resume at fact 3');
+    G.act('mpause');
+    report('Math 3. Speed Check: every fact once, no money, fast facts skip ahead, missed facts become training facts, pause and resume', !errs.length, errs.join('\n'));
+  }catch(e){ report('Math 3. Speed Check', false, e.stack); }
+
+  try{
+    const errs=[];
+    M.startMath('mul'); const q=G.SES.queue;
+    if(q.length!==20) errs.push('practice is '+q.length+' reps');
+    for(let i=1;i<q.length;i++) if(q[i].k===q[i-1].k) errs.push('same fact twice in a row at '+i);
+    const counts={}; q.forEach(f=>counts[f.k]=(counts[f.k]||0)+1);
+    const focus=Object.keys(counts).filter(k=>counts[k]>=3);
+    if(focus.length<1 || focus.length>3) errs.push('expected 1-3 training facts shown 3 times, got '+focus.length);
+    if(focus.some(k=>M.factStatus(k)==='fast')) errs.push('a fast fact was used as a training fact');
+    if(!q.some(f=>M.factStatus(f.k)==='fast')) errs.push('no known facts mixed in');
+    // wrong answer: no money lost, strategy + fix rep, comes back later
+    const w0=G.S.bank.wallet, v0=G.S.bank.vault; const f0=G.SES.queue[0];
+    answerMath('1');
+    if(G.S.bank.wallet!==w0 || G.S.bank.vault!==v0) errs.push('a miss changed money');
+    if(!D.querySelector('.strat')) errs.push('no strategy after a miss');
+    if(f0.deck==='mul' && !D.querySelector('.arr svg')) errs.push('no dot picture after a times miss');
+    G.act('mnext'); if(G.SES.rep.phase!=='fix') errs.push('no fix rep after a miss');
+    const later=G.SES.queue.slice(1,6).some(f=>f.k===f0.k); if(!later) errs.push('missed fact does not come back within a few reps');
+    G.SES.rep.ans=G.SES.rep.pr.ans; M.mathFix(); if(G.SES.idx!==1) errs.push('right fix rep did not move on');
+    G.act('mend'); G.act('confirmok');
+    if(G.ui.screen!=='mfinal') errs.push('no final screen');
+    const sess=G.S.sessions[G.S.sessions.length-1]; if(!sess || sess.mode!=='math') errs.push('math session not logged');
+    report('Math 4. Practice: 20 reps, 1 to 3 training facts shown 3 times each, mixed with known facts; a miss costs nothing and shows a strategy, dot picture and fix rep', !errs.length, errs.join('\n'));
+  }catch(e){ report('Math 4. Practice', false, e.stack); }
+
+  try{
+    const errs=[]; reset({onboarded:true}); G.S.settings.weeklyCap=1000; G.save();
+    runCheck('mul', (f,pr)=>'1');                       // knows nothing: every fact is a training fact
+    const days=['2026-11-09T16:00:00','2026-11-10T16:00:00','2026-11-11T16:00:00','2026-11-12T16:00:00','2026-11-13T16:00:00'];
+    days.forEach(d=>{ G.setNow(d); M.startMath('mul'); let g=0; while(G.SES && G.SES.mode==='math' && g++<60){ answerMath(ansOf()); M.mathAfter(); } G.act('home'); });
+    const facts=G.S.math.facts; let over=[], mastered=0;
+    Object.keys(facts).forEach(k=>{ if(facts[k].e>0.25+1e-9) over.push(k+' '+facts[k].e); if(facts[k].m) mastered++; });
+    if(over.length) errs.push('facts over 25¢: '+over.join(', '));
+    // ledger check: sum per fact from the money log never over 25¢
+    const mathMoney = G.S.ledger.filter(e=>/^Math/.test(e.r)).reduce((a,e)=>a+e.amt,0);
+    const factSum = Object.keys(facts).reduce((a,k)=>a+facts[k].e,0);
+    if(Math.abs(mathMoney-factSum)>0.001) errs.push('money log ('+mathMoney.toFixed(2)+') does not match fact totals ('+factSum.toFixed(2)+')');
+    if(!mastered) errs.push('nothing mastered after 5 days of fast reps');
+    const mk=Object.keys(facts).find(k=>facts[k].m); if(mk && Math.abs(facts[mk].e-0.25)>1e-9) errs.push('a mastered fact earned '+facts[mk].e+', expected exactly 0.25');
+    if(mk && facts[mk].days.length<3) errs.push('mastered before 3 different days');
+    if(Object.keys(facts).some(k=>facts[k].m && G.S.math.reps.filter(r=>r.k===k && r.fs).map(r=>r.t).filter((t,i,a)=>a.indexOf(t)===i).length<3)) errs.push('a fact was mastered without 3 fast days');
+    // slow reps: right but slow never count toward mastery
+    reset({onboarded:true}); runCheck('mul', ()=> '1'); G.setNow('2026-11-09T16:00:00'); M.startMath('mul');
+    const f=G.SES.queue[0]; G.SES.rep.ans=ansOf(); G.SES.rep.t0=W.performance.now()-20000; M.mathSubmit();
+    if(G.S.math.facts[f.k].days.length) errs.push('a slow rep counted as a fast day');
+    if(G.S.math.facts[f.k].e!==0.01) errs.push('slow rep paid '+G.S.math.facts[f.k].e);
+    G.act('home'); G.setNow(null);
+    report('Math 5. Money: no fact ever earns more than 25¢; mastered = fast on 3 different days and pays the rest up to exactly 25¢; slow reps pay 1¢ and do not count toward mastery', !errs.length, errs.join('\n'));
+  }catch(e){ G.setNow(null); report('Math 5. Money cap', false, e.stack); }
+
+  try{
+    const errs=[]; reset({onboarded:true});
+    G.act('sport', {dataset:{s:'math'}});
+    if(D.body.innerText.indexOf('Math Reps')<0) errs.push('math home not shown');
+    if(!D.querySelector('[data-act="mcheck"][data-deck="mul"]')) errs.push('no Speed Check button for times');
+    if(D.querySelectorAll('.deck').length!==3) errs.push('expected 3 deck cards');
+    runCheck('mul', (f,pr)=>pr.ans); G.act('home');
+    if(!D.querySelector('.fgrid')) errs.push('no times chart after Speed Check');
+    M.startMath('mul');
+    ['1','2','del','5'].forEach(k=>G.act('key',{dataset:{k}}));
+    if(G.SES.rep.ans!=='15' || D.getElementById('mans').textContent!=='15') errs.push('keypad typing wrong: '+G.SES.rep.ans);
+    G.SES.rep.ans=''; W.document.dispatchEvent(new W.KeyboardEvent('keydown',{key:'4',bubbles:true})); W.document.dispatchEvent(new W.KeyboardEvent('keydown',{key:'2',bubbles:true}));
+    if(G.SES.rep.ans!=='42') errs.push('computer keyboard digits not taken');
+    answerMath(ansOf());
+    G.act('mend'); G.act('confirmok'); G.act('home');
+    G.act('sport', {dataset:{s:'spelling'}});
+    if(!D.querySelector('[data-act="practice"]') && !D.querySelector('[data-act="combine"]')) errs.push('spelling home missing after switching back');
+    // Coach Room math tab + CSV + summary; spelling stats ignore math sessions
+    G.S.settings.pinHash=G.simpleHash('1234'); G.ui.coachOpen=true; G.ui.coachTab='math'; G.render();
+    ['How Math Reps works','Times chart','Math settings','Speed Check history'].forEach(t=>{ if(D.body.innerText.indexOf(t)<0) errs.push('coach Math tab missing "'+t+'"'); });
+    G.ui.coachOpen=false; G.render();
+    if(G.buildCSV().indexOf('\nmath,')<0) errs.push('CSV has no math rows');
+    if(G.weeklySummary().indexOf('Math facts:')<0) errs.push('weekly summary has no math line');
+    const txt=(G.S.sessions.filter(x=>x.mode==='math').length);
+    if(!txt) errs.push('no math session to compare');
+    // forbidden words on math screens
+    G.act('sport', {dataset:{s:'math'}}); const homeTxt=D.body.innerText; M.startMath('mul'); answerMath('1'); const repTxt=D.body.innerText; G.act('mend'); G.act('confirmok'); G.act('home');
+    FORBIDDEN.forEach(re=>{ if(re.test(homeTxt)||re.test(repTxt)) errs.push('math screen uses '+re); });
+    report('Math 6. Spelling / Math switch; keypad and computer keyboard; Coach Room Math tab; CSV and weekly summary include math; no labels on Graham\'s screens', !errs.length, errs.join('\n'));
+  }catch(e){ report('Math 6. Screens', false, e.stack); }
+
+  try{
+    const errs=[]; const P=ph.contentWindow, PG=P.GSG, PD=ph.contentDocument;
+    PG.setNow(null); const s=PG.freshState(); s.onboarded=true; PG.S=s; PG.save(); PG.act('sport',{dataset:{s:'math'}});
+    const chk=(where)=>{ const sw=PD.documentElement.scrollWidth, cw=PD.documentElement.clientWidth; if(sw>cw+1) errs.push(where+': sideways scroll ('+sw+' > '+cw+')'); };
+    chk('math home'); PG.MATH.startMathCheck('mul'); chk('speed check');
+    let g=0; while(PG.SES && PG.SES.mode==='mathcheck' && g++<80){ PG.SES.rep.ans=PG.SES.rep.pr.ans; PG.SES.rep.t0=P.performance.now(); PG.MATH.mathSubmit(); }
+    chk('check results'); PG.act('home'); chk('math home with chart');
+    PG.MATH.startMath('mul'); chk('practice'); PG.SES.rep.ans='1'; PG.MATH.mathSubmit(); chk('miss with dot picture');
+    PG.act('mend'); PG.act('confirmok'); chk('final'); PG.act('home');
+    const s2=PG.freshState(); PG.S=s2; PG.save(); PG.act('sport',{dataset:{s:'spelling'}});
+    report('Math 7. Phone size (360 px): no sideways scrolling on any math screen', !errs.length, errs.join('\n'));
+  }catch(e){ report('Math 7. Phone size', false, e.stack); }
 
   // Extra: Drill 4 shows the sentence with a blank; feedback order; fix rep
   try{

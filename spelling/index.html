@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#0f1a2b">
-<meta name="apple-mobile-web-app-title" content="Spelling Reps">
+<meta name="apple-mobile-web-app-title" content="Reps">
 <link rel="apple-touch-icon" href="icon.png">
-<title>Spelling Reps</title>
+<title>Reps</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -202,6 +202,48 @@ svg text{fill:var(--muted);font-family:inherit}
 .tierpill.e{background:color-mix(in srgb,var(--ok) 22%,var(--panel))}
 .tierpill.m{background:color-mix(in srgb,var(--sky) 20%,var(--panel))}
 .tierpill.h{background:color-mix(in srgb,var(--gold) 35%,var(--panel))}
+/* math reps */
+.sport{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:14px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:6px;box-shadow:var(--shadow)}
+.sport button{min-height:52px;border-radius:12px;border:0;background:transparent;font-weight:800;font-size:18px;cursor:pointer;color:var(--ink);touch-action:manipulation}
+.sport button.on{background:var(--board);color:var(--board-ink)}
+.deck .deckhead{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.deckicon{width:46px;height:46px;flex:none;border-radius:12px;color:#fff;font-weight:800;font-size:28px;display:flex;align-items:center;justify-content:center}
+.deck .progress{margin:4px 0 6px}
+.deck .small{margin-bottom:10px}
+.fact{font-size:56px;font-weight:800;text-align:center;font-variant-numeric:tabular-nums;margin:4px 0 10px;letter-spacing:.02em;line-height:1.15}
+.fact.sm{font-size:40px;white-space:nowrap}
+.frac{display:inline-flex;flex-direction:column;align-items:center;line-height:1.05;vertical-align:middle;font-size:.8em}
+.frac span:first-child{border-bottom:4px solid currentColor;padding:0 8px}
+.ansrow{display:flex;align-items:center;gap:8px}
+.mans{flex:1;font-size:44px;font-weight:800;text-align:center;min-height:76px;border:3px solid var(--sky);border-radius:16px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums}
+.mans .ph{color:var(--muted);opacity:.5}
+.ansrow .pct{font-size:40px;font-weight:800}
+.key.delkey{min-height:76px;min-width:72px;flex:none;font-size:28px}
+.asks{text-align:center;margin:0;font-size:18px;color:var(--muted)}
+.asks b{color:var(--ink)}
+.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.key{min-height:62px;border-radius:14px;border:2px solid var(--line);background:var(--field);font-size:30px;font-weight:800;cursor:pointer;touch-action:manipulation;color:var(--ink);font-variant-numeric:tabular-nums}
+.key:active{transform:translateY(2px)}
+.key.alt{font-size:26px}
+.key.go{background:var(--turf);color:var(--turf-ink);border-color:var(--turf);font-size:24px}
+.key.wide{grid-column:span 2}
+.key.full{grid-column:1 / -1}
+.strat{background:color-mix(in srgb,var(--sky) 14%,var(--panel));border-radius:12px;padding:10px 12px;margin:10px 0;font-weight:600}
+.arr{display:flex;flex-direction:column;align-items:center;gap:4px;margin:6px 0}
+.fgrid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:2px;max-width:440px}
+.fgrid div{aspect-ratio:1;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-variant-numeric:tabular-nums;background:var(--field);color:var(--muted);min-width:0}
+.fgrid .hd{background:none;font-size:12px}
+.fgrid .mastered{background:var(--ok);color:#fff}
+.fgrid .fast{background:color-mix(in srgb,var(--sky) 45%,var(--panel))}
+.fgrid .learning{background:color-mix(in srgb,var(--gold) 55%,var(--panel))}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:13px;margin-top:8px;color:var(--muted)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+.fdpchips{display:flex;flex-wrap:wrap;gap:6px}
+.fdpchips span{border-radius:10px;padding:4px 10px;font-weight:700;background:var(--field);font-size:14px}
+.fdpchips .mastered{background:var(--ok);color:#fff}
+.fdpchips .fast{background:color-mix(in srgb,var(--sky) 45%,var(--panel))}
+.fdpchips .learning{background:color-mix(in srgb,var(--gold) 55%,var(--panel))}
+@media (max-width:520px){ .fact{font-size:46px} .fact.sm{font-size:34px} .key{min-height:56px} .mans{font-size:38px;min-height:66px} .key.delkey{min-height:66px;min-width:62px} .fgrid div{font-size:9px} }
 @media (prefers-reduced-motion: reduce){ .cashpop,.cp-coin{animation-duration:.01s} }
 @media (prefers-reduced-motion: reduce){ .float,.confetti,.shake{animation-duration:.01s} }
 </style>
@@ -559,6 +601,48 @@ const MONEY_LABELS = {
   mastered:'Word mastered, to Vault (earn)', rankUp:'Drill rank up, to Vault (earn)', combine:'Finish a Combine, to Vault (earn)', combineGain:'Each drill up on a re-test, to Vault (earn)', bigPlay:'Big play bonus: hard word right (earn)'
 };
 
+
+/* =========================================================
+   MATH REPS: DATA
+   Three decks. Every fact can earn at most settings.math.factCap ($0.25) in its whole life:
+   a few cents for fast reps (up to repCap), and the rest when it is mastered.
+   ========================================================= */
+const MATH_ORDER = [2,10,5,11,3,4,9,6,8,12,7];   // teaching order: easiest "times" first
+const DECKS = {
+  mul:{id:'mul', name:'Multiplication', short:'Times', icon:'×', color:'#2f6fb0', blurb:'2s through 12s'},
+  div:{id:'div', name:'Division', short:'Divide', icon:'÷', color:'#7a4fb5', blurb:'The flip side of every times fact'},
+  fdp:{id:'fdp', name:'Fraction · Decimal · %', short:'F·D·%', icon:'%', color:'#b07a12', blurb:'The ones you see every day'}
+};
+const DECK_IDS = ['mul','div','fdp'];
+/* fraction | decimal | percent | money tip (same picture as the Conversion Map) */
+const FDP_RAW = [
+  [1,2,'0.5','50','Half a dollar is 50¢. 1/2 = 0.5 = 50%.'],
+  [1,4,'0.25','25','A quarter is 25¢. 1/4 = 0.25 = 25%.'],
+  [3,4,'0.75','75','3 quarters is 75¢. 3/4 = 0.75 = 75%.'],
+  [1,10,'0.1','10','A dime is 10¢. 1/10 = 0.1 = 10%.'],
+  [3,10,'0.3','30','3 dimes is 30¢. 3/10 = 0.3 = 30%.'],
+  [7,10,'0.7','70','7 dimes is 70¢. 7/10 = 0.7 = 70%.'],
+  [1,5,'0.2','20','Out of 100: ×20 top and bottom. 1/5 = 20/100 = 0.2 = 20%.'],
+  [2,5,'0.4','40','Out of 100: ×20 top and bottom. 2/5 = 40/100 = 0.4 = 40%.'],
+  [3,5,'0.6','60','Out of 100: ×20 top and bottom. 3/5 = 60/100 = 0.6 = 60%.'],
+  [4,5,'0.8','80','Out of 100: ×20 top and bottom. 4/5 = 80/100 = 0.8 = 80%.'],
+  [1,100,'0.01','1','A penny is 1¢. 1/100 = 0.01 = 1%.'],
+  [1,8,'0.125','12.5','Half of a quarter. Half of 25 is 12.5. 1/8 = 0.125 = 12.5%.'],
+  [1,3,'0.33','33','1 ÷ 3 = 0.333… and it keeps going. Call it 0.33, about 33%.'],
+  [2,3,'0.67','67','2 ÷ 3 = 0.666… and it keeps going. Call it 0.67, about 67%.']
+];
+const FACTS = [];
+['mul','div'].forEach(deck=>{
+  for(let a=2;a<=12;a++) for(let b=a;b<=12;b++){
+    const e = Math.min(MATH_ORDER.indexOf(a), MATH_ORDER.indexOf(b));
+    FACTS.push({k:(deck==='mul'?'m':'d')+a+'x'+b, deck, a, b, p:a*b, ease:e*1000 + a*b});
+  }
+});
+FDP_RAW.forEach((f,i)=>FACTS.push({k:'f'+f[0]+'/'+f[1], deck:'fdp', n:f[0], d:f[1], dec:f[2], pct:f[3], tip:f[4], ease:i}));
+const FACT = {}; FACTS.forEach(f=>FACT[f.k]=f);
+const DEFAULT_MATH = { fastSec:4, fdpFastSec:7, reps:20, minutes:5, newPer:3, factCap:0.25, repCap:0.10, fast:0.02, slow:0.01, decksOn:{mul:true, div:true, fdp:true} };
+const MATH_BOX = [0,0,1,3,7];   // days until the next review, by box
+
 /* =========================================================
    DATES
    ========================================================= */
@@ -581,7 +665,7 @@ function freshState(){
     version: DATA_VERSION,
     createdAt: today(),
     onboarded: false,
-    settings: { pinHash:'', recoveryHash:'', money:Object.assign({},DEFAULT_MONEY), weeklyCap:10, dailyLossCap:0.5, practiceReps:15, practiceMinutes:10, drillsOn:DRILLS.map(()=>true), muted:false, voiceName:'', voiceRate:0.9, useRecordings:true },
+    settings: { pinHash:'', recoveryHash:'', money:Object.assign({},DEFAULT_MONEY), weeklyCap:10, dailyLossCap:0.5, practiceReps:15, practiceMinutes:10, drillsOn:DRILLS.map(()=>true), muted:false, voiceName:'', voiceRate:0.9, useRecordings:true, math:JSON.parse(JSON.stringify(DEFAULT_MATH)) },
     bank: { wallet:0, vault:0 },
     ledger: [],     // {t, amt, v(0/1), r, p(payout 0/1)}
     payouts: [],    // {t, amt}
@@ -597,7 +681,8 @@ function freshState(){
     records: { bestAcc:0, bestStreak:0, bestBoss:0 },
     streak: { days:0, last:'' },
     dailyGoalDay: '',
-    lastBackup: ''
+    lastBackup: '',
+    math: { facts:{}, checks:{mul:[],div:[],fdp:[]}, checkCur:null, reps:[] }   // math facts: per-fact box/days/money, Speed Checks, rep log
   };
 }
 function isObj(x){ return x && typeof x==='object' && !Array.isArray(x); }
@@ -623,6 +708,10 @@ const Store = {
     }
     if(!Array.isArray(s.settings.drillsOn) || s.settings.drillsOn.length!==DRILLS.length) s.settings.drillsOn = DRILLS.map(()=>true);
     s.settings.money = Object.assign({}, DEFAULT_MONEY, s.settings.money||{});
+    s.settings.math = Object.assign(JSON.parse(JSON.stringify(DEFAULT_MATH)), s.settings.math||{});
+    s.settings.math.decksOn = Object.assign({mul:true,div:true,fdp:true}, s.settings.math.decksOn||{});
+    if(!isObj(s.math)) s.math = freshState().math;
+    if(!Array.isArray(s.math.reps)) s.math.reps=[];
     s.version = DATA_VERSION;
     return s;
   },
@@ -663,7 +752,7 @@ const GSync = {
     if(!j || !j.ok) throw new Error((j && j.error) || 'failed');
     return j;
   },
-  busyPlaying(){ return !!(SES && (SES.mode==='practice'||SES.mode==='boss'||SES.mode==='combine')); },
+  busyPlaying(){ return !!(SES && ['practice','boss','combine','math','mathcheck'].indexOf(SES.mode)>=0); },
   watch(){ const c=this.cfg(); return !!(c && c.watch); },
   async init(){
     if(!this.cfg()) return;
@@ -754,7 +843,7 @@ const Cloud = {
       this.unsub = db.doc('game/core').onSnapshot(snap=>{
         if(!snap.exists || snap.metadata.hasPendingWrites) return;
         const b = snap.data(); if(!b || !b.savedAt || b.savedAt <= (S.savedAt||0)) return;
-        if(SES && (SES.mode==='practice'||SES.mode==='boss'||SES.mode==='combine')) return;   // never swap data mid-practice
+        if(GSync.busyPlaying()) return;   // never swap data mid-practice
         this.pull().then(r=>{ if(r){ S=Store.migrate(r); Store.save(S); render(); } }).catch(()=>{});
       }, ()=>{});
       render();
@@ -1277,7 +1366,8 @@ function updateWordAfterRep(item, ok, helped){
 /* =========================================================
    SESSION (practice / boss / combine)
    ========================================================= */
-let ui = { screen:'home', welcome:0, coachTab:'progress', coachOpen:false, pickDrill:false, modal:null };
+const SPORT_KEY = IS_TEST ? 'gsg.test.sport' : 'gsg.sport';
+let ui = { screen:'home', welcome:0, coachTab:'progress', coachOpen:false, pickDrill:false, modal:null, sport:(function(){ try{ return localStorage.getItem(SPORT_KEY)==='math'?'math':'spelling'; }catch(e){ return 'spelling'; } })() };
 let SES = null;
 
 function startPractice(drillFilter){
@@ -1513,14 +1603,14 @@ function floatMoney(a){
   if(a>0) Sound.coin();
 }
 const CHEERS = ['Cha-ching!','Snipe!','Top shelf!','Money!','Goal!','Cash it!','Nailed it!','Clean!'];
-function celebrate(amount, item, streak, fixed){
-  const big = (item && tierOf(item)==='h') || streak>=5 || fixed;
+function celebrate(amount, item, streak, fixed, cheer){
+  const big = (item && tierOf(item)==='h') || streak>=5 || fixed || !!cheer;
   Sound.cash(big);
   if(IS_TEST) return;
   try{ if(navigator.vibrate) navigator.vibrate(big?[30,40,30]:25); }catch(e){}
   const reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   const wrap = document.createElement('div'); wrap.className='cashpop'+(big?' big':'');
-  const word = fixed ? 'Great catch!' : (item && tierOf(item)==='h') ? 'Big play!' : CHEERS[Math.floor(Math.random()*CHEERS.length)];
+  const word = cheer ? cheer : fixed ? 'Great catch!' : (item && tierOf(item)==='h') ? 'Big play!' : CHEERS[Math.floor(Math.random()*CHEERS.length)];
   wrap.innerHTML = '<div class="cp-coin">$</div><div class="cp-amt">+$'+Math.max(0,amount).toFixed(2)+'</div><div class="cp-word">'+word+(streak>=3?' <span class="cp-fire">🔥 '+streak+' in a row</span>':'')+'</div>';
   document.body.appendChild(wrap); setTimeout(()=>wrap.remove(), 1500);
   const flash=document.createElement('div'); flash.className='cashflash'; document.body.appendChild(flash); setTimeout(()=>flash.remove(), 700);
@@ -1590,7 +1680,7 @@ function pct(x){ return x==null?'–':Math.round(x*100)+'%'; }
    SCREENS
    ========================================================= */
 function topbar(title){
-  return '<div class="topbar"><div class="brand"><span class="dot"></span>'+esc(title||'Spelling Reps')+'</div><div class="row" style="gap:6px">'+
+  return '<div class="topbar"><div class="brand"><span class="dot"></span>'+esc(title||'Reps')+'</div><div class="row" style="gap:6px">'+
     '<button class="iconbtn" data-act="mute" aria-label="'+(S.settings.muted?'Sound on':'Mute')+'">'+(S.settings.muted?'🔇':'🔊')+'</button>'+
     '<button class="iconbtn" data-act="coach" aria-label="Coach Room">⚙︎</button></div></div>';
 }
@@ -1608,7 +1698,7 @@ function renderWelcome(){
 /* ---------- Parent progress snapshot: the signals that show learning, this week vs last ---------- */
 function weekStats(ws_, we){
   const r = S.reps.filter(x=>x.t>=ws_ && x.t<we);
-  const ss = S.sessions.filter(x=>x.t>=ws_ && x.t<we);
+  const ss = S.sessions.filter(x=>x.t>=ws_ && x.t<we && x.mode!=='math');
   const solo = r.filter(x=>!x.h && !x.c);
   return {
     days: new Set(ss.map(x=>x.t)).size, mins: ss.reduce((a,x)=>a+(x.mins||0),0), reps: r.length,
@@ -1650,10 +1740,11 @@ function progressCard(){
 function renderWatch(){
   let h = '<div class="topbar"><div class="brand"><span class="dot" style="background:var(--sky)"></span>Watching Graham</div><div class="row" style="gap:6px"><button class="iconbtn" data-act="watchrefresh" aria-label="Refresh">↻</button><button class="iconbtn" data-act="coach" aria-label="Coach Room">⚙︎</button></div></div>';
   h += '<div class="banner" style="background:color-mix(in srgb,var(--sky) 14%,var(--panel));border-color:color-mix(in srgb,var(--sky) 40%,var(--line))">Parent view. This phone only reads Graham\'s progress; it never changes it. '+(GSync.status==='error'?'Could not reach Google Drive just now.':GSync.pulledAt?'Updated '+new Date(GSync.pulledAt).toLocaleTimeString([], {hour:'numeric',minute:'2-digit'})+'.':'Loading…')+'</div>';
-  if(!S.combines.length && !S.reps.length){ return h + '<div class="card"><p>Loading Graham\'s progress from Google Drive…</p></div>'; }
+  if(!S.combines.length && !S.reps.length && !S.math.reps.length){ return h + '<div class="card"><p>Loading Graham\'s progress from Google Drive…</p></div>'; }
   h += '<div class="board" style="margin-top:14px"><div class="bankrow"><div><div class="lab">Bank</div><div class="bank-total money">'+fmt$(S.bank.wallet+S.bank.vault)+'</div></div><div><div class="lab">Wallet</div><div class="bank-sub money">'+fmt$(S.bank.wallet)+'</div></div><div><div class="lab">Vault 🔒</div><div class="bank-sub money">'+fmt$(S.bank.vault)+'</div></div></div>'+
        '<div class="stats"><div class="stat"><div class="lab">This week</div><div class="v money">'+fmt$(weekEarned(S))+'</div><div class="lab">of '+fmt$(S.settings.weeklyCap)+'</div></div><div class="stat"><div class="lab">Day streak</div><div class="v">'+(S.streak.last===today()||S.streak.last===addDays(today(),-1)?S.streak.days:0)+'</div><div class="lab">days</div></div><div class="stat"><div class="lab">Mastered</div><div class="v">'+masteredCount()+'</div><div class="lab">words</div></div></div></div>';
   h += progressCard();
+  h += mathWatchCard();
   h += '<div class="card"><h2>Drill ranks</h2><div class="drills">'+DRILLS.map((_,d)=>drillBadge(d,false)).join('')+'</div><p class="muted small" style="margin-top:8px">More detail: tap ⚙︎ for the Plan, Progress and Benchmark tabs.</p></div>';
   return h;
 }
@@ -1665,8 +1756,11 @@ function renderHome(){
        '<div><div class="lab">Vault 🔒</div><div class="bank-sub money">'+fmt$(S.bank.vault)+'</div></div></div>'+
        '<div class="stats"><div class="stat"><div class="lab">This week</div><div class="v money">'+fmt$(weekEarned(S))+'</div><div class="lab">of '+fmt$(S.settings.weeklyCap)+'</div></div>'+
        '<div class="stat"><div class="lab">Day streak</div><div class="v">'+(S.streak.last===today()||S.streak.last===addDays(today(),-1)?S.streak.days:0)+'</div><div class="lab">days</div></div>'+
-       '<div class="stat"><div class="lab">Mastered</div><div class="v">'+masteredCount()+'</div><div class="lab">words</div></div></div></div>';
+       (ui.sport==='math' ? '<div class="stat"><div class="lab">Mastered</div><div class="v">'+mathMasteredTotal()+'</div><div class="lab">facts</div></div></div></div>'
+                          : '<div class="stat"><div class="lab">Mastered</div><div class="v">'+masteredCount()+'</div><div class="lab">words</div></div></div></div>');
+  h += '<div class="sport" role="tablist"><button role="tab" aria-selected="'+(ui.sport==='spelling')+'" class="'+(ui.sport==='spelling'?'on':'')+'" data-act="sport" data-s="spelling">✏️ Spelling</button><button role="tab" aria-selected="'+(ui.sport==='math')+'" class="'+(ui.sport==='math'?'on':'')+'" data-act="sport" data-s="math">✖️ Math</button></div>';
   if(weeklyCapHit(S)) h+='<div class="banner">Max paycheck reached this week. Keep stacking reps for your stats.</div>';
+  if(ui.sport==='math') return h + renderMathHome();
   if(S.combineCur){
     h+='<div class="card"><h2>Scouting Combine</h2><p>You are on word '+(S.combineCur.idx+1)+' of 27. Pick up where you left off.</p><button class="btn block gold" data-act="combine">Keep going</button></div>';
   } else if(cs.need){
@@ -1825,13 +1919,13 @@ function renderModal(){
 }
 function weeksBack(n){ const out=[]; let w=weekStart(today()); for(let i=0;i<n;i++){ out.unshift(w); w=addDays(w,-7); } return out; }
 function renderCoach(){
-  const tabs=[['plan','Plan'],['progress','Progress'],['benchmark','Benchmark'],['voice','Voice'],['money','Money'],['settings','Settings'],['words','Words'],['data','Data']];
+  const tabs=[['plan','Plan'],['math','Math'],['progress','Progress'],['benchmark','Benchmark'],['voice','Voice'],['money','Money'],['settings','Settings'],['words','Words'],['data','Data']];
   let h='<div class="topbar"><div class="brand"><span class="dot" style="background:var(--gold)"></span>Coach Room</div><button class="btn sm ghost" data-act="coachclose">Back to game</button></div>';
   h+='<div class="cloud'+(Cloud.status==='online'?' on':'')+'"><i></i>'+esc(Cloud.label())+'</div>';
   if(!S.lastBackup && (S.reps.length||S.combines.length)) h+='<div class="banner">Tip: make your first backup code in the Data tab and email it to yourself.</div>';
   else if(S.lastBackup && daysBetween(S.lastBackup,today())>=7) h+='<div class="banner">Reminder: no backup in 7 days. Open the Data tab and copy a backup code.</div>';
   h+='<div class="tabs">'+tabs.map(t=>'<button class="tab'+(ui.coachTab===t[0]?' on':'')+'" data-act="ctab" data-tab="'+t[0]+'">'+t[1]+'</button>').join('')+'</div><div class="coach">';
-  const fn={plan:coachPlan, progress:coachProgress, benchmark:coachBenchmark, voice:coachVoice, money:coachMoney, settings:coachSettings, words:coachWords, data:coachData}[ui.coachTab] || coachProgress;
+  const fn={plan:coachPlan, math:coachMath, progress:coachProgress, benchmark:coachBenchmark, voice:coachVoice, money:coachMoney, settings:coachSettings, words:coachWords, data:coachData}[ui.coachTab] || coachProgress;
   h+=fn()+'</div>';
   return h;
 }
@@ -2037,14 +2131,14 @@ function coachSync(){
 }
 function coachData(){
   let h=coachSync()+'<div class="card"><h2>Weekly summary</h2><p class="muted small">Paste into an email.</p><textarea id="summary" readonly>'+esc(weeklySummary())+'</textarea><button class="btn sm" data-act="copy" data-target="summary" style="margin-top:8px">Copy</button></div>';
-  h+='<div class="card"><h2>Download CSV</h2><p class="muted small">All reps, sessions, Boss Battles, Combines and payouts.</p><button class="btn sm" data-act="csv">Download CSV</button></div>';
+  h+='<div class="card"><h2>Download CSV</h2><p class="muted small">All spelling and math reps, sessions, Boss Battles, Combines, Speed Checks and payouts.</p><button class="btn sm" data-act="csv">Download CSV</button></div>';
   h+='<div class="card"><h2>Backup code</h2><p class="muted small">Data lives only in this browser on this device. Copy this code somewhere safe (email it to yourself). Last backup: '+(S.lastBackup?niceDate(S.lastBackup):'never')+'.</p><button class="btn sm gold" data-act="makebackup">Make backup code</button><textarea id="backup" readonly style="margin-top:8px">'+(ui.backupCode?esc(ui.backupCode):'')+'</textarea>'+(ui.backupCode?'<button class="btn sm" data-act="copy" data-target="backup" style="margin-top:8px">Copy</button>':'')+'</div>';
   h+='<div class="card"><h2>Restore from a backup code</h2><p class="muted small">This replaces everything on this device.</p><textarea id="restore" placeholder="GSG1:..."></textarea><button class="btn sm ghost" data-act="restore" style="margin-top:8px">Restore</button><div class="err" id="reserr"></div></div>';
   return h;
 }
 function weeklySummary(){
   const ws_=weekStart(today());
-  const ss=S.sessions.filter(x=>x.t>=ws_);
+  const ss=S.sessions.filter(x=>x.t>=ws_ && x.mode!=='math');
   const r=S.reps.filter(x=>x.t>=ws_);
   const acc=r.length? r.filter(x=>x.ok).length/r.length : null;
   const dstats=DRILLS.map((dr,d)=>{ const x=r.filter(y=>y.d===d); return {d, n:x.length, a:x.length? x.filter(y=>y.ok).length/x.length:null}; }).filter(x=>x.n>=3);
@@ -2055,6 +2149,7 @@ function weeklySummary(){
     'Practices played this week: '+ss.filter(x=>x.mode==='practice').length+' practice'+(ss.filter(x=>x.mode==='boss').length?' + 1 Boss Battle':'')+' ('+ss.reduce((a,x)=>a+x.mins,0)+' minutes, '+r.length+' reps).',
     'Overall accuracy: '+pct(acc)+'.',
     'Best drill: '+(best?DRILLS[best.d].name+' ('+pct(best.a)+')':'–')+'; lowest drill: '+(low&&low!==best?DRILLS[low.d].name+' ('+pct(low.a)+')':'–')+'.',
+    (function(){ const mw=mathWeek(ws_, addDays(ws_,7)); return 'Math facts: '+mw.reps+' reps on '+mw.days+' day'+(mw.days===1?'':'s')+', '+pct(mw.fastRate)+' fast and right. Mastered: '+DECK_IDS.map(d=>DECKS[d].name+' '+deckCounts(d).mastered+'/'+deckCounts(d).total).join(', ')+'.'; })(),
     'Money earned this week: '+fmt$(weekEarned(S))+'. Last Combine: '+(lc? niceDate(lc.t)+', '+lc.score+'/27, lowest drills '+lowestDrillsFromCombine().map(i=>DRILLS[i].name).join(', ') : 'not yet')+'.'
   ].join('\n');
 }
@@ -2065,6 +2160,8 @@ function buildCSV(){
   S.sessions.forEach(x=>rows.push(['session',x.t,x.mode,'','','',x.correct+'/'+x.reps,'',x.mins+' min; earned '+x.earned+'; lost '+x.lost]));
   S.boss.forEach(b=>b.items.forEach(x=>rows.push(['boss',b.t,'boss',DRILLS[x.d].name,x.w,x.ans,x.ok,'','score '+b.score+'/10'])));
   S.combines.forEach(c=>c.items.forEach(x=>rows.push(['combine',c.t,'Form '+c.form,DRILLS[x.d].name,x.w,x.ans,x.ok,x.pat?'pattern right':'pattern wrong',x.ed?'changed in check':''])));
+  (S.math.reps||[]).forEach(x=>{ const f=FACT[x.k]; rows.push(['math',x.t,f?DECKS[f.deck].name:'','',x.q||'',x.a,x.ok,x.fs?'fast':'slow',x.ms+' ms']); });
+  DECK_IDS.forEach(d=>(S.math.checks[d]||[]).forEach(c=>c.items.forEach(x=>rows.push(['speed check',c.t,DECKS[d].name,'',x.q||'',x.a,x.ok,x.fs?'fast':'slow',x.ms+' ms']))));
   S.payouts.forEach(p=>rows.push(['payout',p.t,'','','','','','',p.amt]));
   S.outside.forEach(o=>rows.push(['outside',o.t,'','','','','','',o.note]));
   return rows.map(r=>r.map(csvCell).join(',')).join('\n');
@@ -2097,6 +2194,457 @@ function validateCustom(c){
 }
 function sentenceUses(s,w){ return wordIndex(s,w)>=0; }
 
+
+/* =========================================================
+   MATH REPS: ENGINE
+   Speed Check (placement) → small sets of new facts mixed with known ones
+   (each new fact shows up 3 times per practice) → spaced review by box.
+   Mastered = right AND fast on 3 different days.
+   ========================================================= */
+function deckFacts(d){ return FACTS.filter(f=>f.deck===d).sort((x,y)=>x.ease-y.ease); }
+function fget(k){ return S.math.facts[k] || {b:0,due:'',days:[],seen:0,ok:0,fast:0,miss:0,e:0,m:0,up:''}; }
+function fs(k){ if(!S.math.facts[k]) S.math.facts[k]={b:0,due:'',days:[],seen:0,ok:0,fast:0,miss:0,e:0,m:0,up:''}; return S.math.facts[k]; }
+function factStatus(k){ const st=fget(k); if(st.m && st.b>=2) return 'mastered'; if(st.b>=2) return 'fast'; if(st.b===1 || st.m) return 'learning'; return 'new'; }
+function deckChecked(d){ return (S.math.checks[d]||[]).length>0; }
+function deckCounts(d){
+  const out={total:0, mastered:0, fast:0, learning:0, fresh:0};
+  deckFacts(d).forEach(f=>{ out.total++; const s=factStatus(f.k); if(s==='mastered') out.mastered++; else if(s==='fast') out.fast++; else if(s==='learning') out.learning++; else out.fresh++; });
+  return out;
+}
+function mathMasteredTotal(){ return FACTS.filter(f=>factStatus(f.k)==='mastered').length; }
+function factLabel(f){
+  if(f.deck==='mul') return f.a+' × '+f.b;
+  if(f.deck==='div') return (f.p)+' ÷ '+f.a+' / '+f.b;
+  return f.n+'/'+f.d;
+}
+function lastCheck(d){ const c=S.math.checks[d]||[]; return c[c.length-1]||null; }
+function checkDue(d){ const L=lastCheck(d); return !!L && daysBetween(L.t, today())>=28; }
+function fastLimit(f){ const m=S.settings.math; return 1000*(f.deck==='fdp' ? (Number(m.fdpFastSec)||7) : (Number(m.fastSec)||4)); }
+
+/* One question for a fact. Times facts flip order at random; division asks either way. */
+function makePrompt(f){
+  if(f.deck==='mul'){ const flip=Math.random()<0.5; const x=flip?f.b:f.a, y=flip?f.a:f.b; return {kind:'num', x, y, text:x+' × '+y, ans:String(f.p)}; }
+  if(f.deck==='div'){ const byA = f.a===f.b || Math.random()<0.5; const dv=byA?f.a:f.b, q=byA?f.b:f.a; return {kind:'num', dv, q, text:f.p+' ÷ '+dv, ans:String(q)}; }
+  const types = f.d===3 ? ['f2d','f2p'] : ['f2d','f2p','p2f'];
+  const kind = types[Math.floor(Math.random()*types.length)];
+  return {kind, text: kind==='p2f' ? f.pct+'%' : f.n+'/'+f.d, ans: kind==='f2d'?f.dec : kind==='f2p'?f.pct : f.n+'/'+f.d};
+}
+/* Grade an answer. Decimals: 0.5 = .5 = 0.50. Thirds: 0.33 / 0.333 / 33 / 33.3 all count.
+   Fractions must be in simplest form; an equal but unsimplified one gets a "simplify" note. */
+function gradeMath(f, pr, raw){
+  const a = String(raw==null?'':raw).replace(/\s+/g,'').replace(/%$/,'');
+  if(!a) return {ok:false, blank:true};
+  if(pr.kind==='num') return {ok: /^\d+$/.test(a) && Number(a)===Number(pr.ans)};
+  if(pr.kind==='p2f'){
+    const m=/^(\d+)\/(\d+)$/.exec(a); if(!m) return {ok:false};
+    const n=Number(m[1]), d=Number(m[2]); if(!d) return {ok:false};
+    if(n===f.n && d===f.d) return {ok:true};
+    if(n*f.d===d*f.n) return {ok:false, simplify:true};
+    return {ok:false};
+  }
+  if(a.indexOf('/')>=0 || !/^\d*\.?\d*$/.test(a) || a==='.') return {ok:false};
+  const v = Number(a.charAt(0)==='.' ? '0'+a : a);
+  const target = pr.kind==='f2d' ? f.n/f.d : 100*f.n/f.d;
+  if(f.d===3){
+    const dp=(a.split('.')[1]||'').length;
+    return {ok: pr.kind==='f2d' ? (dp>=2 && Math.abs(v-target)<=0.007) : Math.abs(v-target)<=0.7};
+  }
+  return {ok: Math.abs(v-target)<1e-9};
+}
+/* The strategy for a times fact, worked out with the real numbers.
+   f = the "times" we use the trick for (the easier one), n = the other number. */
+function strategy(x,y){
+  const f = MATH_ORDER.indexOf(x)<=MATH_ORDER.indexOf(y) ? x : y, n = f===x ? y : x, p=x*y;
+  const o = {f, n, p, split:null, minus:false, text:''};
+  switch(f){
+    case 2: o.text='Double '+n+': '+n+' + '+n+' = '+p+'.'; o.split=[1,1]; break;
+    case 10: o.text='Times 10: put a zero on the end. '+n+' → '+p+'.'; break;
+    case 5: o.text='Times 5 is half of times 10. '+n+' × 10 = '+(n*10)+'. Half of that is '+p+'.'; break;
+    case 11: if(n<=9) o.text=n+' × 11: write the digit twice. '+p+'.'; else { o.text=n+' × 10 = '+(n*10)+', plus one more '+n+' = '+p+'.'; o.split=[10,1]; } break;
+    case 3: o.text='Double '+n+' = '+(2*n)+', plus one more '+n+' = '+p+'.'; o.split=[2,1]; break;
+    case 4: o.text='Double, then double again: '+n+' → '+(2*n)+' → '+p+'.'; o.split=[2,2]; break;
+    case 9: o.text=n+' × 10 = '+(10*n)+', take away one '+n+': '+(10*n)+' − '+n+' = '+p+'.'; o.minus=true; break;
+    case 6: o.text=n+' × 5 = '+(5*n)+', plus one more '+n+' = '+p+'.'; o.split=[5,1]; break;
+    case 8: o.text='Double three times: '+n+' → '+(2*n)+' → '+(4*n)+' → '+p+'.'; o.split=[4,4]; break;
+    case 12: o.text=n+' × 10 = '+(10*n)+', plus '+n+' × 2 = '+(2*n)+'. '+(10*n)+' + '+(2*n)+' = '+p+'.'; o.split=[10,2]; break;
+    default: o.text=n+' × 5 = '+(5*n)+', plus '+n+' × 2 = '+(2*n)+'. '+(5*n)+' + '+(2*n)+' = '+p+'.'; o.split=[5,2];
+  }
+  return o;
+}
+function tipForFact(f, pr){
+  if(f.deck==='fdp') return f.tip;
+  if(f.deck==='mul'){ const s=strategy(pr.x, pr.y); return (pr.x!==s.f ? pr.x+' × '+pr.y+' is the same as '+s.f+' × '+s.n+'. ' : '')+s.text; }
+  const s=strategy(pr.dv, pr.q);
+  return 'Think times: '+pr.dv+' × ? = '+f.p+'. '+s.text+' So '+f.p+' ÷ '+pr.dv+' = '+pr.q+'.';
+}
+/* Dot picture: f rows of n. The colors show the split the strategy uses. */
+function arraySVG(x,y){
+  const s=strategy(x,y); const rows = s.minus ? 10 : s.f, cols = s.n;
+  const c = Math.max(9, Math.min(16, Math.floor(190/Math.max(rows,cols)))), r = c*0.36;
+  const W = cols*c+8, H = rows*c+8;
+  let g='';
+  for(let i=0;i<rows;i++) for(let j=0;j<cols;j++){
+    let col='var(--sky)', op=1;
+    if(s.split){ col = i < s.split[0] ? 'var(--ok)' : 'var(--gold)'; }
+    if(s.minus && i===rows-1){ col='var(--coral)'; op=0.35; }
+    g+='<circle cx="'+(4+j*c+c/2)+'" cy="'+(4+i*c+c/2)+'" r="'+r.toFixed(1)+'" fill="'+col+'" opacity="'+op+'"/>';
+  }
+  if(s.minus) g+='<line x1="2" y1="'+(4+(rows-1)*c+c/2)+'" x2="'+(W-2)+'" y2="'+(4+(rows-1)*c+c/2)+'" stroke="var(--coral)" stroke-width="2"/>';
+  const cap = s.minus ? '10 rows of '+s.n+', take away 1 row' : s.f+' row'+(s.f===1?'':'s')+' of '+s.n;
+  return '<div class="arr"><svg viewBox="0 0 '+W+' '+H+'" style="max-width:'+W+'px;width:100%" role="img" aria-label="'+esc(cap)+'">'+g+'</svg><div class="muted small">'+esc(cap)+'</div></div>';
+}
+
+/* Money: a fact's lifetime total never goes over factCap. Reps share repCap; mastery pays the rest. */
+function mathEarn(k, amt, reason, mastery){
+  const st=fs(k), m=S.settings.math;
+  const limit = mastery ? Number(m.factCap) : Math.min(Number(m.repCap), Number(m.factCap));
+  const room = cents(limit - st.e); if(room<=0 || amt<=0) return 0;
+  const a = addMoney(S, Math.min(amt, room), reason, {vault:!!mastery});
+  if(a>0) st.e = cents(st.e + a);
+  return a;
+}
+
+/* Practice queue: up to newPer focus facts, each 3 times, spread out; the rest is review and known facts. */
+function buildMathQueue(deck){
+  const N = Math.max(8, Math.min(40, Number(S.settings.math.reps)||20));
+  const t=today(), all=deckFacts(deck);
+  const learning = all.filter(f=>fget(f.k).b===1).sort((x,y)=>(fget(y.k).miss-fget(x.k).miss)||x.ease-y.ease);
+  const fresh = all.filter(f=>fget(f.k).b===0);
+  const focus = learning.concat(fresh).slice(0, Math.max(1, Number(S.settings.math.newPer)||3));
+  const due = shuffle(all.filter(f=>fget(f.k).b>=2 && fget(f.k).due<=t));
+  const known = shuffle(all.filter(f=>fget(f.k).b>=2 && fget(f.k).due>t));
+  const q = new Array(N).fill(null);
+  focus.forEach((f,j)=>[j, j+4, j+10].forEach(p=>{
+    let i=Math.min(p,N-1); while(i<N && q[i]) i++;
+    if(i>=N){ i=N-1; while(i>=0 && q[i]) i--; }
+    if(i>=0) q[i]=f;
+  }));
+  const fill = due.concat(known), extra = learning.concat(fresh).slice(focus.length, focus.length+3);
+  let fi=0, xi=0;
+  for(let i=0;i<N;i++){
+    if(q[i]) continue;
+    if(fi<fill.length) q[i]=fill[fi++];
+    else if(xi<extra.length) q[i]=extra[xi++];
+    else q[i]=focus.length ? focus[i%focus.length] : all[Math.floor(Math.random()*all.length)];
+  }
+  for(let pass=0;pass<3;pass++) for(let i=1;i<N;i++){
+    if(q[i].k!==q[i-1].k) continue;
+    for(let j=i+1;j<N;j++){ if(q[j].k!==q[i-1].k && (i+1>=N || q[j].k!==q[i+1].k)){ const tmp=q[i]; q[i]=q[j]; q[j]=tmp; break; } }
+  }
+  return q;
+}
+/* After a scored rep. Box goes up at most once a day. Returns true when newly mastered. */
+function updateFactAfterRep(f, ok, fast){
+  const st=fs(f.k), t=today();
+  st.seen++;
+  if(ok) st.ok++; else st.miss++;
+  if(fast){
+    st.fast++;
+    if(st.up!==t){ st.b = st.b<2 ? 2 : Math.min(4, st.b+1); st.up=t; }
+    if(st.days.indexOf(t)<0){ st.days.push(t); if(st.days.length>8) st.days.shift(); }
+    st.due = addDays(t, st.m ? 14 : MATH_BOX[st.b]);
+    if(!st.m && st.days.length>=3){ st.m=1; return true; }
+  } else if(ok){
+    st.b = Math.max(1, st.b); if(st.b<2) st.due=t; else st.due=addDays(t,1);
+  } else {
+    st.b = 1; st.due = t;
+  }
+  return false;
+}
+
+function startMath(deck){
+  if(!deckChecked(deck)) return startMathCheck(deck);
+  SES = {mode:'math', deck, queue:buildMathQueue(deck), idx:0, start:Date.now(), log:[], earned:0, lost:0, streak:0, bestStreak:0, reinserted:new Set(), mastered:[]};
+  newMathRep(); ui.screen='mrep'; render();
+}
+function startMathCheck(deck){
+  const cur=S.math.checkCur;
+  if(!cur || cur.deck!==deck){ S.math.checkCur={deck, order:shuffle(deckFacts(deck).map(f=>f.k)), idx:0, items:[], started:today()}; save(); }
+  const c=S.math.checkCur;
+  SES = {mode:'mathcheck', deck, queue:c.order.map(k=>FACT[k]), idx:c.idx, start:Date.now(), log:[], earned:0, lost:0, streak:0, bestStreak:0};
+  newMathRep(); ui.screen='mrep'; render();
+}
+function newMathRep(){
+  const f=curItem(); if(!f) return;
+  SES.rep = {pr:makePrompt(f), ans:'', t0:(window.performance?performance.now():Date.now()), phase:'ask', status:'', result:null, fixTries:0};
+}
+function nowMs(){ return window.performance ? performance.now() : Date.now(); }
+function mathKey(k){
+  if(!SES || !SES.rep) return; const rep=SES.rep;
+  if(k==='go'){ if(rep.phase==='ask') mathSubmit(); else if(rep.phase==='fix') mathFix(); else if(rep.phase==='result') mathAfter(); return; }
+  if(rep.phase!=='ask' && rep.phase!=='fix') return;
+  if(k==='del') rep.ans=rep.ans.slice(0,-1);
+  else {
+    if(rep.ans.length>=7) return;
+    if(k==='.' && (rep.ans.indexOf('.')>=0 || rep.ans.indexOf('/')>=0)) return;
+    if(k==='/' && (rep.ans.indexOf('/')>=0 || rep.ans.indexOf('.')>=0 || !rep.ans)) return;
+    rep.ans+=k;
+  }
+  rep.status='';
+  const b=document.getElementById('mans'); if(b) b.innerHTML = rep.ans ? esc(rep.ans) : '<span class="ph">?</span>';
+  const st=document.getElementById('status'); if(st) st.textContent='';
+}
+function mathSubmit(){
+  const rep=SES.rep; if(!rep || rep.phase!=='ask') return;
+  if(!rep.ans){ rep.status='Tap your answer first.'; render(); return; }
+  const f=curItem(), ms=Math.round(nowMs()-rep.t0), g=gradeMath(f, rep.pr, rep.ans);
+  const fast = g.ok && ms<=fastLimit(f);
+  if(SES.mode==='mathcheck') return lockMathCheck(f, rep, g.ok, fast, ms);
+  const m=S.settings.math; let applied=0; const msgs=[];
+  if(g.ok){ applied += mathEarn(f.k, fast?m.fast:m.slow, 'Math: '+(fast?'fast ':'')+rep.pr.text); }
+  const newly = updateFactAfterRep(f, g.ok, fast);
+  let bonus=0;
+  if(newly){ bonus = mathEarn(f.k, Number(m.factCap), 'Math fact mastered: '+factLabel(f), true); applied+=bonus; SES.mastered.push(f.k); msgs.push('Fact mastered! '+(bonus>0?'+'+fmt$(bonus)+' to your Vault.':'')); }
+  if(g.ok){ SES.streak++; SES.bestStreak=Math.max(SES.bestStreak,SES.streak); } else SES.streak=0;
+  S.math.reps.push({t:today(), k:f.k, q:rep.pr.text, a:rep.ans.slice(0,12), ok:g.ok?1:0, fs:fast?1:0, ms});
+  if(S.math.reps.length>4000) S.math.reps.splice(0, S.math.reps.length-4000);
+  SES.log.push({k:f.k, ok:g.ok, fast, ms});
+  if(applied>0) SES.earned=cents(SES.earned+applied);
+  if(!g.ok && !SES.reinserted.has(f.k)){
+    SES.reinserted.add(f.k);
+    const pos=Math.min(SES.queue.length, SES.idx+3);
+    SES.queue.splice(pos,0,f);
+    const cap=Math.max(8, Math.min(40, Number(m.reps)||20))+3;
+    if(SES.queue.length>cap) SES.queue.length=cap;
+  }
+  rep.result={ok:g.ok, fast, ms, applied, bonus, simplify:!!g.simplify, mastered:newly, msgs};
+  rep.phase='result';
+  save(); render();
+  if(g.ok){
+    if(newly) celebrate(applied, null, SES.streak, false, 'Fact mastered!');
+    else if(applied>0){ Sound.cash(false); floatMoney(applied); const bank=document.querySelector('.pill.money'); if(bank){ bank.classList.remove('bump'); void bank.offsetWidth; bank.classList.add('bump'); } }
+    else Sound.coin();
+    if(!IS_TEST){ const r=rep; setTimeout(()=>{ if(SES && SES.rep===r && r.phase==='result') mathAfter(); }, newly?1500:(fast?750:1100)); }
+  } else Sound.soft();
+}
+function mathAfter(){
+  const rep=SES.rep; if(!rep || rep.phase!=='result') return;
+  if(!rep.result.ok){ rep.phase='fix'; rep.ans=''; rep.status=''; render(); return; }
+  mathNext();
+}
+function mathFix(){
+  const rep=SES.rep, f=curItem();
+  if(gradeMath(f, rep.pr, rep.ans).ok){ Sound.tap(); mathNext(); return; }
+  rep.fixTries++; rep.ans='';
+  if(rep.fixTries>=3){ mathNext(); return; }
+  rep.status='Look at it and tap it in again.'; render();
+  const b=document.getElementById('mans'); if(b){ b.classList.add('shake'); setTimeout(()=>b.classList.remove('shake'),400); }
+}
+function mathNext(){
+  SES.idx++;
+  const timeUp = (Date.now()-SES.start) >= (Number(S.settings.math.minutes)||5)*60000;
+  if(SES.idx>=SES.queue.length || timeUp) return endMath(true);
+  newMathRep(); render();
+}
+function lockMathCheck(f, rep, ok, fast, ms){
+  const c=S.math.checkCur;
+  c.items.push({k:f.k, q:rep.pr.text, a:rep.ans.slice(0,12), ok:ok?1:0, fs:fast?1:0, ms});
+  c.idx=SES.idx+1; save(); Sound.tap();
+  SES.idx++;
+  if(SES.idx>=SES.queue.length) return finishMathCheck();
+  newMathRep(); SES.rep.status='Got it. Next one.'; render();
+}
+function finishMathCheck(){
+  const c=S.math.checkCur, t=today(), first=!deckChecked(c.deck);
+  c.items.forEach(x=>{
+    const st=fs(x.k);
+    if(first){
+      if(x.fs){ st.b=2; st.days=[t]; st.up=t; st.due=addDays(t,1); }
+      else if(x.ok){ st.b=1; st.due=t; }
+      else { st.b=0; st.due=''; }
+    } else if(!x.ok){ st.b=1; st.due=t; }
+  });
+  const rec={t, deck:c.deck, total:c.items.length, ok:c.items.filter(x=>x.ok).length, fast:c.items.filter(x=>x.fs).length, items:c.items};
+  (S.math.checks[c.deck]=S.math.checks[c.deck]||[]).push(rec);
+  S.math.checkCur=null; save();
+  const prev=(S.math.checks[c.deck]||[]).slice(-2)[0];
+  SES={mode:'mcheckDone', deck:c.deck, rec, first, prev: prev!==rec ? prev : null};
+  ui.screen='mcheckResults'; Sound.horn(); confetti(); render();
+}
+function endMath(full){
+  if(!SES){ ui.screen='home'; render(); return; }
+  if(SES.mode==='mathcheck'){ SES=null; ui.screen='home'; render(); return; }
+  const t=today(), reps=SES.log.length, correct=SES.log.filter(x=>x.ok).length, fast=SES.log.filter(x=>x.fast).length;
+  const extras=[];
+  if(reps>0){
+    if(S.streak.last!==t){ S.streak.days=(S.streak.last===addDays(t,-1))?S.streak.days+1:1; S.streak.last=t;
+      if(S.streak.days%5===0){ const b=addMoney(S,S.settings.money.dayStreak5,'Day streak'); if(b>0){ SES.earned=cents(SES.earned+b); extras.push(S.streak.days+' days in a row: +'+fmt$(b)); } } }
+    S.sessions.push({t, mode:'math', deck:SES.deck, mins:Math.max(1,Math.round((Date.now()-SES.start)/60000)), reps, correct, fast, earned:SES.earned, lost:0, full:full?1:0, bestStreak:SES.bestStreak});
+  }
+  save();
+  SES.final={reps, correct, fast, extras};
+  ui.screen='mfinal'; if(reps) Sound.horn(); render();
+}
+
+/* =========================================================
+   MATH REPS: SCREENS
+   ========================================================= */
+function capText(){ const c=Number(S.settings.math.factCap)||0; return c<1 ? Math.round(c*100)+'¢' : fmt$(c); }
+function fracHTML(n,d){ return '<span class="frac"><span>'+n+'</span><span>'+d+'</span></span>'; }
+function promptHTML(f, pr){
+  if(pr.kind==='num') return '<div class="fact">'+esc(pr.text)+' =</div>';
+  if(pr.kind==='f2d') return '<p class="asks">Write it as a <b>decimal</b></p><div class="fact">'+fracHTML(f.n,f.d)+' =</div>';
+  if(pr.kind==='f2p') return '<p class="asks">Write it as a <b>percent</b></p><div class="fact">'+fracHTML(f.n,f.d)+' =</div>';
+  return '<p class="asks">Write it as a <b>fraction</b> (simplest form)</p><div class="fact">'+esc(f.pct)+'% =</div>';
+}
+function fullFactHTML(f, pr){
+  if(pr.kind==='num') return esc(pr.text)+' = '+esc(pr.ans);
+  if(pr.kind==='p2f') return esc(f.pct)+'% = '+fracHTML(f.n,f.d);
+  return fracHTML(f.n,f.d)+' = '+esc(pr.ans)+(pr.kind==='f2p'?'%':'');
+}
+function keypadHTML(kind){
+  const k=(x,cls,label)=>'<button class="key'+(cls?' '+cls:'')+'" data-act="key" data-k="'+x+'" aria-label="'+esc(label||x)+'">'+esc(label||x)+'</button>';
+  let h='<div class="keypad">'+['1','2','3','4','5','6','7','8','9'].map(x=>k(x)).join('');
+  if(kind==='num') h+=k('0','wide')+k('go','go','Go');
+  else h+=k(kind==='p2f'?'/':'.','alt')+k('0')+k('go','go','Go');
+  return h+'</div>';
+}
+function ansRowHTML(rep){
+  return '<div class="ansrow"><div class="mans" id="mans">'+(rep.ans?esc(rep.ans):'<span class="ph">?</span>')+'</div>'+(rep.pr.kind==='f2p'?'<span class="pct">%</span>':'')+
+    '<button class="key delkey" data-act="key" data-k="del" aria-label="Delete">⌫</button></div>';
+}
+function renderMathRep(){
+  const f=curItem(), rep=SES.rep, check=SES.mode==='mathcheck', total=SES.queue.length;
+  let h=topbar(check?'Speed Check':DECKS[SES.deck].name);
+  h+='<div class="rephead"><span class="pill">'+(check?'Fact ':'Rep ')+(SES.idx+1)+' of '+total+'</span>';
+  if(!check){ h+='<span class="pill money">'+fmt$(S.bank.wallet+S.bank.vault)+'</span>'; if(SES.streak>=3) h+='<span class="pill">🔥 '+SES.streak+' in a row</span>'; }
+  h+='</div><div class="progress"><i style="width:'+Math.round(100*SES.idx/total)+'%"></i></div><div class="stage">';
+  if(rep.phase==='result' && rep.result.ok){
+    const r=rep.result;
+    h+='<div class="result good" style="text-align:center"><div class="fact sm" style="margin:0">'+fullFactHTML(f,rep.pr)+'</div><div class="big">'+(r.fast?'⚡ Fast!':'Got it')+'</div>'+
+      (r.applied>0?'<div class="money ok">+'+fmt$(r.applied)+'</div>':(fget(f.k).e>=Number(S.settings.math.factCap)?'<div class="muted small">This fact already paid its '+capText()+'. Keep it fast.</div>':''))+
+      (!r.fast?'<div class="muted small">Right! Now get it faster. Fast reps count toward mastering it.</div>':'')+
+      r.msgs.map(x=>'<div class="tipline">'+esc(x)+'</div>').join('')+'</div><button class="btn block" data-act="mnext">Next</button>';
+  } else if(rep.phase==='result'){
+    const r=rep.result;
+    h+='<div class="result try"><div class="big">'+(r.simplify?'Right amount. Now simplify it.':'Here\'s the fact')+'</div><div class="fact sm" style="margin:6px 0">'+fullFactHTML(f,rep.pr)+'</div>'+
+      '<div class="muted small" style="text-align:center">You tapped: '+esc(rep.ans)+(rep.pr.kind==='f2p'?'%':'')+'</div>'+
+      '<div class="strat">'+esc(tipForFact(f,rep.pr))+'</div>'+(f.deck==='mul'?arraySVG(rep.pr.x,rep.pr.y):f.deck==='div'?arraySVG(rep.pr.dv,rep.pr.q):'')+
+      '<div class="muted small" style="margin-top:6px">No money lost. It comes back in a few reps.</div></div><button class="btn block" data-act="mnext">Do the fix rep</button>';
+  } else if(rep.phase==='fix'){
+    h+='<p class="coachline" style="text-align:center">Fix rep: look at it, then tap the answer in.</p><div class="fact" style="opacity:.9">'+fullFactHTML(f,rep.pr)+'</div>';
+    h+=ansRowHTML(rep)+keypadHTML(rep.pr.kind);
+  } else {
+    h+=promptHTML(f, rep.pr);
+    h+=ansRowHTML(rep)+keypadHTML(rep.pr.kind);
+  }
+  h+='<div class="status" id="status">'+esc(rep.status||'')+'</div></div>';
+  h+='<div class="row" style="margin-top:14px"><button class="btn ghost sm" data-act="'+(check?'mpause':'mend')+'">'+(check?'Pause':'End practice')+'</button></div>';
+  if(check && SES.idx===0) h+='<p class="muted small">Speed Check: no money lost, no right or wrong shown. Just go as fast as you can and still be right.</p>';
+  return h;
+}
+function renderMathFinal(){
+  const f=SES.final;
+  let h=topbar('Final whistle');
+  if(!f.reps) return h+'<div class="card"><h2>No reps this time</h2><p>Come back soon.</p><button class="btn block" data-act="home">Home</button></div>';
+  h+='<div class="board final"><div class="lab">Fast and right</div><div class="big">'+f.fast+'/'+f.reps+'</div></div>';
+  h+='<div class="card"><div class="grid2"><div><div class="muted small">Right</div><div class="v">'+f.correct+'/'+f.reps+'</div></div><div><div class="muted small">Best streak</div><div class="v">'+SES.bestStreak+'</div></div>'+
+     '<div><div class="muted small">Coins earned</div><div class="v ok">+'+fmt$(SES.earned)+'</div></div><div><div class="muted small">'+esc(DECKS[SES.deck].name)+' mastered</div><div class="v">'+deckCounts(SES.deck).mastered+'/'+deckCounts(SES.deck).total+'</div></div></div>';
+  if(SES.mastered.length) h+='<p class="ok" style="margin-top:12px"><b>Mastered today:</b> '+esc(SES.mastered.map(k=>factLabel(FACT[k])).join(', '))+'</p>';
+  f.extras.forEach(x=>{ h+='<p class="ok">'+esc(x)+'</p>'; });
+  if(weeklyCapHit(S)) h+='<p class="muted">Max paycheck reached this week. Keep stacking reps for your stats.</p>';
+  h+='<button class="btn block" data-act="home" style="margin-top:8px">Back to the scoreboard</button></div>';
+  if(SES.deck!=='fdp') h+='<div class="card"><h2>Your chart</h2>'+factGrid(SES.deck)+'</div>';
+  return h;
+}
+function renderMathCheckResults(){
+  const R=SES.rec, d=SES.deck;
+  let h=topbar('Speed Check results');
+  h+='<div class="card"><h2>'+(SES.first?'Your starting stats':'Your new stats')+': '+esc(DECKS[d].name)+'</h2>';
+  h+='<div class="grid2"><div><div class="muted small">Fast and right</div><div class="v">'+R.fast+'/'+R.total+'</div>'+(SES.prev?'<div class="muted small">Last time: '+SES.prev.fast+'</div>':'')+'</div><div><div class="muted small">Right</div><div class="v">'+R.ok+'/'+R.total+'</div></div></div>';
+  const next=deckFacts(d).filter(f=>fget(f.k).b<=1).slice(0,3);
+  if(next.length) h+='<p style="margin-top:12px"><b>Your training starts with:</b> '+esc(next.map(f=>factLabel(f)).join(', '))+'.</p>';
+  else h+='<p class="ok" style="margin-top:12px"><b>Every fact was fast.</b> Practice keeps them that way and finishes mastering them.</p>';
+  h+=(d!=='fdp'?factGrid(d):fdpChips());
+  h+='<button class="btn block" data-act="home" style="margin-top:14px">Go to the scoreboard</button></div>';
+  return h;
+}
+function factGrid(deck){
+  let h='<div class="fgrid" role="img" aria-label="'+esc(DECKS[deck].name)+' chart"><div class="hd">'+DECKS[deck].icon+'</div>';
+  for(let c=2;c<=12;c++) h+='<div class="hd">'+c+'</div>';
+  for(let r=2;r<=12;r++){
+    h+='<div class="hd">'+r+'</div>';
+    for(let c=2;c<=12;c++){ const a=Math.min(r,c), b=Math.max(r,c); const k=(deck==='mul'?'m':'d')+a+'x'+b; const s=factStatus(k); h+='<div class="'+s+'" title="'+r+' × '+c+'">'+(s==='mastered'?r*c:'')+'</div>'; }
+  }
+  return h+'</div>'+gridLegend();
+}
+function gridLegend(){ return '<div class="legend"><span><i style="background:var(--ok)"></i>Mastered</span><span><i style="background:color-mix(in srgb,var(--sky) 45%,var(--panel))"></i>Fast</span><span><i style="background:color-mix(in srgb,var(--gold) 55%,var(--panel))"></i>Training</span><span><i style="background:var(--field);border:1px solid var(--line)"></i>Not yet</span></div>'; }
+function fdpChips(){ return '<div class="fdpchips">'+deckFacts('fdp').map(f=>'<span class="'+factStatus(f.k)+'">'+f.n+'/'+f.d+' = '+f.dec+' = '+f.pct+'%</span>').join('')+'</div>'+gridLegend(); }
+function deckCard(d){
+  const D=DECKS[d], c=deckCounts(d), cur=S.math.checkCur && S.math.checkCur.deck===d, checked=deckChecked(d);
+  const mins = Math.max(2, Math.round(c.total*5/60));
+  let h='<div class="card deck"><div class="deckhead"><span class="deckicon" style="background:'+D.color+'">'+D.icon+'</span><div><h2 style="margin:0">'+esc(D.name)+'</h2><div class="muted small">'+esc(D.blurb)+' · '+c.total+' facts</div></div></div>';
+  if(checked){
+    h+='<div class="progress" style="height:14px"><i style="width:'+Math.round(100*c.mastered/c.total)+'%;background:var(--ok)"></i></div>'+
+       '<div class="small"><b>'+c.mastered+'</b> mastered · <b>'+c.fast+'</b> fast · <b>'+c.learning+'</b> training · '+c.fresh+' not yet</div>';
+  }
+  if(cur) h+='<p class="small">Speed Check paused at fact '+(S.math.checkCur.idx+1)+' of '+S.math.checkCur.order.length+'.</p><button class="btn block gold" data-act="mcheck" data-deck="'+d+'">Keep going</button>';
+  else if(!checked) h+='<p class="small">Start with a Speed Check. It shows which facts are already fast. About '+mins+' minutes, no money lost.</p><button class="btn block gold" data-act="mcheck" data-deck="'+d+'">Start the Speed Check</button>';
+  else {
+    h+='<div class="row"><button class="btn" data-act="mstart" data-deck="'+d+'">Start '+esc(D.short)+' Reps</button>'+(checkDue(d)?'<button class="btn ghost" data-act="mcheck" data-deck="'+d+'">Speed Check day</button>':'')+'</div>';
+  }
+  return h+'</div>';
+}
+function renderMathHome(){
+  let h='<div class="card"><h2>Math Reps</h2><p class="small" style="margin:0">'+(Number(S.settings.math.reps)||20)+' quick facts, about '+(Number(S.settings.math.minutes)||5)+' minutes. Every fact is worth up to <b>'+capText()+'</b>: a little for each fast rep, the rest when you master it (fast on 3 different days). No money lost in Math Reps.</p></div>';
+  const on=DECK_IDS.filter(d=>S.settings.math.decksOn[d]!==false);
+  on.forEach(d=>{ h+=deckCard(d); });
+  if(on.indexOf('mul')>=0 && deckChecked('mul')) h+='<div class="card"><h2>Fill your times chart</h2>'+factGrid('mul')+'</div>';
+  return h;
+}
+function mathWatchCard(){
+  let h='<div class="card"><h2>Math facts</h2><div class="tblwrap"><table class="tbl"><tr><th>Deck</th><th>Mastered</th><th>Fast</th><th>Training</th><th>Speed Check</th></tr>';
+  DECK_IDS.forEach(d=>{ const c=deckCounts(d), L=lastCheck(d), F=(S.math.checks[d]||[])[0];
+    h+='<tr><td><b>'+esc(DECKS[d].name)+'</b></td><td>'+c.mastered+'/'+c.total+'</td><td>'+c.fast+'</td><td>'+c.learning+'</td><td>'+(L?(F!==L?F.fast+' → ':'')+'<b>'+L.fast+'/'+L.total+'</b> fast · '+niceDate(L.t):'not yet')+'</td></tr>'; });
+  h+='</table></div>';
+  if(deckChecked('mul')) h+='<h3>Times chart</h3>'+factGrid('mul');
+  return h+'</div>';
+}
+function mathWeek(ws_, we){
+  const r=S.math.reps.filter(x=>x.t>=ws_ && x.t<we);
+  return {reps:r.length, acc:r.length? r.filter(x=>x.ok).length/r.length : null, fastRate:r.length? r.filter(x=>x.fs).length/r.length : null,
+    days:new Set(S.sessions.filter(x=>x.mode==='math' && x.t>=ws_ && x.t<we).map(x=>x.t)).size,
+    earned:cents(S.ledger.filter(e=>!e.p && e.amt>0 && e.t>=ws_ && e.t<we && /^Math/.test(e.r)).reduce((a,e)=>a+e.amt,0))};
+}
+function coachMath(){
+  const thisW=weekStart(today()), lastW=addDays(thisW,-7), a=mathWeek(thisW, addDays(thisW,7)), b=mathWeek(lastW, thisW);
+  let h='<div class="card"><h2>How Math Reps works</h2><ol class="small" style="margin:0;padding-left:20px">'+
+    '<li><b>Speed Check</b> first (each deck). Every fact once, no feedback, no money. Fast and right facts skip ahead; the rest become training facts.</li>'+
+    '<li><b>Practice</b> (about 5 minutes): up to '+(Number(S.settings.math.newPer)||3)+' training facts, each shown 3 times, mixed in with facts he already knows. Easiest families first (2s, 10s, 5s, 11s, 3s, 4s, 9s, 6s, 8s, 12s, 7s).</li>'+
+    '<li><b>A miss</b> shows the fact, a strategy worked out with the real numbers, and a dot picture, then a fix rep. The fact comes back 3 reps later.</li>'+
+    '<li><b>Mastered</b> = right and fast (under '+S.settings.math.fastSec+' seconds; '+S.settings.math.fdpFastSec+' for fraction facts) on 3 different days. Mastered facts come back every 2 weeks.</li>'+
+    '<li><b>Money:</b> each fact pays at most '+fmt$(S.settings.math.factCap)+' total: '+fmt$(S.settings.math.fast)+' per fast rep and '+fmt$(S.settings.math.slow)+' per slow one (up to '+fmt$(S.settings.math.repCap)+'), then the rest to the Vault when mastered. Nothing is ever lost. Math money counts toward the same weekly cap.</li></ol></div>';
+  h+='<div class="card"><h2>This week vs last</h2><div class="tblwrap"><table class="tbl"><tr><th>Signal</th><th>This week</th><th>Last week</th></tr>'+
+    '<tr><td><b>Days with math reps</b></td><td>'+a.days+'</td><td>'+b.days+'</td></tr>'+
+    '<tr><td><b>Fast and right</b><div class="muted small">The main fluency signal</div></td><td>'+pct(a.fastRate)+'</td><td>'+pct(b.fastRate)+'</td></tr>'+
+    '<tr><td><b>Right</b></td><td>'+pct(a.acc)+'</td><td>'+pct(b.acc)+'</td></tr>'+
+    '<tr><td><b>Reps</b></td><td>'+a.reps+'</td><td>'+b.reps+'</td></tr>'+
+    '<tr><td><b>Math money</b></td><td>'+fmt$(a.earned)+'</td><td>'+fmt$(b.earned)+'</td></tr></table></div></div>';
+  h+=mathWatchCard();
+  if(deckChecked('div')) h+='<div class="card"><h2>Division chart</h2><p class="muted small">Each square is a fact family, for example 56 ÷ 7 and 56 ÷ 8.</p>'+factGrid('div')+'</div>';
+  if(deckChecked('fdp')) h+='<div class="card"><h2>Fraction · decimal · percent</h2>'+fdpChips()+'</div>';
+  const missed=FACTS.map(f=>({f, st:fget(f.k)})).filter(x=>x.st.miss>0).sort((x,y)=>y.st.miss-x.st.miss).slice(0,10);
+  h+='<div class="card"><h2>Most missed</h2>'+(missed.length?'<div class="tblwrap"><table class="tbl"><tr><th>Fact</th><th>Missed</th><th>Right</th><th>Now</th></tr>'+missed.map(x=>'<tr><td><b>'+esc(factLabel(x.f))+'</b></td><td>'+x.st.miss+'</td><td>'+x.st.ok+' of '+x.st.seen+'</td><td>'+({mastered:'Mastered',fast:'Fast',learning:'Training',new:'Not yet'})[factStatus(x.f.k)]+'</td></tr>').join('')+'</table></div>':'<p class="muted">None yet.</p>')+'</div>';
+  h+='<div class="card"><h2>Speed Check history</h2>';
+  const all=[]; DECK_IDS.forEach(d=>(S.math.checks[d]||[]).forEach(c=>all.push(c)));
+  h+= all.length ? '<div class="tblwrap"><table class="tbl"><tr><th>Date</th><th>Deck</th><th>Fast</th><th>Right</th></tr>'+all.sort((x,y)=>y.t.localeCompare(x.t)).map(c=>'<tr><td>'+niceDate(c.t)+'</td><td>'+esc(DECKS[c.deck].name)+'</td><td><b>'+c.fast+'/'+c.total+'</b></td><td>'+c.ok+'/'+c.total+'</td></tr>').join('')+'</table></div>' : '<p class="muted">None yet.</p>';
+  h+='<div class="row" style="margin-top:10px">'+DECK_IDS.map(d=>'<button class="btn sm ghost" data-act="coachmcheck" data-deck="'+d+'">Speed Check: '+esc(DECKS[d].short)+'</button>').join('')+'</div><p class="muted small">A new Speed Check is offered every 4 weeks. It measures growth; it never resets progress.</p></div>';
+  const m=S.settings.math;
+  h+='<div class="card"><h2>Math settings</h2><div class="form">'+
+    '<label>Fast = under this many seconds (× and ÷)<input type="number" min="2" max="15" step="0.5" id="mset-fast" value="'+m.fastSec+'"></label>'+
+    '<label>Fast for fraction facts (seconds)<input type="number" min="3" max="20" step="0.5" id="mset-ffast" value="'+m.fdpFastSec+'"></label>'+
+    '<label>Reps per practice<input type="number" min="8" max="40" step="1" id="mset-reps" value="'+m.reps+'"></label>'+
+    '<label>Practice minutes<input type="number" min="2" max="20" step="1" id="mset-min" value="'+m.minutes+'"></label>'+
+    '<label>New facts per practice<input type="number" min="1" max="5" step="1" id="mset-new" value="'+m.newPer+'"></label>'+
+    '<label>Most one fact can ever earn ($)<input type="number" min="0" max="1" step="0.01" id="mset-cap" value="'+Number(m.factCap).toFixed(2)+'"></label>'+
+    '<label>Most from reps before mastery ($)<input type="number" min="0" max="1" step="0.01" id="mset-repcap" value="'+Number(m.repCap).toFixed(2)+'"></label>'+
+    '<label>Fast rep pays ($)<input type="number" min="0" max="0.25" step="0.01" id="mset-pfast" value="'+Number(m.fast).toFixed(2)+'"></label>'+
+    '<label>Slow but right pays ($)<input type="number" min="0" max="0.25" step="0.01" id="mset-pslow" value="'+Number(m.slow).toFixed(2)+'"></label></div>'+
+    '<h3>Decks on or off</h3>'+DECK_IDS.map(d=>'<label class="chk"><input type="checkbox" data-deckon="'+d+'" '+(m.decksOn[d]!==false?'checked':'')+'> '+esc(DECKS[d].name)+'</label>').join('')+
+    '<div class="row" style="margin-top:12px"><button class="btn sm" data-act="savemath">Save math settings</button></div><div class="status" id="msetstatus"></div></div>';
+  return h;
+}
+
 /* =========================================================
    RENDER + EVENTS
    ========================================================= */
@@ -2109,6 +2657,9 @@ function render(){
   else if(ui.screen==='rep' && SES) h=renderRep();
   else if(ui.screen==='final' && SES) h=renderFinal();
   else if(ui.screen==='combineResults' && SES) h=renderCombineResults();
+  else if(ui.screen==='mrep' && SES && SES.rep) h=renderMathRep();
+  else if(ui.screen==='mfinal' && SES && SES.final) h=renderMathFinal();
+  else if(ui.screen==='mcheckResults' && SES && SES.rec) h=renderMathCheckResults();
   else { ui.screen='home'; h=renderHome(); }
   h+=renderModal();
   app.innerHTML=h;
@@ -2120,6 +2671,17 @@ app.addEventListener('keydown', e=>{
   if(e.key!=='Enter') return;
   if(e.target.id==='ans' && SES){ e.preventDefault(); const ph=SES.rep.phase; if(ph==='spell') doCheck(); else if(ph==='check' && SES.mode==='combine') doLock(null); else if(ph==='fix') fixRep(); }
   else if(e.target.id==='pin'||e.target.id==='pin2'){ e.preventDefault(); act(ui.modal.type==='pin'?'pinok':'setpinok'); }
+});
+document.addEventListener('keydown', e=>{
+  if(ui.modal || ui.coachOpen || ui.screen!=='mrep' || !SES || !SES.rep || (SES.mode!=='math' && SES.mode!=='mathcheck')) return;
+  if(e.target && /INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return;
+  let k=null;
+  if(/^[0-9]$/.test(e.key) || e.key==='.' || e.key==='/') k=e.key;
+  else if(e.key==='Backspace') k='del';
+  else if(e.key==='Enter') k='go';
+  if(!k) return;
+  e.preventDefault(); try{ const c=ac(); if(c && c.state==='suspended') c.resume(); }catch(_){}
+  mathKey(k);
 });
 app.addEventListener('change', e=>{ const el=e.target.closest('[data-act-change]'); if(el) act(el.getAttribute('data-act-change'), el); });
 app.addEventListener('click', e=>{
@@ -2137,6 +2699,21 @@ function act(a, el){
     case 'coachclose': ui.coachOpen=false; ui.backupCode=''; render(); break;
     case 'ctab': ui.coachTab=ds.tab; render(); break;
     case 'practice': startPractice(null); break;
+    case 'sport': ui.sport = ds.s==='math'?'math':'spelling'; try{ localStorage.setItem(SPORT_KEY, ui.sport); }catch(e){} render(); break;
+    case 'mstart': startMath(ds.deck); break;
+    case 'mcheck': startMathCheck(ds.deck); break;
+    case 'key': mathKey(ds.k); break;
+    case 'mnext': mathAfter(); break;
+    case 'mpause': SES=null; ui.screen='home'; render(); break;
+    case 'mend': ui.modal={type:'confirm', title:'End practice?', text:'Your reps so far still count.', ok:'End it', cb:()=>endMath(false)}; render(); break;
+    case 'coachmcheck': { const d=ds.deck; ui.modal={type:'confirm', title:'Start a Speed Check?', text:'He does every '+DECKS[d].name+' fact once ('+deckFacts(d).length+' facts). It measures growth and never resets progress.', ok:'Start', cb:()=>{ ui.coachOpen=false; ui.sport='math'; if(S.math.checkCur && S.math.checkCur.deck!==d) S.math.checkCur=null; startMathCheck(d); }}; render(); break; }
+    case 'savemath': {
+      const num=(id,min,max,def)=>{ const v=Number((document.getElementById(id)||{}).value); return isFinite(v)? Math.min(max,Math.max(min,v)) : def; };
+      const m=S.settings.math;
+      m.fastSec=num('mset-fast',2,15,4); m.fdpFastSec=num('mset-ffast',3,20,7); m.reps=Math.round(num('mset-reps',8,40,20)); m.minutes=Math.round(num('mset-min',2,20,5)); m.newPer=Math.round(num('mset-new',1,5,3));
+      m.factCap=cents(num('mset-cap',0,1,0.25)); m.repCap=cents(Math.min(m.factCap, num('mset-repcap',0,1,0.10))); m.fast=cents(num('mset-pfast',0,0.25,0.02)); m.slow=cents(num('mset-pslow',0,0.25,0.01));
+      const on={}; document.querySelectorAll('[data-deckon]').forEach(i=>on[i.dataset.deckon]=i.checked); if(Object.keys(on).some(k=>on[k])) m.decksOn=Object.assign({mul:true,div:true,fdp:true}, on);
+      save(); render(); const st=document.getElementById('msetstatus'); if(st) st.textContent='Saved.'; break; }
     case 'choosedrill': ui.pickDrill=!ui.pickDrill; render(); break;
     case 'pickdrill': ui.pickDrill=false; startPractice(Number(ds.d)); break;
     case 'boss': startBoss(); break;
@@ -2160,7 +2737,7 @@ function act(a, el){
     case 'fix': fixRep(); break;
     case 'endearly': ui.modal={type:'confirm', title:'End practice?', text:'Your reps so far still count.', ok:'End it', cb:()=>endSession(false)}; render(); break;
     case 'pausecombine': SES=null; ui.screen='home'; render(); break;
-    case 'home': SES=null; ui.screen='home'; render(); break;
+    case 'home': SES=null; ui.screen='home'; render(); window.scrollTo && window.scrollTo(0,0); break;
     case 'coachreads': requirePin(()=>{ ui.modal={type:'reads'}; render(); }); break;
     case 'modalclose': ui.modal=null; render(); break;
     case 'confirmok': { const cb=ui.modal.cb; ui.modal=null; cb&&cb(); if(!ui.modal) render(); break; }
@@ -2217,7 +2794,7 @@ function act(a, el){
     case 'watchoff': { const c=GSync.cfg(); if(c){ c.watch=false; GSync.setCfg(c); render(); } break; }
     case 'watchrefresh': GSync.init(); break;
     case 'syncoff': GSync.setCfg(null); GSync.status='off'; ui.syncLink=''; ui.syncMsg='Sync is off on this device. Data stays here.'; render(); break;
-    case 'csv': download('spelling-reps-'+today()+'.csv', buildCSV()); break;
+    case 'csv': download('reps-'+today()+'.csv', buildCSV()); break;
     case 'makebackup': ui.backupCode=Store.exportCode(S); S.lastBackup=today(); save(); ui.backupCode=Store.exportCode(S); render(); break;
     case 'restore': { const code=(document.getElementById('restore')||{}).value; try{ const ns=Store.importCode(code); ui.modal={type:'confirm', title:'Replace all data?', text:'This replaces everything on this device with the backup.', ok:'Replace', cb:()=>{ S=ns; save(); render(); }}; render(); }catch(err){ const e=document.getElementById('reserr'); if(e) e.textContent='That code did not work. Copy the whole code, starting with GSG1:'; } break; }
   }
@@ -2238,7 +2815,8 @@ window.GSG = {
   get SES(){ return SES; }, get ui(){ return ui; },
   setNow(d){ _now = d; }, render, act, startPractice, startBoss, startCombine, doCheck, doLock, endSession, save,
   reload(){ S = Store.load(); render(); },
-  Clips, voiceScore, Rec, Cloud, analyze, focusDrills, GSync, tierOf, Sound
+  Clips, voiceScore, Rec, Cloud, analyze, focusDrills, GSync, tierOf, Sound,
+  MATH:{FACTS, FACT, DECKS, DECK_IDS, DEFAULT_MATH, gradeMath, makePrompt, strategy, buildMathQueue, startMath, startMathCheck, mathKey, mathSubmit, mathAfter, mathFix, endMath, factStatus, deckCounts, fget, deckFacts, mathWeek}
 };
 
 render();

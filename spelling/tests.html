@@ -578,6 +578,32 @@ async function main(){
     report('Math 7. Phone size (360 px): no sideways scrolling on any math screen', !errs.length, errs.join('\n'));
   }catch(e){ report('Math 7. Phone size', false, e.stack); }
 
+  try{
+    const errs=[]; reset({onboarded:true}); G.act('sport',{dataset:{s:'math'}});
+    M.startMathCheck('fdp');
+    if(!D.getElementById('mclock') || !/⏱ [01]:\d\d/.test(D.getElementById('mclock').textContent)) errs.push('no round clock on the Speed Check');
+    if(!D.querySelector('[data-act="midk"]')) errs.push('no I don\'t know button');
+    const f0=G.SES.queue[0].k; G.act('midk');
+    const it=G.S.math.checkCur.items[0]; if(!it || it.k!==f0 || it.ok || !it.idk) errs.push('I don\'t know did not record a skip');
+    if(G.SES.idx!==1) errs.push('I don\'t know did not move on');
+    answerMath('1');                                        // one more answered this round
+    const before=G.S.math.checkCur.items.length, idxBefore=G.SES.idx;
+    G.SES.roundStart=Date.now()-61000; M.mathTick();         // time runs out mid-fact
+    if(!G.SES.rbreak || D.body.innerText.indexOf('Round 1 done')<0) errs.push('no break screen when the 60 seconds ran out');
+    if(D.body.innerText.indexOf('2 facts')<0) errs.push('break screen does not show facts this round');
+    if(G.S.math.checkCur.items.length!==before) errs.push('the fact on screen was counted when time ran out');
+    G.SES.rep.ans='5'; M.mathSubmit(); if(G.S.math.checkCur.items.length!==before) errs.push('could answer during the break');
+    G.act('mround');
+    if(G.SES.rbreak || G.SES.round!==2 || G.SES.idx!==idxBefore) errs.push('next round did not resume at the same fact');
+    if(G.settings && 0) errs.push('');
+    let g=0; while(G.SES && G.SES.mode==='mathcheck' && g++<40) G.act('midk');
+    if(G.ui.screen!=='mcheckResults') errs.push('check did not finish');
+    if(G.S.math.checks.fdp[0].items.length!==14) errs.push('check did not cover all 14 facts');
+    if(M.factStatus(f0)!=='new') errs.push('I don\'t know fact is not a training fact');
+    if(D.body.innerText.indexOf('"I don\'t know"')<0) errs.push('results do not mention I don\'t know');
+    report('Math 8. Speed Check runs in 60-second rounds with a break; time-out never counts the fact on screen; "I don\'t know" skips fast and becomes a training fact', !errs.length, errs.join('\n'));
+  }catch(e){ report('Math 8. Rounds and I don\'t know', false, e.stack); }
+
   // Extra: Drill 4 shows the sentence with a blank; feedback order; fix rep
   try{
     const errs=[];

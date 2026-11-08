@@ -219,6 +219,9 @@ svg text{fill:var(--muted);font-family:inherit}
 .mans .ph{color:var(--muted);opacity:.5}
 .ansrow .pct{font-size:40px;font-weight:800}
 .key.delkey{min-height:76px;min-width:72px;flex:none;font-size:28px}
+.pill.clock{font-variant-numeric:tabular-nums;min-width:84px;justify-content:center}
+.pill.clock.low{background:var(--coral);color:#fff;border-color:var(--coral)}
+.btn.idk{margin-top:10px;min-height:48px;font-size:17px}
 .asks{text-align:center;margin:0;font-size:18px;color:var(--muted)}
 .asks b{color:var(--ink)}
 .keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
@@ -640,7 +643,7 @@ const FACTS = [];
 });
 FDP_RAW.forEach((f,i)=>FACTS.push({k:'f'+f[0]+'/'+f[1], deck:'fdp', n:f[0], d:f[1], dec:f[2], pct:f[3], tip:f[4], ease:i}));
 const FACT = {}; FACTS.forEach(f=>FACT[f.k]=f);
-const DEFAULT_MATH = { fastSec:4, fdpFastSec:7, reps:20, minutes:5, newPer:3, factCap:0.25, repCap:0.10, fast:0.02, slow:0.01, decksOn:{mul:true, div:true, fdp:true} };
+const DEFAULT_MATH = { roundSec:60, fastSec:4, fdpFastSec:7, reps:20, minutes:5, newPer:3, factCap:0.25, repCap:0.10, fast:0.02, slow:0.01, decksOn:{mul:true, div:true, fdp:true} };
 const MATH_BOX = [0,0,1,3,7];   // days until the next review, by box
 
 /* =========================================================
@@ -2361,7 +2364,7 @@ function startMathCheck(deck){
   const cur=S.math.checkCur;
   if(!cur || cur.deck!==deck){ S.math.checkCur={deck, order:shuffle(deckFacts(deck).map(f=>f.k)), idx:0, items:[], started:today()}; save(); }
   const c=S.math.checkCur;
-  SES = {mode:'mathcheck', deck, queue:c.order.map(k=>FACT[k]), idx:c.idx, start:Date.now(), log:[], earned:0, lost:0, streak:0, bestStreak:0};
+  SES = {mode:'mathcheck', deck, queue:c.order.map(k=>FACT[k]), idx:c.idx, start:Date.now(), log:[], earned:0, lost:0, streak:0, bestStreak:0, round:1, roundN:0, roundStart:Date.now(), rbreak:false};
   newMathRep(); ui.screen='mrep'; render();
 }
 function newMathRep(){
@@ -2370,7 +2373,7 @@ function newMathRep(){
 }
 function nowMs(){ return window.performance ? performance.now() : Date.now(); }
 function mathKey(k){
-  if(!SES || !SES.rep) return; const rep=SES.rep;
+  if(!SES || !SES.rep || SES.rbreak) return; const rep=SES.rep;
   if(k==='go'){ if(rep.phase==='ask') mathSubmit(); else if(rep.phase==='fix') mathFix(); else if(rep.phase==='result') mathAfter(); return; }
   if(rep.phase!=='ask' && rep.phase!=='fix') return;
   if(k==='del') rep.ans=rep.ans.slice(0,-1);
@@ -2385,7 +2388,7 @@ function mathKey(k){
   const st=document.getElementById('status'); if(st) st.textContent='';
 }
 function mathSubmit(){
-  const rep=SES.rep; if(!rep || rep.phase!=='ask') return;
+  const rep=SES.rep; if(!rep || rep.phase!=='ask' || SES.rbreak) return;
   if(!rep.ans){ rep.status='Tap your answer first.'; render(); return; }
   const f=curItem(), ms=Math.round(nowMs()-rep.t0), g=gradeMath(f, rep.pr, rep.ans);
   const fast = g.ok && ms<=fastLimit(f);
@@ -2436,14 +2439,30 @@ function mathNext(){
   if(SES.idx>=SES.queue.length || timeUp) return endMath(true);
   newMathRep(); render();
 }
-function lockMathCheck(f, rep, ok, fast, ms){
+function lockMathCheck(f, rep, ok, fast, ms, idk){
   const c=S.math.checkCur;
-  c.items.push({k:f.k, q:rep.pr.text, a:rep.ans.slice(0,12), ok:ok?1:0, fs:fast?1:0, ms});
-  c.idx=SES.idx+1; save(); Sound.tap();
+  c.items.push({k:f.k, q:rep.pr.text, a:idk?'?':rep.ans.slice(0,12), ok:ok?1:0, fs:fast?1:0, ms, idk:idk?1:0});
+  c.idx=SES.idx+1; SES.roundN++; save(); Sound.tap();
   SES.idx++;
   if(SES.idx>=SES.queue.length) return finishMathCheck();
-  newMathRep(); SES.rep.status='Got it. Next one.'; render();
+  newMathRep(); SES.rep.status=idk?'No problem. Next one.':'Got it. Next one.'; render();
 }
+/* Speed Check: "I don't know" moves on right away; it counts as a training fact, like a miss. */
+function mathIdk(){
+  if(!SES || SES.mode!=='mathcheck' || SES.rbreak || !SES.rep || SES.rep.phase!=='ask') return;
+  const f=curItem(); lockMathCheck(f, SES.rep, false, false, Math.round(nowMs()-SES.rep.t0), true);
+}
+function roundLeft(){ return (Number(S.settings.math.roundSec)||60)*1000 - (Date.now()-SES.roundStart); }
+function clockText(ms){ const sec=Math.max(0,Math.ceil(ms/1000)); return Math.floor(sec/60)+':'+pad(sec%60); }
+/* Round clock: when it runs out, the fact on screen is not counted and comes first next round. */
+function mathTick(){
+  if(!SES || SES.mode!=='mathcheck' || ui.screen!=='mrep' || SES.rbreak || ui.coachOpen) return;
+  const left=roundLeft(); const el=document.getElementById('mclock');
+  if(el){ el.textContent='⏱ '+clockText(left); el.classList.toggle('low', left<=10000); }
+  if(left<=0){ SES.rbreak=true; Sound.horn(); render(); }
+}
+function nextRound(){ if(!SES || SES.mode!=='mathcheck') return; SES.rbreak=false; SES.round++; SES.roundN=0; SES.roundStart=Date.now(); newMathRep(); render(); }
+setInterval(mathTick, 250);
 function finishMathCheck(){
   const c=S.math.checkCur, t=today(), first=!deckChecked(c.deck);
   c.items.forEach(x=>{
@@ -2507,8 +2526,15 @@ function renderMathRep(){
   const f=curItem(), rep=SES.rep, check=SES.mode==='mathcheck', total=SES.queue.length;
   let h=topbar(check?'Speed Check':DECKS[SES.deck].name);
   h+='<div class="rephead"><span class="pill">'+(check?'Fact ':'Rep ')+(SES.idx+1)+' of '+total+'</span>';
+  if(check) h+='<span class="pill">Round '+SES.round+'</span><span class="pill clock'+(!SES.rbreak&&roundLeft()<=10000?' low':'')+'" id="mclock">⏱ '+(SES.rbreak?'0:00':clockText(roundLeft()))+'</span>';
   if(!check){ h+='<span class="pill money">'+fmt$(S.bank.wallet+S.bank.vault)+'</span>'; if(SES.streak>=3) h+='<span class="pill">🔥 '+SES.streak+' in a row</span>'; }
   h+='</div><div class="progress"><i style="width:'+Math.round(100*SES.idx/total)+'%"></i></div><div class="stage">';
+  if(check && SES.rbreak){
+    const left=total-SES.idx;
+    h+='<div class="result good" style="text-align:center"><div class="big">Round '+SES.round+' done!</div><div class="fact sm" style="margin:8px 0">'+SES.roundN+' fact'+(SES.roundN===1?'':'s')+'</div><div class="muted">'+left+' to go. Shake out your hands, then go again.</div></div>'+
+       '<button class="btn block gold" data-act="mround">Start round '+(SES.round+1)+'</button></div><div class="row" style="margin-top:14px"><button class="btn ghost sm" data-act="mpause">Pause</button></div>';
+    return h;
+  }
   if(rep.phase==='result' && rep.result.ok){
     const r=rep.result;
     h+='<div class="result good" style="text-align:center"><div class="fact sm" style="margin:0">'+fullFactHTML(f,rep.pr)+'</div><div class="big">'+(r.fast?'⚡ Fast!':'Got it')+'</div>'+
@@ -2527,10 +2553,11 @@ function renderMathRep(){
   } else {
     h+=promptHTML(f, rep.pr);
     h+=ansRowHTML(rep)+keypadHTML(rep.pr.kind);
+    if(check) h+='<button class="btn block ghost idk" data-act="midk">I don\'t know →</button>';
   }
   h+='<div class="status" id="status">'+esc(rep.status||'')+'</div></div>';
   h+='<div class="row" style="margin-top:14px"><button class="btn ghost sm" data-act="'+(check?'mpause':'mend')+'">'+(check?'Pause':'End practice')+'</button></div>';
-  if(check && SES.idx===0) h+='<p class="muted small">Speed Check: no money lost, no right or wrong shown. Just go as fast as you can and still be right.</p>';
+  if(check && SES.idx===0 && !SES.rbreak) h+='<p class="muted small">Speed Check: '+(Number(S.settings.math.roundSec)||60)+'-second rounds with a break in between. No money lost, no right or wrong shown. Don\'t know one? Tap I don\'t know and keep moving.</p>';
   return h;
 }
 function renderMathFinal(){
@@ -2552,6 +2579,7 @@ function renderMathCheckResults(){
   let h=topbar('Speed Check results');
   h+='<div class="card"><h2>'+(SES.first?'Your starting stats':'Your new stats')+': '+esc(DECKS[d].name)+'</h2>';
   h+='<div class="grid2"><div><div class="muted small">Fast and right</div><div class="v">'+R.fast+'/'+R.total+'</div>'+(SES.prev?'<div class="muted small">Last time: '+SES.prev.fast+'</div>':'')+'</div><div><div class="muted small">Right</div><div class="v">'+R.ok+'/'+R.total+'</div></div></div>';
+  const idk=R.items.filter(x=>x.idk).length; if(idk) h+='<p class="muted small" style="margin-top:8px">'+idk+' "I don\'t know" '+(idk===1?'fact':'facts')+'. Those are where training starts. Good call skipping them.</p>';
   const next=deckFacts(d).filter(f=>fget(f.k).b<=1).slice(0,3);
   if(next.length) h+='<p style="margin-top:12px"><b>Your training starts with:</b> '+esc(next.map(f=>factLabel(f)).join(', '))+'.</p>';
   else h+='<p class="ok" style="margin-top:12px"><b>Every fact was fast.</b> Practice keeps them that way and finishes mastering them.</p>';
@@ -2572,14 +2600,14 @@ function gridLegend(){ return '<div class="legend"><span><i style="background:va
 function fdpChips(){ return '<div class="fdpchips">'+deckFacts('fdp').map(f=>'<span class="'+factStatus(f.k)+'">'+f.n+'/'+f.d+' = '+f.dec+' = '+f.pct+'%</span>').join('')+'</div>'+gridLegend(); }
 function deckCard(d){
   const D=DECKS[d], c=deckCounts(d), cur=S.math.checkCur && S.math.checkCur.deck===d, checked=deckChecked(d);
-  const mins = Math.max(2, Math.round(c.total*5/60));
+  const rounds = Math.max(1, Math.round(c.total*4/(Number(S.settings.math.roundSec)||60)));
   let h='<div class="card deck"><div class="deckhead"><span class="deckicon" style="background:'+D.color+'">'+D.icon+'</span><div><h2 style="margin:0">'+esc(D.name)+'</h2><div class="muted small">'+esc(D.blurb)+' · '+c.total+' facts</div></div></div>';
   if(checked){
     h+='<div class="progress" style="height:14px"><i style="width:'+Math.round(100*c.mastered/c.total)+'%;background:var(--ok)"></i></div>'+
        '<div class="small"><b>'+c.mastered+'</b> mastered · <b>'+c.fast+'</b> fast · <b>'+c.learning+'</b> training · '+c.fresh+' not yet</div>';
   }
   if(cur) h+='<p class="small">Speed Check paused at fact '+(S.math.checkCur.idx+1)+' of '+S.math.checkCur.order.length+'.</p><button class="btn block gold" data-act="mcheck" data-deck="'+d+'">Keep going</button>';
-  else if(!checked) h+='<p class="small">Start with a Speed Check. It shows which facts are already fast. About '+mins+' minutes, no money lost.</p><button class="btn block gold" data-act="mcheck" data-deck="'+d+'">Start the Speed Check</button>';
+  else if(!checked) h+='<p class="small">Start with a Speed Check. It shows which facts are already fast. About '+rounds+' round'+(rounds===1?'':'s')+' of '+(Number(S.settings.math.roundSec)||60)+' seconds, no money lost.</p><button class="btn block gold" data-act="mcheck" data-deck="'+d+'">Start the Speed Check</button>';
   else {
     h+='<div class="row"><button class="btn" data-act="mstart" data-deck="'+d+'">Start '+esc(D.short)+' Reps</button>'+(checkDue(d)?'<button class="btn ghost" data-act="mcheck" data-deck="'+d+'">Speed Check day</button>':'')+'</div>';
   }
@@ -2609,7 +2637,7 @@ function mathWeek(ws_, we){
 function coachMath(){
   const thisW=weekStart(today()), lastW=addDays(thisW,-7), a=mathWeek(thisW, addDays(thisW,7)), b=mathWeek(lastW, thisW);
   let h='<div class="card"><h2>How Math Reps works</h2><ol class="small" style="margin:0;padding-left:20px">'+
-    '<li><b>Speed Check</b> first (each deck). Every fact once, no feedback, no money. Fast and right facts skip ahead; the rest become training facts.</li>'+
+    '<li><b>Speed Check</b> first (each deck). Every fact once in '+(S.settings.math.roundSec||60)+'-second rounds with breaks, no feedback, no money. "I don\'t know" skips a fact and makes it a training fact. Fast and right facts skip ahead; the rest become training facts.</li>'+
     '<li><b>Practice</b> (about 5 minutes): up to '+(Number(S.settings.math.newPer)||3)+' training facts, each shown 3 times, mixed in with facts he already knows. Easiest families first (2s, 10s, 5s, 11s, 3s, 4s, 9s, 6s, 8s, 12s, 7s).</li>'+
     '<li><b>A miss</b> shows the fact, a strategy worked out with the real numbers, and a dot picture, then a fix rep. The fact comes back 3 reps later.</li>'+
     '<li><b>Mastered</b> = right and fast (under '+S.settings.math.fastSec+' seconds; '+S.settings.math.fdpFastSec+' for fraction facts) on 3 different days. Mastered facts come back every 2 weeks.</li>'+
@@ -2631,6 +2659,7 @@ function coachMath(){
   h+='<div class="row" style="margin-top:10px">'+DECK_IDS.map(d=>'<button class="btn sm ghost" data-act="coachmcheck" data-deck="'+d+'">Speed Check: '+esc(DECKS[d].short)+'</button>').join('')+'</div><p class="muted small">A new Speed Check is offered every 4 weeks. It measures growth; it never resets progress.</p></div>';
   const m=S.settings.math;
   h+='<div class="card"><h2>Math settings</h2><div class="form">'+
+    '<label>Speed Check round length (seconds)<input type="number" min="30" max="300" step="10" id="mset-round" value="'+(m.roundSec||60)+'"></label>'+
     '<label>Fast = under this many seconds (× and ÷)<input type="number" min="2" max="15" step="0.5" id="mset-fast" value="'+m.fastSec+'"></label>'+
     '<label>Fast for fraction facts (seconds)<input type="number" min="3" max="20" step="0.5" id="mset-ffast" value="'+m.fdpFastSec+'"></label>'+
     '<label>Reps per practice<input type="number" min="8" max="40" step="1" id="mset-reps" value="'+m.reps+'"></label>'+
@@ -2676,6 +2705,8 @@ document.addEventListener('keydown', e=>{
   if(ui.modal || ui.coachOpen || ui.screen!=='mrep' || !SES || !SES.rep || (SES.mode!=='math' && SES.mode!=='mathcheck')) return;
   if(e.target && /INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return;
   let k=null;
+  if(SES.rbreak){ if(e.key==='Enter'){ e.preventDefault(); nextRound(); } return; }
+  if(e.key==='Escape' && SES.mode==='mathcheck'){ e.preventDefault(); mathIdk(); return; }
   if(/^[0-9]$/.test(e.key) || e.key==='.' || e.key==='/') k=e.key;
   else if(e.key==='Backspace') k='del';
   else if(e.key==='Enter') k='go';
@@ -2704,13 +2735,15 @@ function act(a, el){
     case 'mcheck': startMathCheck(ds.deck); break;
     case 'key': mathKey(ds.k); break;
     case 'mnext': mathAfter(); break;
+    case 'midk': mathIdk(); break;
+    case 'mround': nextRound(); break;
     case 'mpause': SES=null; ui.screen='home'; render(); break;
     case 'mend': ui.modal={type:'confirm', title:'End practice?', text:'Your reps so far still count.', ok:'End it', cb:()=>endMath(false)}; render(); break;
     case 'coachmcheck': { const d=ds.deck; ui.modal={type:'confirm', title:'Start a Speed Check?', text:'He does every '+DECKS[d].name+' fact once ('+deckFacts(d).length+' facts). It measures growth and never resets progress.', ok:'Start', cb:()=>{ ui.coachOpen=false; ui.sport='math'; if(S.math.checkCur && S.math.checkCur.deck!==d) S.math.checkCur=null; startMathCheck(d); }}; render(); break; }
     case 'savemath': {
       const num=(id,min,max,def)=>{ const v=Number((document.getElementById(id)||{}).value); return isFinite(v)? Math.min(max,Math.max(min,v)) : def; };
       const m=S.settings.math;
-      m.fastSec=num('mset-fast',2,15,4); m.fdpFastSec=num('mset-ffast',3,20,7); m.reps=Math.round(num('mset-reps',8,40,20)); m.minutes=Math.round(num('mset-min',2,20,5)); m.newPer=Math.round(num('mset-new',1,5,3));
+      m.roundSec=Math.round(num('mset-round',30,300,60)); m.fastSec=num('mset-fast',2,15,4); m.fdpFastSec=num('mset-ffast',3,20,7); m.reps=Math.round(num('mset-reps',8,40,20)); m.minutes=Math.round(num('mset-min',2,20,5)); m.newPer=Math.round(num('mset-new',1,5,3));
       m.factCap=cents(num('mset-cap',0,1,0.25)); m.repCap=cents(Math.min(m.factCap, num('mset-repcap',0,1,0.10))); m.fast=cents(num('mset-pfast',0,0.25,0.02)); m.slow=cents(num('mset-pslow',0,0.25,0.01));
       const on={}; document.querySelectorAll('[data-deckon]').forEach(i=>on[i.dataset.deckon]=i.checked); if(Object.keys(on).some(k=>on[k])) m.decksOn=Object.assign({mul:true,div:true,fdp:true}, on);
       save(); render(); const st=document.getElementById('msetstatus'); if(st) st.textContent='Saved.'; break; }
@@ -2816,7 +2849,7 @@ window.GSG = {
   setNow(d){ _now = d; }, render, act, startPractice, startBoss, startCombine, doCheck, doLock, endSession, save,
   reload(){ S = Store.load(); render(); },
   Clips, voiceScore, Rec, Cloud, analyze, focusDrills, GSync, tierOf, Sound,
-  MATH:{FACTS, FACT, DECKS, DECK_IDS, DEFAULT_MATH, gradeMath, makePrompt, strategy, buildMathQueue, startMath, startMathCheck, mathKey, mathSubmit, mathAfter, mathFix, endMath, factStatus, deckCounts, fget, deckFacts, mathWeek}
+  MATH:{FACTS, FACT, DECKS, DECK_IDS, DEFAULT_MATH, gradeMath, makePrompt, strategy, buildMathQueue, startMath, startMathCheck, mathKey, mathSubmit, mathAfter, mathIdk, mathTick, nextRound, mathFix, endMath, factStatus, deckCounts, fget, deckFacts, mathWeek}
 };
 
 render();

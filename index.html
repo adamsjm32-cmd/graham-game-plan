@@ -328,6 +328,34 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
 .pj-sc .mc button{font:inherit;font-weight:700;min-width:44px;min-height:40px;border:2px solid var(--ink);border-radius:10px;background:var(--card);color:var(--ink);cursor:pointer}
 .pj-sc .mc button.right{background:var(--math);border-color:var(--math);color:#fff}
 .pj-sc .mc button.wrong{border-color:var(--due);color:var(--due);text-decoration:line-through}
+
+.wk-total{display:flex;flex-direction:column;gap:6px;font-family:var(--display);font-weight:700}
+.wk-total .bar{height:12px;border-radius:999px;background:var(--soft);overflow:hidden}
+.wk-total .bar i{display:block;height:100%;width:0;background:var(--math);transition:width .3s}
+.wkb{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.wkb>summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;gap:12px;align-items:center}
+.wkb>summary::-webkit-details-marker{display:none}
+.wkb .num{font-family:var(--display);font-weight:700;font-size:22px;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--read-soft);color:var(--read);flex-shrink:0}
+.wkb.done .num{background:var(--math);color:#fff}
+.wkb .ttl{display:flex;flex-direction:column;gap:2px;flex:1}
+.wkb .ttl b{font-family:var(--display);font-size:17px}
+.wkb .cnt{font-family:var(--display);font-weight:700;font-size:14px;color:var(--muted)}
+.wkb .body{padding:0 16px 16px;display:flex;flex-direction:column;gap:10px}
+.wkq{border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:8px}
+.wkq.ok{border-color:var(--math);background:var(--math-soft)}
+.wkq .top{display:flex;gap:10px;align-items:flex-start}
+.wkq .top input{width:24px;height:24px;flex-shrink:0;margin-top:2px;accent-color:var(--math)}
+.wkq .top b{font-family:var(--display)}
+.wkq details{border-radius:10px;background:var(--gold-soft);padding:8px 10px}
+.wkq details.chk{background:var(--sci-soft)}
+.wkq details summary{cursor:pointer;font-weight:700}
+.wkq .keys ul{margin:6px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:5px}
+.wkq textarea{min-height:50px}
+.wkq .mcrow{display:flex;gap:6px;flex-wrap:wrap}
+.wkq .mcrow button{font:inherit;font-weight:700;min-width:44px;min-height:40px;border:2px solid var(--ink);border-radius:10px;background:var(--card);color:var(--ink);cursor:pointer}
+.wkq .mcrow button.right{background:var(--math);border-color:var(--math);color:#fff}
+.wkq .mcrow button.wrong{border-color:var(--due);color:var(--due);text-decoration:line-through}
+.wk-fixed{background:var(--math-soft);border-radius:12px;padding:8px 12px;font-size:15px}
 </style>
 
 <div class="wrap">
@@ -433,67 +461,16 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
       </div>
     </div>
 
-    <!-- 1. STUDY GUIDE -->
+    <!-- 1. STUDY GUIDE: WEEKEND FINISH LINE -->
     <div class="card" id="pj-guide">
-      <span class="lbl">Play 1 · Study guide · due Tue 11/17 by 8:00 PM</span>
-      <h3>Finish the study guide in 3 reps</h3>
-      <p class="sub">Open your Classroom doc, <i>Graham Adams - Percy Jackson - Summative Study Guide</i>. You already filled in most of the character chart. Nice start. Here’s the rest, one rep per night.</p>
-      <div class="sk-rep"><span>Sun · Rep 1 · chart + settings · 30 min</span><span>Mon · Rep 2 · inferences + growth · 25 min</span><span>Tue · Rep 3 · themes + short answers · 25 min</span></div>
+      <span class="lbl">Play 1 · Study guide · due Tue 11/17 by 8:00 PM · goal: done this weekend</span>
+      <h3>Weekend finish line</h3>
+      <p>You already did a lot: 14 characters written up, all three trait rows, and Kronos is perfect now. This weekend you finish the rest in <b>8 short blocks</b>. Each question has a <b>Hint</b> (where to look in the book) and a <b>Check</b> (open it after you write your answer).</p>
+      <div class="look"><b>How each question works:</b> 1. Read the hint. 2. Write your answer in your Classroom doc. 3. Type a short version in the Check box and tap <b>Check it</b>. 4. Fix anything that doesn’t match. 5. Tick the box.</div>
+      <p class="sub">Page numbers = Mrs. Pacelli’s PDF of the book in Classroom (“Page __ of 189”).</p>
+      <div class="wk-total"><span id="wkTotal"></span><div class="bar"><i id="wkBar"></i></div></div>
     </div>
-
-    <div class="card">
-      <span class="lbl">Rep 1 · Sunday · 30 min</span>
-      <h3>Character chart: what Mrs. Pacelli asked for</h3>
-      <div class="look"><b>Her notes to you:</b> add 1–2 things each character <b>does</b> in the novel, and finish the trait chart.</div>
-      <p><b>Frame for each character:</b> ___ is ___ (who they are). In the story, they ___ (one thing they do).</p>
-      <h3 style="margin-top:6px">Fact-check these 7 before you turn it in</h3>
-      <p class="sub">Each one has a detail worth checking. Use the “Who’s Who” list in Classroom or flip to the chapter.</p>
-      <div class="pj-checks" id="pjFacts"></div>
-      <h3 style="margin-top:6px">Settings chart</h3>
-      <p>For each place, answer two questions in one sentence: <b>What happens there?</b> and <b>Why does it matter to Percy or the quest?</b></p>
-      <div class="starter"><span class="lbl">Frame</span><br>At ___, Percy ___. This matters because ___.</div>
-      <p class="sub">“The school” is a start. Push it one step further: what happens to Percy at Yancy, and why does it change his life?</p>
-      <div class="pj-sc" data-sc="facts"></div>
-      <div class="pj-sc" data-sc="settings"></div>
-    </div>
-
-    <div class="card">
-      <span class="lbl">Rep 2 · Monday · 25 min</span>
-      <h3>Inferences: find the proof</h3>
-      <p>The inference is already written for you. Your job is the <b>evidence</b>: a moment from the book that proves it. Here’s where to look.</p>
-      <ol class="sk-steps">
-        <li><span><b>Percy protects others, even when he’s scared.</b> Look at the night with the Minotaur (Ch. 4) or what Percy says to Annabeth after the bus fight (start of Ch. 11).</span></li>
-        <li><span><b>Chiron was watching over Percy before Percy knew.</b> Look back at Mr. Brunner at Yancy (Ch. 1), then what Chiron tells Percy at camp (Ch. 5).</span></li>
-        <li><span><b>Luke’s friendliness was a cover.</b> Think about Luke’s going-away gift (Ch. 10) and what Luke admits at the end (Ch. 22).</span></li>
-        <li><span><b>Annabeth wants to prove herself.</b> Look at what Luke says about Annabeth wanting a quest (Ch. 7) and what she tells Percy about her dad on the train (Ch. 13).</span></li>
-      </ol>
-      <div class="starter"><span class="lbl">Frame</span><br>In Chapter ___, ___. This proves the inference because ___.</div>
-      <h3 style="margin-top:6px">3 ways Percy grows: explain each one</h3>
-      <div class="look"><b>Mrs. Pacelli’s example question:</b> “How does he have more focus as the story goes on?” Answer that kind of question for every trait you list.</div>
-      <div class="starter"><span class="lbl">Frame (do it 3 times)</span><br>At the start, Percy ___. By the end, he ___. I know because ___.</div>
-      <p class="sub">Brave, strong and focus are good picks. Each one needs a before and an after.</p>
-      <div class="pj-sc" data-sc="infer"></div>
-      <div class="pj-sc" data-sc="grow"></div>
-    </div>
-
-    <div class="card">
-      <span class="lbl">Rep 3 · Tuesday · 25 min</span>
-      <h3>Big idea vs. theme</h3>
-      <div class="pj-vs">
-        <div><b>Big idea</b><span>A <b>topic</b>. One word or a short phrase.</span><span class="sub">Lacrosse example: <i>teamwork</i></span></div>
-        <div><b>Theme</b><span>A <b>full sentence</b>. The lesson the author wants you to learn about life.</span><span class="sub">Lacrosse example: <i>A team wins more when players trust each other than when one player tries to do it all.</i></span></div>
-      </div>
-      <p>Your big ideas need to be topics the book really explores. Ask: what does Percy keep dealing with, chapter after chapter? Then turn each big idea into a sentence: <b>“In life, ___.”</b> No character names in a theme.</p>
-      <h3 style="margin-top:6px">The 2 short answers are mini-RACERs</h3>
-      <ol class="sk-steps">
-        <li><span><b>Percy and Annabeth:</b> how do they treat each other when they first meet at camp (Ch. 5)? How do they treat each other in the Underworld (Ch. 18–19)? One detail from each.</span></li>
-        <li><span><b>Percy and water:</b> pick ONE dangerous moment where water helps him. Look at capture the flag (Ch. 8), the jump from the Arch (Ch. 13–14) or the beach fight (Ch. 20).</span></li>
-      </ol>
-      <div class="pj-sc" data-sc="summary"></div>
-      <div class="pj-sc" data-sc="theme"></div>
-      <div class="pj-sc" data-sc="short"></div>
-      <p class="sub">Last step: read the whole guide once, top to bottom. Then click <b>Turn in</b> before 8:00 PM.</p>
-    </div>
+    <div id="wkBlocks" style="display:flex;flex-direction:column;gap:12px"></div>
 
     <!-- 2. RACER -->
     <div class="card" id="pj-racer">
@@ -1184,17 +1161,20 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
      weekend:{label:'Weekend Nov 14–15',items:[['v15a','ela','Mrs. Marini’s Percy Jackson questions Ch. 11–17: all turned in early ✓',0,0,'#percy']]}},
 
     {id:'nov16',label:'Nov 16 – 20',theme:'Percy Jackson test week · science quiz Tuesday · study guide Tuesday 8 PM',
-     pre:{label:'Weekend kickoff · Sat 11/14 – Sun 11/15',items:[
+     pre:{label:'Weekend finish line · Sat 11/14 – Sun 11/15 · finish the study guide',items:[
       ['k1','read','Sat · Finish reading Percy Jackson Ch. 22, the last chapter (due Mon)',30,0],
-      ['k2','read','Sun · Study guide Rep 1: fix the character chart (Mrs. Pacelli’s 2 comments) + the settings chart',30,0,'#pjtest'],
+      ['k2','read','Sat · Study guide Blocks 1–2: fix the character chart + the 3 summary questions',25,0,'#pjtest'],
+      ['k5','read','Sun morning · Blocks 3–4: inference evidence + how Percy grows',35,0,'#pjtest'],
+      ['k6','read','Sun afternoon · Blocks 5–7: settings, big idea + themes, short answers',45,0,'#pjtest'],
+      ['k7','read','Sun night · Block 8: Mom or Dad checks it with you, then Turn in',10,0,'#pjtest'],
       ['k3','sci','Sun · Science flashcards: Surface Currents deck',10,0,'#currents'],
-      ['k4','read','Sun · Tell Mom or Dad which RACER theme you picked on Mrs. Pacelli’s form. Tap it in the coach.',2,0,'#pjtest']]},
+      ['k4','read','Sun · Tell Mom or Dad which RACER theme you picked. Tap it in the coach.',2,0,'#pjtest']]},
      bigs:[['TUE 11/17','Science quiz: Currents & Air','Miss Moriello · early dismissal day','#currents'],['TUE 11/17','Percy Jackson Ch. 21–22 check','Mrs. Pacelli · in class'],['TUE 11/17','Percy Jackson study guide','Mrs. Pacelli · 30 pts · Turn in by 8:00 PM','#pjtest'],['THU 11/19','Percy Jackson RACER theme response','Mrs. Pacelli · 25 pts · in class','#pjtest'],['FRI 11/20','Percy Jackson multiple-choice test','Mrs. Pacelli · Google Form · 75 pts','#pjtest'],['FRI 11/20','Math: November Extra Credit','Mr. DeNuzzo · by 11:59 PM']],
      days:[
       ['2026-11-16','Mon 11/16',[['x16a','read','Percy Jackson Ch. 22 reading finished (Pacelli)',0,1]],
-        [['x16b','read','Study guide Rep 2: the 4 inference boxes + 3 ways Percy grows (explain each one)',25,0,'#pjtest'],['x16c','sci','Science flashcards: Deep Currents deck + redo your misses (quiz tomorrow)',15,0,'#currents'],['x16d','read','Ch. 21–22 check tomorrow: say out loud what happens in each chapter',5,0],['x16e','skill','Optional: Mrs. Pacelli’s Extra Help is usually Monday after school. Bring one study guide question.',0,0]]],
+        [['x16b','read','Study guide not turned in yet? Finish your open blocks, then Turn in. (Done? Skip this.)',0,0,'#pjtest'],['x16c','sci','Science flashcards: Deep Currents deck + redo your misses (quiz tomorrow)',15,0,'#currents'],['x16d','read','Ch. 21–22 check tomorrow: say out loud what happens in each chapter',5,0],['x16e','skill','Optional: Mrs. Pacelli’s Extra Help is usually Monday after school. Bring one study guide question.',0,0]]],
       ['2026-11-17','Tue 11/17',[['x17a','sci','SCIENCE QUIZ: Currents & Air (Moriello)',0,1,'#currents'],['x17b','read','Percy Jackson Ch. 21–22 Comprehension Check, in class (Pacelli)',0,1],['x17c','read','PERCY JACKSON STUDY GUIDE, Turn in by 8:00 PM (Pacelli, 30 pts)',0,1,'#pjtest']],
-        [['x17d','read','Study guide Rep 3: big ideas + theme statements + the 2 short answers',25,0,'#pjtest'],['x17e','read','Read the whole study guide once, then click Turn in before 8:00 PM',5,0],['x17f','skill','Early dismissal day (district calendar). Do the study guide first.',0,0]]],
+        [['x17e','read','Open Classroom: does the study guide say Turned in? If not, Turn in before 8:00 PM',2,0],['x17f','skill','Early dismissal day (district calendar). Light night: you finished the guide this weekend.',0,0]]],
       ['2026-11-18','Wed 11/18',[],
         [['x18a','read','RACER Rep 1: evidence hunt. Find 2 moments for your theme + page numbers. Sticky-note them.',20,0,'#pjtest'],['x18b','read','RACER Rep 2: write one practice RACER (20-min timer), then run the checklist',20,0,'#pjtest'],['x18c',...CHECK]]],
       ['2026-11-19','Thu 11/19',[['x19a','read','PERCY JACKSON RACER THEME RESPONSE, in class (Pacelli, 25 pts)',0,1,'#pjtest'],['x19b','skill','Picture Retake Day (only if you need a retake)',0,1]],
@@ -1931,6 +1911,102 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
     btn.addEventListener('click',()=>{if(ta.value.trim().length<15){msg.textContent='Write a little more first (at least one full idea).';return}
       keys.hidden=false;msg.textContent='';S.set('scopen_'+k,true)});
   });
+})();
+</script>
+<script>
+// Weekend finish line: study guide in 8 blocks, each question with a Hint and a Check (added Nov 14)
+(function(){
+  const S={get(k,d){try{const v=localStorage.getItem('ggp:'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('ggp:'+k,JSON.stringify(v))}catch(e){}}};
+  // item: [id, title, task, hint, check(array of key points) | {mc:answerIndex, why}]
+  const B=[
+   {when:'Sat · 20 min',t:'Block 1 · Fix the character chart',intro:'<div class="wk-fixed"><b>Already fixed. Nice!</b> Kronos is spot on, and Grover’s traits are fair now.</div><p>Mrs. Pacelli asked for 1–2 things each character <b>does</b>. You did that for most of them. Now fix these 11 rows. Each one is a quick fix: change a few words.</p>',items:[
+    ['c1','Percy','Your row says Percy “got his mom from the underworld.” Is that exactly how she got home?','Read p.165. Poseidon tells Percy how his mom got home. Who sent her?',['Percy did <b>not</b> bring his mom out. He had to leave her behind (p.153).','<b>Hades sent her home</b> after Percy got Hades’s helm back (p.165).']],
+    ['c2','Annabeth','Your row says Annabeth realized Aunty Em’s wasn’t safe. Check who really noticed.','Read p.86. Who says “I smell monsters”? What does Annabeth say back?',['It was <b>Grover</b> who smelled monsters. Annabeth said his nose was clogged and wanted the burgers (p.86).','Swap in a different Annabeth moment: she tells Percy to look at Medusa only in the glass ball (p.90), or she gets past Cerberus with a red rubber ball (p.142).']],
+    ['c3','Grover','Fix the spelling of “seder.” Then check the Underworld part: marbles? Who stayed behind?','Read p.152–153. What were the small white things called? How many were there, and how many people needed to get out?',['Spelling: <b>satyr</b>.','They were <b>pearls</b>, not marbles. There were <b>3 pearls</b> and 4 people (Percy, Annabeth, Grover and Mom).','Grover <b>offered</b> to stay, but nobody made him. Percy left his <b>mom</b> behind and promised to come back.']],
+    ['c4','Luke','Two facts to check: who Luke’s dad is, and where Luke wanted the bolt to go.','Read p.176. Luke names his own father. Then read what he says about where the bolt should end up.',['Luke is the son of <b>Hermes</b>. He says “my father, Hermes” (p.176). Ares is Clarisse’s dad.','Luke wanted the bolt taken down to <b>Tartarus for Kronos</b>, not given to Hades (p.176).']],
+    ['c5','Chiron','Three things to check: satyr or something else? Greek teacher? Ruler of camp?','p.39: what is Mr. Brunner when he gets out of the wheelchair? p.6: what subject does he teach? p.34: who is the camp director?',['Chiron is a <b>centaur</b> (half man, half horse), not a satyr (p.39).','He was Percy’s <b>Latin</b> teacher (p.6).','<b>Mr. D</b> (Dionysus) is the camp director. Chiron trains the heroes.']],
+    ['c6','Sally Jackson','Were Sally and Poseidon married?','Read p.19. What does Percy say about his mom and dad?',['They were <b>not married</b> (p.19).','She married Gabe because his smell hid Percy from monsters (p.79). Great detail to add!']],
+    ['c7','Poseidon','Two words to check: “husband” and “betrayed.”','Read p.166. What does Poseidon say to Percy right before he leaves Olympus?',['Poseidon was <b>not</b> Sally’s husband.','He didn’t betray Percy. The gods aren’t allowed to raise their kids, so Percy <b>felt</b> left alone.','At the end Poseidon says Percy <b>did well</b> and is truly his son (p.166).']],
+    ['c8','Athena','God or goddess?','Annabeth’s mom is a she.',['Athena is the <b>goddess</b> of wisdom.','Your idea that Annabeth feels left alone is good. Her <b>dad</b> is the one she says resented her (p.98).']],
+    ['c9','Ares','Three things to check: whose dad is he? When did Percy meet him? What happened between them?','Read p.46: whose dad is Ares? Ch. 15: did Percy meet Ares before or after the Underworld? Then p.159.',['Ares is <b>Clarisse’s</b> dad, not Luke’s (p.46).','Percy met Ares in Denver <b>before</b> the Underworld (Ch. 15). Ares tricked them with the backpack.','After the Underworld, Percy <b>fought</b> Ares on the beach and wounded his heel (p.159).']],
+    ['c10','Hades','Did Hades come to Camp Half-Blood? What did he want?','Think about Ch. 19. Where did Percy meet Hades? What did Hades say Percy stole?',['Hades rules the <b>Underworld</b> (say Underworld, not hell).','Percy met Hades in his <b>palace in the Underworld</b>. Hades never came to camp.','Hades thought Percy stole his <b>helm of darkness</b> and wanted it back.']],
+    ['c11','Thalia','“Did not get raised well” is vague. What happened to Thalia?','Read p.59. What did Thalia do on the hill, and what did Zeus turn her into?',['Thalia held off the monsters so her <b>friends could reach camp</b> (p.59).','Zeus turned her into the <b>pine tree</b> on the hill that protects camp.']]
+   ]},
+   {when:'Sat · 5 min',t:'Block 2 · The 3 summary questions',intro:'<p>Pick the event that is <b>missing</b> and should be in the summary. Mark your letter in your doc first, then check it here.</p>',items:[
+    ['m1','Chapter 1','Which event is missing from the Chapter 1 summary?','Only one choice happens in Chapter 1. Cross out anything that happens later in the book. (p.11)',{mc:1,why:'B. Mr. Brunner throws Percy the pen that becomes a sword (p.11). The others happen later or never.'}],
+    ['m2','Chapter 4','Which event is missing from the Chapter 4 summary?','Read p.25–26. What does Percy see when he looks down at Grover’s legs?',{mc:0,why:'A. Grover admits he’s a satyr: “a goat from the waist down” (p.26).'}],
+    ['m3','Chapter 14','Which detail is missing from the Chapter 14 summary? (Tricky one!)','Read p.104–105. Where was Riptide? Did the catfish ever talk? Where do the pearls come from later?',{mc:0,why:'A. Riptide was stuck in the river mud, so Percy had to grab it (p.105). The catfish never talks, and the pearls come later at Santa Monica.'}]
+   ]},
+   {when:'Sun morning · 20 min',t:'Block 3 · Inference evidence',intro:'<p>The inference is already written. You add ONE moment from the book that proves it.</p><div class="starter"><span class="lbl">Frame</span><br>In Chapter ___ (p.__), ___. This proves it because ___.</div>',items:[
+    ['i1','Inference 1 · Percy protects others','Find one time Percy jumps into danger to protect someone.','Start of Ch. 11 (p.84): what does Percy say to Annabeth after the bus fight? Or Ch. 4 (p.30): what does he do when the Minotaur goes after his mom?',['Strong evidence: after the bus, Percy asks Annabeth, “What did you want me to do? Let you get killed?” (p.84).','Also strong: Percy faces the Minotaur to protect his mom and Grover (p.30).']],
+    ['i2','Inference 2 · Chiron was watching Percy','Find where Chiron explains why he was at Yancy.','Read p.35. What does Chiron say his year at Yancy was for?',['Chiron says he spent a year at Yancy “to instruct you” and that they were “keeping an eye on you” (p.35).']],
+    ['i3','Inference 3 · Luke’s friendliness was a cover','Find one “friendly” thing Luke does that turns out to be a trick.','Read p.75–76 (the going-away gift), then p.175 (what Luke admits).',['Luke gives Percy flying shoes as a gift (p.75–76), but they were cursed.','At the end, Luke admits Kronos got him to steal the bolt (p.175).']],
+    ['i4','Inference 4 · Annabeth wants to prove herself','Find a moment that shows Annabeth wants a quest, or how her family makes her feel.','Read p.53 (what Luke says about Annabeth) or p.98 (what she says about her dad on the train).',['Luke says Annabeth has been “dying to get out into the world” and begged Chiron for a quest (p.53).','Annabeth says her dad “resented me since the day I was born” (p.98).']]
+   ]},
+   {when:'Sun morning · 15 min',t:'Block 4 · 3 ways Percy grows',intro:'<p>Right now you have three words: brave, strong, focus. Mrs. Pacelli wants you to <b>explain</b> each one. Her example: “How does he have more focus as the story goes on?”</p><div class="starter"><span class="lbl">Frame (do it 3 times)</span><br>At the start, Percy ___. By the end, he ___. For example, ___.</div>',items:[
+    ['g1','Change 1','Write your first before-and-after.','Start: what does Percy think of himself? (p.23: kicked out of six schools). End: what does he learn about the things he thought were problems? (p.46)',['A strong answer has a <b>before</b>, an <b>after</b>, and <b>one example</b>.','Example idea: he thinks he’s a “troubled kid,” then learns his struggles are really demigod strengths (p.46).']],
+    ['g2','Change 2','Write your second before-and-after.','How does Percy feel about his dad on p.95? How does that change on p.166?',['Before: “He doesn’t care about me. I don’t care about him.” (p.95)','After: Poseidon tells him he did well and is truly his son (p.166).']],
+    ['g3','Change 3 · Focus','Answer Mrs. Pacelli’s question: how does Percy get more focused?','Think about the Lotus Casino (p.128) and the hard choice in the Underworld (p.153).',['Focus example: Percy notices they lost <b>five days</b> in the Lotus Casino and gets everyone out (p.128).','He puts the mission first and leaves his mom behind, promising to come back (p.153).']]
+   ]},
+   {when:'Sun afternoon · 25 min',t:'Block 5 · Settings',intro:'<p>Each setting needs two parts: <b>what happens there</b> + <b>why it matters</b>. Your first four are a start. Add the “why” to those, then do the other six.</p><div class="starter"><span class="lbl">Frame</span><br>At ___, ___ happens. This matters because ___.</div>',items:[
+    ['s1','Yancy Academy','Add what happens there and why it matters.','Ch. 1. Who is secretly watching Percy at Yancy? How does Percy feel about himself there?',['Percy’s boarding school, where he’s known as a “troubled kid.”','Grover and Mr. Brunner are secretly watching him there (p.35), and the first monster finds him.']],
+    ['s2','Metropolitan Museum of Art','Add why it matters.','p.11. What does Percy get from Mr. Brunner there?',['Mrs. Dodds turns into a Fury and Percy defeats her with Riptide (p.11).','Why it matters: the <b>first proof</b> Percy isn’t a normal kid.']],
+    ['s3','Camp Half-Blood','Add more than “safe.” What happens to Percy there?','p.64: what appears over his head? Ch. 9: what does he get? Ch. 22: who betrays him there?',['A safe place for demigods where Percy learns who he is.','He’s claimed by Poseidon (p.64), gets his quest (Ch. 9), and Luke betrays him there (Ch. 22).']],
+    ['s4','Aunty Em’s Garden Gnome Emporium','Add why it matters.','Ch. 11. What were the “statues,” and how did Percy win?',['Medusa’s lair. The statues are people she turned to stone.','Percy beats her by looking only at her reflection (p.90). It’s the team’s first big win.']],
+    ['s5','The Gateway Arch (St. Louis)','Write what happens and why it matters.','Ch. 13–14. Who attacks Percy at the top? Where does he land, and what does he learn?',['Echidna and the Chimera attack. Percy jumps into the Mississippi River.','He learns <b>water protects him</b> (p.104) and he becomes a wanted fugitive.']],
+    ['s6','Waterland (Denver)','Write what happens and why it matters.','Ch. 15. What did Ares send them to get? What did Ares give them afterward?',['They get Ares’s shield out of a trap at an old water park (p.112).','Ares gives them the <b>backpack</b>, which secretly holds the bolt.']],
+    ['s7','Lotus Hotel and Casino (Las Vegas)','Write what happens and why it matters.','p.128. How many days did they lose?',['Everything is fun, so nobody wants to leave. They lose <b>five days</b> (p.128).','It almost ruins the quest, so Percy has to focus and get them out.']],
+    ['s8','Santa Monica Beach','Write what happens and why it matters.','p.132. What does the Nereid give Percy? What happens on this beach in Ch. 20?',['A Nereid gives Percy <b>three pearls</b> (p.132), their way out of the Underworld.','Later Percy fights Ares on this beach (Ch. 20).']],
+    ['s9','DOA Recording Studios / The Underworld','Write what happens and why it matters.','Ch. 18–19. What do they find in the backpack? Who does Percy have to leave behind?',['DOA Studios is the entrance to the Underworld. They get past Cerberus and meet Hades.','The bolt is in the backpack, and Percy has to <b>leave his mom</b>, just like the prophecy said (p.153).']],
+    ['s10','Mount Olympus','Write what happens and why it matters.','Ch. 21. What does Percy return, and who does he finally talk to?',['Olympus is on the 600th floor of the Empire State Building. Percy <b>returns the bolt</b> to Zeus and stops a war.','He finally talks with his dad (p.166).']]
+   ]},
+   {when:'Sun afternoon · 10 min',t:'Block 6 · Big idea vs. theme',intro:'<p>Three parts: the fill-in sentence, two more big ideas, and three theme statements.</p>',items:[
+    ['t1','The fill-in sentence','Fill in the 5 blanks in your doc.','Think about size. A big idea is tiny: one ___ or a short ___. A theme is a full ___. It’s the ___ or life ___ the author wants you to learn.',['word · phrase · sentence · message · lesson','(Close words like “topic” or “statement” are fine too.)']],
+    ['t2','Big ideas #2 and #3','Add two more big ideas (Identity is #1).','Ask: what does Percy keep dealing with, chapter after chapter? Think about his friends, his family, and who he can trust.',['Strong big ideas: <b>friendship</b>, <b>loyalty</b>, <b>family</b>, <b>trust and betrayal</b>, <b>courage</b>, <b>sacrifice</b>.','Each one should be just a word or two.']],
+    ['t3','Theme statements #1–3','Turn each big idea into a full sentence about life.','Start with “In life, …” or “People …”. No character names! Use your own words, not the three RACER themes from Mrs. Pacelli’s form.',['Is it a <b>full sentence</b>?','Does it teach a <b>lesson</b>, not just name a topic?','<b>No character names?</b>','Does it match the big idea in the parentheses?']]
+   ]},
+   {when:'Sun afternoon · 20 min',t:'Block 7 · The 2 short answers',intro:'<p>Each one is a mini-RACER: answer the question, give ONE detail from the book (with page), and explain it.</p>',items:[
+    ['a1','Percy and Annabeth','How does their relationship change from the start to the end?','Start: what are Annabeth’s first words to Percy? (p.35). End: how do they act toward each other in the Underworld? (p.137, p.153)',['Start: she’s cold, almost a rival. Her first words are “You drool when you sleep” (p.35).','End: they trust each other as a team. She’s trying to be brave for Percy’s sake (p.137), and they escape together (p.153).','Strong answer = what changed + one detail from the book.']],
+    ['a2','Percy and water','How does water help Percy survive a dangerous moment?','Pick ONE: the creek at capture the flag (p.62–64), the fall into the river (p.104), or the beach fight with Ares (p.159).',['Creek: the water gives him energy and heals him (p.62–64).','River: he isn’t hurt, he can breathe underwater and he stays dry (p.104).','Beach: the sea helps him beat Ares (p.159).','Strong answer = the danger + what the water did + why it helped him survive.']]
+   ]},
+   {when:'Sun night · 10 min',t:'Block 8 · Final check and Turn in',intro:'',items:[
+    ['f1','Read it out loud','Read the whole guide out loud, top to bottom.','Fix any spelling you catch: satyr, Ares, Medusa, Riptide.',['Every box has something in it.','Character names are spelled right.']],
+    ['f2','Mom or Dad check','Show it to Mom or Dad.','They have the answer key.',['Fix anything they flag.']],
+    ['f3','Turn in','Click Turn in on Classroom.','Due Tue 11/17 by 8:00 PM, but you’re done early!',['It says <b>Turned in</b>. You finished early. Rest of the night is yours.']]
+   ]}
+  ];
+  const box=document.getElementById('wkBlocks');if(!box)return;
+  const done=new Set(S.get('wkdone',[]));
+  const totalEl=document.getElementById('wkTotal'),bar=document.getElementById('wkBar');
+  const all=B.flatMap(b=>b.items.map(x=>x[0]));
+  function tally(){const n=all.filter(i=>done.has(i)).length;totalEl.textContent=`${n} of ${all.length} questions done`;bar.style.width=(100*n/all.length)+'%';
+    box.querySelectorAll('.wkb').forEach((d,bi)=>{const ids=B[bi].items.map(x=>x[0]);const k=ids.filter(i=>done.has(i)).length;d.querySelector('.cnt').textContent=`${k}/${ids.length}`;d.classList.toggle('done',k===ids.length)})}
+  B.forEach((blk,bi)=>{
+    const d=document.createElement('details');d.className='wkb';
+    const firstOpen=B.findIndex(b=>b.items.some(x=>!done.has(x[0])));if(bi===firstOpen)d.open=true;
+    d.innerHTML=`<summary><span class="num">${bi+1}</span><span class="ttl"><b>${blk.t.replace(/^Block \d+ · /,'')}</b><span class="sub">${blk.when}</span></span><span class="cnt"></span></summary><div class="body">${blk.intro}</div>`;
+    const body=d.querySelector('.body');
+    blk.items.forEach(([id,name,task,hint,chk])=>{
+      const q=document.createElement('div');q.className='wkq'+(done.has(id)?' ok':'');
+      q.innerHTML=`<div class="top"><input type="checkbox" id="wk_${id}" ${done.has(id)?'checked':''} aria-label="Done: ${name}"><div><b>${name}</b><div>${task}</div></div></div><details><summary>💡 Hint</summary><div>${hint}</div></details><details class="chk"><summary>✔ Check my answer</summary><div class="cbody"></div></details>`;
+      const cb=q.querySelector('.cbody');
+      if(chk.mc!=null){
+        cb.innerHTML='<span class="sub">Tap the letter you put in your doc.</span><div class="mcrow"></div><p class="sub why"></p>';
+        const row=cb.querySelector('.mcrow'),why=cb.querySelector('.why');const saved=S.get('wkmc_'+id,null);
+        ['A','B','C','D'].forEach((L,li)=>{const bt=document.createElement('button');bt.type='button';bt.textContent=L;
+          const mark=()=>{row.querySelectorAll('button').forEach((x,xi)=>{x.disabled=true;if(xi===chk.mc)x.classList.add('right');else if(xi===li)x.classList.add('wrong')});why.innerHTML=(li===chk.mc?'<b>Yes!</b> ':'<b>Not quite.</b> Change it in your doc. ')+chk.why};
+          bt.addEventListener('click',()=>{S.set('wkmc_'+id,li);mark()});row.appendChild(bt);if(saved===li)setTimeout(mark,0)});
+      }else{
+        cb.innerHTML=`<label class="sub" for="wkt_${id}">Type a short version of what you wrote:</label><textarea id="wkt_${id}"></textarea><div class="row"><button type="button" class="gbtn">Check it</button><span class="sub msg">Write first. The answer points unlock after.</span></div><div class="keys" hidden><b>A strong answer has:</b><ul>${chk.map(x=>'<li>'+x+'</li>').join('')}</ul><span class="sub">Match? Tick the box. Different? Fix it in your doc.</span></div>`;
+        const ta=cb.querySelector('textarea'),btn=cb.querySelector('.gbtn'),keys=cb.querySelector('.keys'),msg=cb.querySelector('.msg');
+        ta.value=S.get('wkt_'+id,'');ta.addEventListener('input',()=>S.set('wkt_'+id,ta.value));
+        if(S.get('wko_'+id,false)){keys.hidden=false;msg.textContent=''}
+        btn.addEventListener('click',()=>{if(ta.value.trim().length<10){msg.textContent='Write a little more first.';return}keys.hidden=false;msg.textContent='';S.set('wko_'+id,true)});
+      }
+      q.querySelector('.top input').addEventListener('change',e=>{e.target.checked?done.add(id):done.delete(id);q.classList.toggle('ok',e.target.checked);S.set('wkdone',[...done]);tally()});
+      body.appendChild(q)});
+    box.appendChild(d)});
+  tally();
 })();
 </script>
 </body>

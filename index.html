@@ -317,6 +317,17 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
 .pj-model b{font-family:var(--display);font-size:22px;color:var(--ela);min-width:18px;line-height:1.1}
 .cc-back{font-size:19px!important;color:var(--sci)!important;line-height:1.4}
 .pj-peek summary{cursor:pointer;font-weight:700}
+
+.pj-sc{border:2px dashed var(--math);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:8px;background:var(--math-soft)}
+.pj-sc .lbl{color:var(--math)}
+.pj-sc textarea{min-height:56px}
+.pj-sc .keys{background:var(--card);border-radius:12px;padding:10px 12px}
+.pj-sc .keys ul{margin:6px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.pj-sc .mc{display:flex;flex-direction:column;gap:6px}
+.pj-sc .mc .row b{min-width:60px}
+.pj-sc .mc button{font:inherit;font-weight:700;min-width:44px;min-height:40px;border:2px solid var(--ink);border-radius:10px;background:var(--card);color:var(--ink);cursor:pointer}
+.pj-sc .mc button.right{background:var(--math);border-color:var(--math);color:#fff}
+.pj-sc .mc button.wrong{border-color:var(--due);color:var(--due);text-decoration:line-through}
 </style>
 
 <div class="wrap">
@@ -442,6 +453,8 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
       <p>For each place, answer two questions in one sentence: <b>What happens there?</b> and <b>Why does it matter to Percy or the quest?</b></p>
       <div class="starter"><span class="lbl">Frame</span><br>At ___, Percy ___. This matters because ___.</div>
       <p class="sub">“The school” is a start. Push it one step further: what happens to Percy at Yancy, and why does it change his life?</p>
+      <div class="pj-sc" data-sc="facts"></div>
+      <div class="pj-sc" data-sc="settings"></div>
     </div>
 
     <div class="card">
@@ -449,16 +462,18 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
       <h3>Inferences: find the proof</h3>
       <p>The inference is already written for you. Your job is the <b>evidence</b>: a moment from the book that proves it. Here’s where to look.</p>
       <ol class="sk-steps">
-        <li><span><b>Percy protects others, even when he’s scared.</b> Look at the night with the Minotaur (Ch. 4) or the fight at Aunty Em’s (Ch. 11).</span></li>
-        <li><span><b>Chiron was watching over Percy before Percy knew.</b> Look back at Mr. Brunner at Yancy (Ch. 1), then what Percy learns at camp (Ch. 5).</span></li>
+        <li><span><b>Percy protects others, even when he’s scared.</b> Look at the night with the Minotaur (Ch. 4) or what Percy says to Annabeth after the bus fight (start of Ch. 11).</span></li>
+        <li><span><b>Chiron was watching over Percy before Percy knew.</b> Look back at Mr. Brunner at Yancy (Ch. 1), then what Chiron tells Percy at camp (Ch. 5).</span></li>
         <li><span><b>Luke’s friendliness was a cover.</b> Think about Luke’s going-away gift (Ch. 10) and what Luke admits at the end (Ch. 22).</span></li>
-        <li><span><b>Annabeth wants to prove herself.</b> Look at what she says about wanting a quest (Ch. 9) and what she tells Percy about her dad on the trip west (Ch. 12–13).</span></li>
+        <li><span><b>Annabeth wants to prove herself.</b> Look at what Luke says about Annabeth wanting a quest (Ch. 7) and what she tells Percy about her dad on the train (Ch. 13).</span></li>
       </ol>
       <div class="starter"><span class="lbl">Frame</span><br>In Chapter ___, ___. This proves the inference because ___.</div>
       <h3 style="margin-top:6px">3 ways Percy grows: explain each one</h3>
       <div class="look"><b>Mrs. Pacelli’s example question:</b> “How does he have more focus as the story goes on?” Answer that kind of question for every trait you list.</div>
       <div class="starter"><span class="lbl">Frame (do it 3 times)</span><br>At the start, Percy ___. By the end, he ___. I know because ___.</div>
       <p class="sub">Brave, strong and focus are good picks. Each one needs a before and an after.</p>
+      <div class="pj-sc" data-sc="infer"></div>
+      <div class="pj-sc" data-sc="grow"></div>
     </div>
 
     <div class="card">
@@ -471,9 +486,12 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
       <p>Your big ideas need to be topics the book really explores. Ask: what does Percy keep dealing with, chapter after chapter? Then turn each big idea into a sentence: <b>“In life, ___.”</b> No character names in a theme.</p>
       <h3 style="margin-top:6px">The 2 short answers are mini-RACERs</h3>
       <ol class="sk-steps">
-        <li><span><b>Percy and Annabeth:</b> how do they treat each other when they first meet at camp (Ch. 5)? How do they treat each other by the end (Ch. 19–22)? One detail from each.</span></li>
+        <li><span><b>Percy and Annabeth:</b> how do they treat each other when they first meet at camp (Ch. 5)? How do they treat each other in the Underworld (Ch. 18–19)? One detail from each.</span></li>
         <li><span><b>Percy and water:</b> pick ONE dangerous moment where water helps him. Look at capture the flag (Ch. 8), the jump from the Arch (Ch. 13–14) or the beach fight (Ch. 20).</span></li>
       </ol>
+      <div class="pj-sc" data-sc="summary"></div>
+      <div class="pj-sc" data-sc="theme"></div>
+      <div class="pj-sc" data-sc="short"></div>
       <p class="sub">Last step: read the whole guide once, top to bottom. Then click <b>Turn in</b> before 8:00 PM.</p>
     </div>
 
@@ -515,6 +533,7 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
         <div><b>E</b><span>This shows that Maya does not quit when she messes up. She studies her mistakes so she can fix them. Because she practiced on purpose, she believes in herself by the end, when she whispers, “I’m a goalie.”</span></div>
         <div><b>R</b><span>Clearly, the story shows that a mistake is not the end. It is how you get better.</span></div>
       </div>
+      <p class="sub">Page numbers: Mrs. Pacelli’s class PDF counts pages differently from a paper copy. Ask her which page numbers she wants in your citation.</p>
       <p class="sub">See it? The quote is the <b>proof</b>. The explain part says <b>why</b> the proof connects to the theme. In your book quote, end with (Riordan + page number).</p>
     </div>
 
@@ -541,6 +560,7 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
         <label><input type="checkbox" id="prc5"><span>My recap says the theme again in new words.</span></label>
         <label><input type="checkbox" id="prc6"><span>Every sentence starts with a capital and ends with a period.</span></label>
       </div>
+      <div class="pj-sc" data-sc="racer"></div>
     </div>
 
     <div class="card">
@@ -1846,5 +1866,72 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
 })();
 </script>
 
+<script>
+// Study guide self-check: key points unlock only after Graham writes his own answer (added Nov 14)
+(function(){
+  const S={get(k,d){try{const v=localStorage.getItem('ggp:'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('ggp:'+k,JSON.stringify(v))}catch(e){}}};
+  const SC={
+    facts:{t:'Check my work: the 8 fact-checks',ask:'Type what you fixed in your chart (a few words each is fine).',keys:[
+      'Luke is a son of <b>Hermes</b>. He runs the Hermes cabin. (Clarisse is the child of Ares.)',
+      'Chiron is a <b>centaur</b>: half man, half horse.',
+      'Sally and Poseidon were <b>not married</b>. She married Gabe to keep Percy hidden from monsters.',
+      'Poseidon did not betray Percy. Percy <b>felt</b> alone. At the end Poseidon says Percy did well and is his true son.',
+      'Athena is a <b>goddess</b> (she), Annabeth’s mom.',
+      'Kronos is the <b>king of the Titans</b>, trapped in the pit of Tartarus. He talks to Luke in dreams.',
+      'Thalia is Zeus’s daughter. She held off monsters to save her friends and became the <b>pine tree</b> that guards camp.',
+      'Grover: pick a fair trait like <b>loyal</b>, <b>brave</b> or <b>caring</b>.']},
+    settings:{t:'Check my work: settings',ask:'Type your answer for ONE setting you’re not sure about (name the place first).',keys:[
+      'A strong answer = <b>what happens there</b> + <b>why it matters</b>.',
+      'Lotus Casino: time flies inside, they lose <b>five days</b>, and Percy has to get them out.',
+      'Santa Monica: a Nereid gives Percy <b>three pearls</b> to escape the Underworld.',
+      'Waterland: they get Ares’s shield from a trap, and Ares gives them the <b>backpack</b> (with the bolt hidden inside).',
+      'Gateway Arch: Percy jumps into the river and learns <b>water protects him</b>.',
+      'Mount Olympus: Percy <b>returns the bolt</b> to Zeus and talks with his dad.',
+      'Underworld: Percy has to <b>leave his mom</b> behind, just like the prophecy said.']},
+    infer:{t:'Check my work: inference evidence',ask:'Type the evidence you picked for each inference (short is fine).',keys:[
+      '1 · Protecting others: the bus fight (Percy asks Annabeth, “Let you get killed?”) or facing the Minotaur to save his mom.',
+      '2 · Chiron watching: Chiron says he came to Yancy for a year <b>just to teach Percy</b> and keep an eye on him.',
+      '3 · Luke’s cover: the <b>flying shoes</b> gift (cursed), then Luke admits Kronos told him to steal the bolt.',
+      '4 · Annabeth: she was “dying” to go on a quest, and her dad <b>resented her</b> since she was born.']},
+    grow:{t:'Check my work: how Percy grows',ask:'Type one of your three “At the start… By the end…” sentences.',keys:[
+      'Does it have a <b>before</b> AND an <b>after</b>? A trait word alone is not enough.',
+      'Strong examples: he sees himself as a “troubled kid” → learns his struggles are demigod strengths.',
+      'He says his dad doesn’t care → his dad tells him he did well.',
+      'He acts on impulse → he puts the mission first (Lotus Casino, leaving his mom with a promise to come back).']},
+    summary:{t:'Check my work: the 3 summary questions',mc:[['Ch. 1',1,'Mr. Brunner tosses Percy the pen that becomes Riptide.'],['Ch. 4',0,'Grover admits he’s a satyr: “a goat from the waist down.”'],['Ch. 14',0,'Riptide didn’t come back to his pocket. It was stuck in the river mud. (The catfish never talks.)']]},
+    theme:{t:'Check my work: big idea vs. theme',ask:'Type one of your theme statements.',keys:[
+      'Is it a <b>full sentence</b>?','Does it teach a <b>lesson about life</b>?','No character names?','Does it match its big idea?',
+      'Big idea ideas: friendship, loyalty, family, trust, courage, sacrifice.']},
+    short:{t:'Check my work: short answers',ask:'Type the detail you used for one of the short answers.',keys:[
+      'Percy + Annabeth, start: she says “You drool when you sleep” and acts like a rival. End: they’re a team in the Underworld and escape together.',
+      'Water: the creek heals him at capture the flag, OR he survives the river under the Arch, OR the sea helps him beat Ares.',
+      'Strong answer = a dangerous moment + what the water did + why it helped.']},
+    racer:{t:'Check my work: practice RACER',ask:'Type the quote you plan to use (with its page).',keys:[
+      'Is your quote in “quotation marks” with (Riordan + page)?',
+      'Does it match your theme? Theme 1: a challenge that shows who Percy is. Theme 2: family or friends changing him. Theme 3: a flaw or mistake he learns from.',
+      'Does your Explain say <b>how</b> the quote proves the theme, in 2+ sentences?',
+      'Ask Mom or Dad to check your quote against the book.']}
+  };
+  document.querySelectorAll('.pj-sc').forEach(box=>{const k=box.dataset.sc,c=SC[k];if(!c)return;
+    box.innerHTML=`<span class="lbl">✔ ${c.t}</span>`;
+    if(c.mc){const wrap=document.createElement('div');wrap.className='mc';
+      box.insertAdjacentHTML('beforeend','<span class="sub">Pick your letter first. Then you’ll see if it’s right.</span>');
+      c.mc.forEach(([ch,ans,why],qi)=>{const r=document.createElement('div');r.className='row';r.innerHTML=`<b>${ch}</b>`;
+        const fb=document.createElement('span');fb.className='sub';
+        const saved=S.get('scmc'+qi,null);
+        ['A','B','C','D'].forEach((L,li)=>{const b=document.createElement('button');b.type='button';b.textContent=L;
+          const mark=()=>{r.querySelectorAll('button').forEach((x,xi)=>{x.disabled=true;if(xi===ans)x.classList.add('right');else if(xi===li)x.classList.add('wrong')});fb.innerHTML=(li===ans?'<b>Yes!</b> ':'<b>Not quite.</b> Fix it in your doc. ')+why};
+          b.addEventListener('click',()=>{S.set('scmc'+qi,li);mark()});r.appendChild(b);if(saved===li)setTimeout(mark,0)});
+        r.appendChild(fb);wrap.appendChild(r)});
+      box.appendChild(wrap);return}
+    box.insertAdjacentHTML('beforeend',`<label class="sub" for="sc_${k}">${c.ask}</label><textarea id="sc_${k}"></textarea><div class="row"><button type="button" class="gbtn">Check it</button><span class="sub msg">Write first. The key points unlock after.</span></div><div class="keys" hidden><b>A strong answer has:</b><ul>${c.keys.map(x=>'<li>'+x+'</li>').join('')}</ul><span class="sub">Match? Great. Something different? Fix it in your Classroom doc.</span></div>`);
+    const ta=box.querySelector('textarea'),btn=box.querySelector('.gbtn'),keys=box.querySelector('.keys'),msg=box.querySelector('.msg');
+    ta.value=S.get('sc_'+k,'');ta.addEventListener('input',()=>S.set('sc_'+k,ta.value));
+    if(S.get('scopen_'+k,false)&&ta.value.trim().length>=15){keys.hidden=false;msg.textContent=''}
+    btn.addEventListener('click',()=>{if(ta.value.trim().length<15){msg.textContent='Write a little more first (at least one full idea).';return}
+      keys.hidden=false;msg.textContent='';S.set('scopen_'+k,true)});
+  });
+})();
+</script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 # Graham's Game Plan
 
-Graham's two-week school game plan: calendar, science study packet, Fish in a Tree coach and essay coach.
+Graham's two-week school game plan: calendar plus a coaching library (Percy Jackson test coach, Currents & Air flashcards, and every past coach).
 
 Live page: https://adamsjm32-cmd.github.io/graham-game-plan/
 

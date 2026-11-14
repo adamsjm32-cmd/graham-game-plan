@@ -287,6 +287,36 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
 .sk-check{display:flex;flex-direction:column;gap:8px}
 .sk-check label{display:flex;gap:10px;align-items:flex-start;font-size:15px}
 .sk-check input{width:22px;height:22px;margin-top:2px;flex-shrink:0;accent-color:var(--math)}
+
+/* Percy Jackson test coach + currents flashcards (Nov 14) */
+.weekend.pre{background:var(--read-soft);border:2px solid var(--read)}
+.pj-path{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+@media (max-width:640px){.pj-path{grid-template-columns:1fr}}
+.pj-path div{border:2px solid var(--ink);border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:2px;background:var(--card)}
+.pj-path b{font-family:var(--display);color:var(--read)}
+.pj-jump a{text-decoration:none}
+.pj-checks{display:flex;flex-direction:column;gap:8px}
+.pj-checks label{display:flex;gap:10px;align-items:flex-start;font-size:15px}
+.pj-checks input{width:22px;height:22px;margin-top:2px;flex-shrink:0;accent-color:var(--math)}
+.pj-vs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media (max-width:640px){.pj-vs{grid-template-columns:1fr}}
+.pj-vs div{background:var(--read-soft);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:4px}
+.pj-vs b{font-family:var(--display);font-size:18px;color:var(--read)}
+.pj-themes{display:flex;flex-direction:column;gap:8px}
+.pj-themes button{font:inherit;font-size:16px;text-align:left;display:flex;gap:12px;align-items:flex-start;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:14px;padding:12px;cursor:pointer;min-height:44px}
+.pj-themes button[aria-pressed="true"]{border-color:var(--read);background:var(--read-soft)}
+.pj-themes .n{font-family:var(--display);font-weight:700;font-size:20px;color:var(--read);min-width:20px}
+.pj-hunt{display:flex;flex-direction:column;gap:6px;border-left:4px solid var(--read);padding:4px 0 4px 12px;margin-top:6px}
+.pj-hunt textarea{min-height:60px}
+.race.race5{grid-template-columns:repeat(5,minmax(0,1fr))}
+@media (max-width:640px){.race.race5{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.pj-story{background:var(--soft);border-radius:14px;padding:12px 14px;font-size:15.5px;line-height:1.55}
+.pj-story p{margin:6px 0}
+.pj-model{display:flex;flex-direction:column;gap:6px}
+.pj-model div{display:flex;gap:10px;align-items:flex-start;background:var(--ela-soft);border-radius:12px;padding:8px 10px}
+.pj-model b{font-family:var(--display);font-size:22px;color:var(--ela);min-width:18px;line-height:1.1}
+.cc-back{font-size:19px!important;color:var(--sci)!important;line-height:1.4}
+.pj-peek summary{cursor:pointer;font-weight:700}
 </style>
 
 <div class="wrap">
@@ -341,7 +371,7 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
     <h2 style="font-size:22px;margin:4px 0 0">Past weeks</h2>
     <div id="wk-past" style="display:flex;flex-direction:column;gap:12px"></div>
     <h2 style="font-size:22px;margin:8px 0 0">Assignment log</h2>
-    <p class="sub" style="margin:0">Every Classroom assignment with a past due date, by week. Pulled from Classroom on Nov 7.</p>
+    <p class="sub" style="margin:0">Every Classroom assignment with a past due date, by week. Pulled from Classroom on Nov 14.</p>
     <div id="alog" style="display:flex;flex-direction:column;gap:12px"></div>
   </section>
 
@@ -356,12 +386,14 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
         <select id="coachPick">
           <option value="">Pick a coach…</option>
           <optgroup label="Use this week">
-            <option value="spanish">Spanish quiz: Classroom expressions (Wed)</option>
-            <option value="percy">Percy Jackson reading (Ch. 11–15 check Mon 11/2)</option>
-            <option value="fishquiz">Fish in a Tree practice quiz (test Tue 10/27)</option>
-            <option value="fish">Fish in a Tree study guide (review for Tue test)</option>
+            <option value="pjtest">Percy Jackson test coach (study guide Tue · RACER Thu · test Fri)</option>
+            <option value="currents">Currents &amp; Air flashcards (science quiz Tue 11/17)</option>
           </optgroup>
           <optgroup label="Completed">
+            <option value="percy">Percy Jackson reading</option>
+            <option value="spanish">Spanish quiz: Classroom expressions</option>
+            <option value="fishquiz">Fish in a Tree practice quiz</option>
+            <option value="fish">Fish in a Tree study guide</option>
             <option value="sketch">Fish in a Tree sketch paragraph</option>
             <option value="essay">Trick-or-treat opinion essay</option>
             <option value="science">Thermal Energy study packet</option>
@@ -371,6 +403,205 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
       <div class="coachgrid" id="coachGrid"></div>
     </div>
 
+
+  <!-- PERCY JACKSON TEST COACH -->
+  <section class="panel coach" id="pjtest" hidden>
+    <div class="card">
+      <span class="tag">READING · MRS. PACELLI · TEST WEEK NOV 16–20</span>
+      <h2>Percy Jackson test coach</h2>
+      <p>Three plays for three game days. Finish the study guide first. It is your film review for the whole book, and every other rep builds on it.</p>
+      <div class="pj-path">
+        <div><b>TUE 11/17</b><span>Study guide</span><span class="sub">30 pts · Turn in by 8:00 PM</span></div>
+        <div><b>THU 11/19</b><span>RACER theme response</span><span class="sub">25 pts · in class</span></div>
+        <div><b>FRI 11/20</b><span>Multiple-choice test</span><span class="sub">75 pts · Google Form</span></div>
+      </div>
+      <div class="row pj-jump">
+        <a class="gbtn ghost" href="#pj-guide" data-jump="pj-guide">1 · Study guide</a>
+        <a class="gbtn ghost" href="#pj-racer" data-jump="pj-racer">2 · RACER</a>
+        <a class="gbtn ghost" href="#pj-quiz" data-jump="pj-quiz">3 · Practice test</a>
+      </div>
+    </div>
+
+    <!-- 1. STUDY GUIDE -->
+    <div class="card" id="pj-guide">
+      <span class="lbl">Play 1 · Study guide · due Tue 11/17 by 8:00 PM</span>
+      <h3>Finish the study guide in 3 reps</h3>
+      <p class="sub">Open your Classroom doc, <i>Graham Adams - Percy Jackson - Summative Study Guide</i>. You already filled in most of the character chart. Nice start. Here’s the rest, one rep per night.</p>
+      <div class="sk-rep"><span>Sun · Rep 1 · chart + settings · 30 min</span><span>Mon · Rep 2 · inferences + growth · 25 min</span><span>Tue · Rep 3 · themes + short answers · 25 min</span></div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">Rep 1 · Sunday · 30 min</span>
+      <h3>Character chart: what Mrs. Pacelli asked for</h3>
+      <div class="look"><b>Her notes to you:</b> add 1–2 things each character <b>does</b> in the novel, and finish the trait chart.</div>
+      <p><b>Frame for each character:</b> ___ is ___ (who they are). In the story, they ___ (one thing they do).</p>
+      <h3 style="margin-top:6px">Fact-check these 7 before you turn it in</h3>
+      <p class="sub">Each one has a detail worth checking. Use the “Who’s Who” list in Classroom or flip to the chapter.</p>
+      <div class="pj-checks" id="pjFacts"></div>
+      <h3 style="margin-top:6px">Settings chart</h3>
+      <p>For each place, answer two questions in one sentence: <b>What happens there?</b> and <b>Why does it matter to Percy or the quest?</b></p>
+      <div class="starter"><span class="lbl">Frame</span><br>At ___, Percy ___. This matters because ___.</div>
+      <p class="sub">“The school” is a start. Push it one step further: what happens to Percy at Yancy, and why does it change his life?</p>
+    </div>
+
+    <div class="card">
+      <span class="lbl">Rep 2 · Monday · 25 min</span>
+      <h3>Inferences: find the proof</h3>
+      <p>The inference is already written for you. Your job is the <b>evidence</b>: a moment from the book that proves it. Here’s where to look.</p>
+      <ol class="sk-steps">
+        <li><span><b>Percy protects others, even when he’s scared.</b> Look at the night with the Minotaur (Ch. 4) or the fight at Aunty Em’s (Ch. 11).</span></li>
+        <li><span><b>Chiron was watching over Percy before Percy knew.</b> Look back at Mr. Brunner at Yancy (Ch. 1), then what Percy learns at camp (Ch. 5).</span></li>
+        <li><span><b>Luke’s friendliness was a cover.</b> Think about Luke’s going-away gift (Ch. 10) and what Luke admits at the end (Ch. 22).</span></li>
+        <li><span><b>Annabeth wants to prove herself.</b> Look at what she says about wanting a quest (Ch. 9) and what she tells Percy about her dad on the trip west (Ch. 12–13).</span></li>
+      </ol>
+      <div class="starter"><span class="lbl">Frame</span><br>In Chapter ___, ___. This proves the inference because ___.</div>
+      <h3 style="margin-top:6px">3 ways Percy grows: explain each one</h3>
+      <div class="look"><b>Mrs. Pacelli’s example question:</b> “How does he have more focus as the story goes on?” Answer that kind of question for every trait you list.</div>
+      <div class="starter"><span class="lbl">Frame (do it 3 times)</span><br>At the start, Percy ___. By the end, he ___. I know because ___.</div>
+      <p class="sub">Brave, strong and focus are good picks. Each one needs a before and an after.</p>
+    </div>
+
+    <div class="card">
+      <span class="lbl">Rep 3 · Tuesday · 25 min</span>
+      <h3>Big idea vs. theme</h3>
+      <div class="pj-vs">
+        <div><b>Big idea</b><span>A <b>topic</b>. One word or a short phrase.</span><span class="sub">Lacrosse example: <i>teamwork</i></span></div>
+        <div><b>Theme</b><span>A <b>full sentence</b>. The lesson the author wants you to learn about life.</span><span class="sub">Lacrosse example: <i>A team wins more when players trust each other than when one player tries to do it all.</i></span></div>
+      </div>
+      <p>Your big ideas need to be topics the book really explores. Ask: what does Percy keep dealing with, chapter after chapter? Then turn each big idea into a sentence: <b>“In life, ___.”</b> No character names in a theme.</p>
+      <h3 style="margin-top:6px">The 2 short answers are mini-RACERs</h3>
+      <ol class="sk-steps">
+        <li><span><b>Percy and Annabeth:</b> how do they treat each other when they first meet at camp (Ch. 5)? How do they treat each other by the end (Ch. 19–22)? One detail from each.</span></li>
+        <li><span><b>Percy and water:</b> pick ONE dangerous moment where water helps him. Look at capture the flag (Ch. 8), the jump from the Arch (Ch. 13–14) or the beach fight (Ch. 20).</span></li>
+      </ol>
+      <p class="sub">Last step: read the whole guide once, top to bottom. Then click <b>Turn in</b> before 8:00 PM.</p>
+    </div>
+
+    <!-- 2. RACER -->
+    <div class="card" id="pj-racer">
+      <span class="lbl">Play 2 · RACER theme response · Thu 11/19 · 25 pts</span>
+      <h3>Which theme did you pick on Mrs. Pacelli’s form?</h3>
+      <p class="sub">You chose one of these three. Tap yours. If you don’t remember, ask Mrs. Pacelli on Monday.</p>
+      <div class="pj-themes" id="pjThemes"></div>
+      <div id="pjHunt"></div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">Mrs. Pacelli’s RACER</span>
+      <div class="race race5" aria-label="RACER answer strategy">
+        <div><b>R</b><span><b>Restate</b> the question.</span></div>
+        <div><b>A</b><span><b>Answer</b> in your own words.</span></div>
+        <div><b>C</b><span><b>Cite</b> a quote + (Riordan page).</span></div>
+        <div><b>E</b><span><b>Explain</b>: This shows…</span></div>
+        <div><b>R</b><span><b>Recap</b> your answer.</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">Film study · a model RACER on a different story</span>
+      <h3>Watch how the play works first</h3>
+      <div class="pj-story" id="pjStory">
+        <b>“The Save”</b>
+        <p>[1] Maya was the newest goalie on her lacrosse team. In her first game, she let in four goals and stared at the grass the whole bus ride home.</p>
+        <p>[2] “I’m just not a goalie,” she told her coach. Coach Reyes shook his head. “You stepped toward the shooter’s stick instead of the ball. That’s a fix, not a forever.”</p>
+        <p>[3] All week, Maya stayed after practice. She asked her teammates to shoot at her, and every time she missed, she said out loud what she did wrong.</p>
+        <p>[4] In the next game, a shooter wound up from the crease. Maya watched the ball, not the stick, and snapped her stick across her body. Save. “I’m a goalie,” she whispered.</p>
+      </div>
+      <p><b>Question:</b> What is a theme of “The Save”? Use evidence from the story.</p>
+      <div class="pj-model">
+        <div><b>R</b><span>In the story “The Save,” the author teaches a lesson through Maya’s first weeks as a goalie.</span></div>
+        <div><b>A</b><span>One theme is that learning from your mistakes helps you become who you want to be.</span></div>
+        <div><b>C</b><span>After a hard first game, Maya “asked her teammates to shoot at her, and every time she missed, she said out loud what she did wrong” (paragraph 3).</span></div>
+        <div><b>E</b><span>This shows that Maya does not quit when she messes up. She studies her mistakes so she can fix them. Because she practiced on purpose, she believes in herself by the end, when she whispers, “I’m a goalie.”</span></div>
+        <div><b>R</b><span>Clearly, the story shows that a mistake is not the end. It is how you get better.</span></div>
+      </div>
+      <p class="sub">See it? The quote is the <b>proof</b>. The explain part says <b>why</b> the proof connects to the theme. In your book quote, end with (Riordan + page number).</p>
+    </div>
+
+    <div class="card">
+      <span class="lbl">Wednesday · practice rep · 20-minute timer</span>
+      <h3>Write your practice RACER</h3>
+      <p class="sub">Your own words, your theme, your evidence. It saves on this device. Voice typing works: say one sentence, then stop.</p>
+      <label class="lbl" for="pr1">R · Restate</label><textarea id="pr1" placeholder="In The Lightning Thief by Rick Riordan, …"></textarea>
+      <label class="lbl" for="pr2">A · Answer</label><textarea id="pr2" placeholder="One theme is that …"></textarea>
+      <label class="lbl" for="pr3">C · Cite</label><textarea id="pr3" placeholder="For example, in Chapter __, … “ … ” (Riordan __)."></textarea>
+      <label class="lbl" for="pr4">E · Explain</label><textarea id="pr4" placeholder="This shows … because …"></textarea>
+      <label class="lbl" for="pr5">R · Recap</label><textarea id="pr5" placeholder="Clearly, …"></textarea>
+      <div class="row">
+        <button class="gbtn" id="prBuild" type="button">Put it together</button>
+        <button class="gbtn ghost" id="prRead" type="button">Read it to me</button>
+      </div>
+      <div class="sk-out" id="prOut" aria-live="polite">Your paragraph will show up here.</div>
+      <p class="sub" id="prMsg" aria-live="polite"></p>
+      <div class="checks">
+        <label><input type="checkbox" id="prc1"><span>My first sentence names the book (<i>The Lightning Thief</i>) and the author (Rick Riordan).</span></label>
+        <label><input type="checkbox" id="prc2"><span>My answer says my theme as a full sentence about life.</span></label>
+        <label><input type="checkbox" id="prc3"><span>My quote is in “quotation marks” and ends with (Riordan + page).</span></label>
+        <label><input type="checkbox" id="prc4"><span>My explain part says <b>how</b> the quote proves the theme. No retelling.</span></label>
+        <label><input type="checkbox" id="prc5"><span>My recap says the theme again in new words.</span></label>
+        <label><input type="checkbox" id="prc6"><span>Every sentence starts with a capital and ends with a period.</span></label>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">Thursday · game-day plays</span>
+      <ol class="sk-steps">
+        <li><span><b>Read the prompt twice.</b> Circle what it asks for.</span></li>
+        <li><span><b>Plan for 3 minutes.</b> Jot R, A, C, E, R down the margin with a few words each.</span></li>
+        <li><span><b>Use the evidence you hunted Wednesday.</b> If the book is allowed, go to your sticky notes.</span></li>
+        <li><span><b>Explain is the money part.</b> Write at least two sentences there.</span></li>
+        <li><span><b>Last 3 minutes:</b> read it once and fix capitals, periods and quote marks.</span></li>
+      </ol>
+    </div>
+
+    <!-- 3. PRACTICE TEST -->
+    <div class="card" id="pj-quiz">
+      <span class="lbl">Play 3 · Multiple-choice practice · for Thu night</span>
+      <h3>Practice test: 3 rounds</h3>
+      <p class="sub">Turn in your study guide first. This quiz is for after. Misses come back at the end of each round.</p>
+      <div class="row"><div class="seg" id="pqRound"><button type="button" data-r="1" aria-pressed="true">Round 1 · Start</button><button type="button" data-r="2" aria-pressed="false">Round 2 · Quest</button><button type="button" data-r="3" aria-pressed="false">Round 3 · Ending</button></div></div>
+      <div class="qbox" id="pqBox" aria-live="polite"></div>
+      <div class="row"><span class="big" id="pqScore" style="font-family:var(--display);font-weight:700"></span></div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">Friday · test-day plays</span>
+      <ol class="sk-steps">
+        <li><span><b>Read the question twice.</b> Watch for NOT, BEST and MISSING.</span></li>
+        <li><span><b>Read ALL the choices</b> before you pick.</span></li>
+        <li><span><b>Cross out two</b> that are clearly wrong.</span></li>
+        <li><span><b>Ask: did this really happen, and in this part of the book?</b> Wrong choices often mix up events from other chapters.</span></li>
+        <li><span><b>Don’t get stuck.</b> Skip, keep going, come back.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- CURRENTS & AIR COACH -->
+  <section class="panel coach" id="currents" hidden>
+    <div class="card">
+      <span class="tag">SCIENCE · MISS MORIELLO · QUIZ TUE 11/17</span>
+      <h2>Currents &amp; Air flashcards</h2>
+      <p>Miss Moriello’s own flashcard questions, with answers from her class slides. Say the answer out loud, then flip. Use your paper study guide from class too.</p>
+      <div class="sk-rep"><span>Sun · Surface Currents · 10 min</span><span>Mon · Deep Currents + misses · 15 min</span><span>Tue morning · Air &amp; Wind · 5 min</span></div>
+    </div>
+    <div class="card">
+      <div class="row"><div class="seg" id="ccDeck"><button type="button" data-d="surf" aria-pressed="true">Surface Currents</button><button type="button" data-d="deep" aria-pressed="false">Deep Currents</button><button type="button" data-d="air" aria-pressed="false">Air &amp; Wind</button><button type="button" data-d="miss" aria-pressed="false">My misses</button></div></div>
+      <button type="button" class="flip" id="ccCard" aria-live="polite"><span class="front" id="ccFront"></span><span class="back cc-back" id="ccBack" hidden></span><span class="hint" id="ccHint">Say it out loud, then tap to flip.</span></button>
+      <div class="row">
+        <button type="button" class="gbtn ghost" id="ccSay">Read to me</button>
+        <button type="button" class="gbtn ghost" id="ccAgain">Not yet</button>
+        <button type="button" class="gbtn" id="ccGot">Got it</button>
+        <span class="sub" id="ccCount"></span>
+      </div>
+      <p class="sub" id="ccNote"></p>
+    </div>
+    <div class="card">
+      <span class="lbl">The big question from the lesson</span>
+      <h3>Ireland is farther north than Maine. Why are its winters warmer?</h3>
+      <p class="sub">Answer it out loud in 2 sentences before you peek. Use the words <b>warm current</b>, <b>equator</b> and <b>air</b>.</p>
+      <details class="pj-peek"><summary>Peek at a strong answer</summary><p>A warm surface current, the Gulf Stream, starts near the equator and carries warm water across the Atlantic toward Ireland. The warm water heats the air above it, and wind carries that warmth over the land, so Ireland’s winters are milder than Maine’s.</p></details>
+    </div>
+  </section>
 
   <!-- SPANISH COACH -->
   <section class="panel coach" id="spanish" hidden>
@@ -930,17 +1161,36 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
       ['2026-11-13','Fri 11/13',[['v13a','ela','Personal Narrative FINAL DRAFT (Heffernan, 100 pts)',0,1],['v13b','ela','Weekly Log 11/9–11/13, if posted like other weeks (Marini)',0,1],['v13c','math','Weekly Review #11, by 2:30 PM, if posted like other weeks (DeNuzzo)',0,1]],
         [['v13d','ela','Narrative: one last read, then click Turn in',5,0],['v13e','ela','Weekly Log',10,0],['v13f','skill','Weekly film review: what worked, what’s next?',5,0]]]
      ],
-     weekend:{label:'Weekend Nov 14–15',items:[['v15a','ela','Sun 11/15 · Percy Jackson Chapter 14 question for Mrs. Marini',15,0,'#percy']]}},
+     weekend:{label:'Weekend Nov 14–15',items:[['v15a','ela','Mrs. Marini’s Percy Jackson questions Ch. 11–17: all turned in early ✓',0,0,'#percy']]}},
 
-    {id:'nov16',label:'Nov 16 – 20',theme:'Mrs. Marini’s Percy Jackson questions due Friday · more posts coming',
-     bigs:[['FRI 11/20','Percy Jackson questions, Ch. 11–17','Mrs. Marini · all 7 turned in','#percy']],
+    {id:'nov16',label:'Nov 16 – 20',theme:'Percy Jackson test week · science quiz Tuesday · study guide Tuesday 8 PM',
+     pre:{label:'Weekend kickoff · Sat 11/14 – Sun 11/15',items:[
+      ['k1','read','Sat · Finish reading Percy Jackson Ch. 22, the last chapter (due Mon)',30,0],
+      ['k2','read','Sun · Study guide Rep 1: fix the character chart (Mrs. Pacelli’s 2 comments) + the settings chart',30,0,'#pjtest'],
+      ['k3','sci','Sun · Science flashcards: Surface Currents deck',10,0,'#currents'],
+      ['k4','read','Sun · Tell Mom or Dad which RACER theme you picked on Mrs. Pacelli’s form. Tap it in the coach.',2,0,'#pjtest']]},
+     bigs:[['TUE 11/17','Science quiz: Currents & Air','Miss Moriello · early dismissal day','#currents'],['TUE 11/17','Percy Jackson Ch. 21–22 check','Mrs. Pacelli · in class'],['TUE 11/17','Percy Jackson study guide','Mrs. Pacelli · 30 pts · Turn in by 8:00 PM','#pjtest'],['THU 11/19','Percy Jackson RACER theme response','Mrs. Pacelli · 25 pts · in class','#pjtest'],['FRI 11/20','Percy Jackson multiple-choice test','Mrs. Pacelli · Google Form · 75 pts','#pjtest'],['FRI 11/20','Math: November Extra Credit','Mr. DeNuzzo · by 11:59 PM']],
      days:[
-      ['2026-11-16','Mon 11/16',[],[['w16a','ela','Percy Jackson Chapter 15 question for Mrs. Marini',15,0,'#percy'],['w16b',...CHECK]]],
-      ['2026-11-17','Tue 11/17',[],[['w17a','ela','Percy Jackson Chapter 16 question for Mrs. Marini',15,0,'#percy'],['w17b','skill','Spelling Reps: one practice set',10,0,SP],['w17c',...CHECK]]],
-      ['2026-11-18','Wed 11/18',[],[['w18a','ela','Percy Jackson Chapter 17 question for Mrs. Marini',15,0,'#percy'],['w18b',...CHECK]]],
-      ['2026-11-19','Thu 11/19',[],[['w19a','ela','Open Mrs. Marini’s class: do Ch. 11–17 all say Turned in?',5,0],['w19b','skill','Spelling Reps: one practice set',10,0,SP],['w19c',...CHECK]]],
-      ['2026-11-20','Fri 11/20',[['w20a','ela','Percy Jackson Chapter 11–17 questions (Marini)',0,1],['w20b','ela','Weekly Log 11/16–11/20, if posted (Marini)',0,1],['w20c','math','Weekly Review #12, if posted (DeNuzzo)',0,1]],[['w20d','ela','Weekly Log',10,0],['w20e','skill','Weekly film review: what worked, what’s next?',5,0]]]
-     ]}
+      ['2026-11-16','Mon 11/16',[['x16a','read','Percy Jackson Ch. 22 reading finished (Pacelli)',0,1]],
+        [['x16b','read','Study guide Rep 2: the 4 inference boxes + 3 ways Percy grows (explain each one)',25,0,'#pjtest'],['x16c','sci','Science flashcards: Deep Currents deck + redo your misses (quiz tomorrow)',15,0,'#currents'],['x16d','read','Ch. 21–22 check tomorrow: say out loud what happens in each chapter',5,0],['x16e','skill','Optional: Mrs. Pacelli’s Extra Help is usually Monday after school. Bring one study guide question.',0,0]]],
+      ['2026-11-17','Tue 11/17',[['x17a','sci','SCIENCE QUIZ: Currents & Air (Moriello)',0,1,'#currents'],['x17b','read','Percy Jackson Ch. 21–22 Comprehension Check, in class (Pacelli)',0,1],['x17c','read','PERCY JACKSON STUDY GUIDE, Turn in by 8:00 PM (Pacelli, 30 pts)',0,1,'#pjtest']],
+        [['x17d','read','Study guide Rep 3: big ideas + theme statements + the 2 short answers',25,0,'#pjtest'],['x17e','read','Read the whole study guide once, then click Turn in before 8:00 PM',5,0],['x17f','skill','Early dismissal day (district calendar). Do the study guide first.',0,0]]],
+      ['2026-11-18','Wed 11/18',[],
+        [['x18a','read','RACER Rep 1: evidence hunt. Find 2 moments for your theme + page numbers. Sticky-note them.',20,0,'#pjtest'],['x18b','read','RACER Rep 2: write one practice RACER (20-min timer), then run the checklist',20,0,'#pjtest'],['x18c',...CHECK]]],
+      ['2026-11-19','Thu 11/19',[['x19a','read','PERCY JACKSON RACER THEME RESPONSE, in class (Pacelli, 25 pts)',0,1,'#pjtest'],['x19b','skill','Picture Retake Day (only if you need a retake)',0,1]],
+        [['x19c','read','Practice test: Rounds 1, 2 and 3 (misses come back)',20,0,'#pjtest'],['x19d','math','Reps: Fraction · Decimal · % benchmarks (one set)',10,0,SP],['x19e',...CHECK]]],
+      ['2026-11-20','Fri 11/20',[['x20a','read','PERCY JACKSON MULTIPLE-CHOICE TEST, Google Form (Pacelli, 75 pts)',0,1,'#pjtest'],['x20b','math','November Extra Credit, by 11:59 PM (DeNuzzo)',0,1],['x20c','ela','Weekly Log 11/16–11/20, if posted (Marini)',0,1],['x20d','math','Weekly Review #12, by 2:30 PM, if posted (DeNuzzo)',0,1]],
+        [['x20e','math','November Extra Credit: free points, do it tonight',15,0],['x20f','ela','Weekly Log',10,0],['x20g','skill','Weekly film review: what worked, what’s next?',5,0]]]
+     ]},
+
+    {id:'nov23',label:'Nov 23 – 25',theme:'Short week · Thanksgiving recess Thu–Fri',
+     bigs:[['THU 11/26 – FRI 11/27','No school: Thanksgiving recess','District calendar']],
+     days:[
+      ['2026-11-23','Mon 11/23',[],[['y23a','read','Percy Jackson film review: when the test comes back, circle 2 misses and say why the right answer is right',10,0],['y23b',...CHECK]]],
+      ['2026-11-24','Tue 11/24',[],[['y24a','math','Reps: Fraction · Decimal · % benchmarks (one set)',10,0,SP],['y24b',...CHECK]]],
+      ['2026-11-25','Wed 11/25',[],[['y25a','ela','Weekly Log, if posted (Marini)',10,0],['y25b','skill','Weekly film review, then enjoy the break',5,0]]]
+     ],
+     weekend:{label:'Thu 11/26 – Sun 11/29 · Thanksgiving break',items:[['y26a','skill','Sun 11/29 · 10-minute look ahead: open the Daily Report and this plan',10,0]]}}
   ];
   // The week whose last school day is today or later is "this week". On weekends that's the coming week.
   // Finished weeks roll into the Archive on their own.
@@ -949,8 +1199,13 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
   if(ci<0)ci=WEEKS.length-1;
   const CURRENT=WEEKS[ci].id, NEXT=WEEKS[ci+1]?WEEKS[ci+1].id:null;
 
-  // Assignment log from Classroom (pulled Nov 7). [due ISO, subject, class, title, status in|late|miss|open]
+  // Assignment log from Classroom (pulled Nov 14). [due ISO, subject, class, title, status in|late|miss|open]
   const ALOG=[
+   ['2026-11-13','ela','Heffernan','Personal Narrative Final Draft','in'],['2026-11-13','ela','Heffernan','Editing Checklist','in'],['2026-11-13','ela','Heffernan','Daily Warm-Up','in'],['2026-11-13','ela','Marini','Weekly Log 11/9–11/13','in'],['2026-11-13','ela','Marini','Personal Narrative Checklist','in'],['2026-11-13','ela','Marini','Percy Jackson Ch. 8–10 questions','in'],['2026-11-13','read','Pacelli','Percy Jackson RACER Theme Choice','in'],['2026-11-13','math','DeNuzzo','Practice 3.3','in'],['2026-11-13','math','DeNuzzo','Weekly Review #11','in'],
+   ['2026-11-12','ela','Heffernan','Daily Warm-Up','in'],['2026-11-12','math','DeNuzzo','Percent of a Number (3.3)','in'],
+   ['2026-11-11','read','Pacelli','Percy Jackson Ch. 16–20 Comprehension Check','in'],['2026-11-11','ela','Heffernan','Daily Warm-Up','in'],['2026-11-11','math','DeNuzzo','Explore 3.3','in'],
+   ['2026-11-10','ela','Heffernan','Daily Warm-Up','in'],['2026-11-10','math','DeNuzzo','Percents, Decimals, and Fractions Review','in'],['2026-11-10','span','Bedoya','Spain KWL','in'],
+   ['2026-11-09','ela','Heffernan','Daily Warm-Up','in'],
    ['2026-11-06','ela','Heffernan','Daily Warm-Up','in'],['2026-11-06','ela','Marini','Weekly Log 11/2–11/6','in'],['2026-11-06','math','DeNuzzo','Lesson 3.2 Notes','in'],['2026-11-06','math','DeNuzzo','Weekly Review #10','in'],['2026-11-06','span','Bedoya','ABCs & Wayground Practice','in'],
    ['2026-11-05','ela','Heffernan','Daily Warm-Up','in'],['2026-11-05','math','DeNuzzo','Practice 3.1','in'],
    ['2026-11-04','math','DeNuzzo','Lesson 3.1 Intro to Percents','in'],['2026-11-04','span','Bedoya','ABCs (11/2 & 11/4)','in'],
@@ -990,7 +1245,7 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
    ['span','Bedoya','Workbook page 10 (due Oct 7)','miss'],
    ['span','Bedoya','Intro: Hispanic Heritage Month (due Sep 29)','miss'],
    ['ela','Heffernan','October 16 Character Change Response (no due date)','open'],
-   ['math','DeNuzzo','Unit 3 Readiness Check, Unit 2 Clean Up, Unit 2 Review Game (no due date)','open'],
+   ['math','DeNuzzo','Unit 3 Readiness Check, Practice 3.2, Lesson 3.4 % Application (no due date)','open'],
    ['math','DeNuzzo','Older classwork with no due date (about 20 items back to Aug 31). Ask Mr. DeNuzzo if any still count.','open'],
    ['sci','Moriello','Amplify Pre-Assessment for the new unit (no due date)','open']
   ];
@@ -1005,11 +1260,12 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
     w.innerHTML=`<input type="checkbox" id="${id}" ${done.has(id)?'checked':''}><label for="${id}"><span class="pill s-${subj}" style="align-self:flex-start">${SUBJ[subj]}</span><span class="txt">${inner}</span>${min?`<span class="t">${min} min</span>`:''}</label>`;
     w.querySelector('input').addEventListener('change',e=>{e.target.checked?done.add(id):done.delete(id);w.classList.toggle('checked',e.target.checked);S.set('done',[...done]);listeners.forEach(f=>f())});
     return w}
-  function allIds(wk){const ids=[];wk.days.forEach(([,,due,plan])=>due.concat(plan).forEach(x=>ids.push(x[0])));(wk.weekend?wk.weekend.items:[]).forEach(x=>ids.push(x[0]));return ids}
+  function allIds(wk){const ids=[];(wk.pre?wk.pre.items:[]).forEach(x=>ids.push(x[0]));wk.days.forEach(([,,due,plan])=>due.concat(plan).forEach(x=>ids.push(x[0])));(wk.weekend?wk.weekend.items:[]).forEach(x=>ids.push(x[0]));return ids}
   function weekBody(wk,box,showHead){
     if(showHead){const h=document.createElement('div');h.className='wkhead';h.innerHTML=`<h2>Week of ${wk.label}</h2><span class="sub">${wk.theme}</span>`;box.appendChild(h)}
     if(wk.bigs&&wk.bigs.length){const b=document.createElement('div');b.className='bigs';
       b.innerHTML=wk.bigs.map(([d,t,sub,link])=>`<div class="big"><span class="d">${d}</span><b>${t}</b><span class="sub">${sub||''}${link?` · <a href="${link}" style="font-weight:600">Open coach</a>`:''}</span></div>`).join('');box.appendChild(b)}
+    if(wk.pre){const w=document.createElement('div');w.className='weekend pre';w.innerHTML=`<b style="font-family:var(--display)">${wk.pre.label}</b>`;wk.pre.items.forEach(x=>w.appendChild(itemEl(x)));box.appendChild(w)}
     const g=document.createElement('div');g.className='grid';
     wk.days.forEach(([iso,label,due,plan])=>{
       const d=document.createElement('article');d.className='day'+(iso===todayISO?' today':'')+(iso<todayISO&&wk.id===CURRENT?' past':'');
@@ -1055,7 +1311,9 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
 
   // coaching library
   const COACHES=[
-    ['percy','Percy Jackson reading','Mrs. Pacelli + Mrs. Marini','active','Use this week: Ch. 16–20 check Wed 11/11 · Marini questions Ch. 11–17'],
+    ['pjtest','Percy Jackson test coach','Mrs. Pacelli · Reading','active','Use this week: study guide Tue · RACER Thu · test Fri'],
+    ['currents','Currents & Air flashcards','Miss Moriello · Science','active','Use this week: quiz Tue 11/17'],
+    ['percy','Percy Jackson reading','Mrs. Pacelli + Mrs. Marini','done','Completed · all chapter questions turned in'],
     ['spanish','Spanish quiz: Classroom expressions','Ms. Bedoya · Spanish','done','Completed · quiz Oct 28'],
     ['fishquiz','Fish in a Tree practice quiz','Mrs. Heffernan · ELA','done','Completed · test Oct 27'],
     ['fish','Fish in a Tree study guide','Mrs. Heffernan · ELA','done','Completed · turned in Oct 22'],
@@ -1396,6 +1654,197 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
 </script>
 
 
+
+<script>
+// Percy Jackson test coach + Currents & Air flashcards (added Nov 14)
+(function(){
+  const S={get(k,d){try{const v=localStorage.getItem('ggp:'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('ggp:'+k,JSON.stringify(v))}catch(e){}}};
+  function speak(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.rate=.92;speechSynthesis.speak(u)}catch(e){}}
+  function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+  const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+  // jump buttons inside the coach
+  document.querySelectorAll('[data-jump]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();const el=document.getElementById(a.dataset.jump);if(el)el.scrollIntoView({behavior:'smooth',block:'start'})}));
+
+  // ---------- Study guide fact-checks (questions only, Graham finds the answer) ----------
+  const FACTS=[
+    ['Luke','Which god is Luke’s parent? Think about which cabin Luke leads at camp.'],
+    ['Chiron','Satyr or centaur? Your chart says “sailor.” Voice typing may have swapped a word.'],
+    ['Sally Jackson','Were Sally and Poseidon married? Reread what Sally tells Percy about his dad (Ch. 2–3).'],
+    ['Poseidon','Did Poseidon betray Percy, or did Percy <i>feel</i> left alone? Reread their talk on Olympus (Ch. 21).'],
+    ['Athena','Athena is a goddess. Check every “he” in that row.'],
+    ['Kronos','Who is he, and where is he trapped? Think about the pit in the Underworld (Ch. 18) and what Luke says (Ch. 22).'],
+    ['Thalia','What happened to Thalia, and how does she still protect camp?'],
+    ['Grover','Swap “dum” for a fair trait. Use Mrs. Pacelli’s <i>List of Character Traits</i> in Classroom.']
+  ];
+  const fb=document.getElementById('pjFacts');
+  if(fb){const got=new Set(S.get('pjfacts',[]));
+    FACTS.forEach(([who,q],i)=>{const l=document.createElement('label');l.innerHTML=`<input type="checkbox" ${got.has(i)?'checked':''}><span><b>${who}:</b> ${q}</span>`;
+      l.querySelector('input').addEventListener('change',e=>{e.target.checked?got.add(i):got.delete(i);S.set('pjfacts',[...got])});fb.appendChild(l)})}
+
+  // ---------- RACER theme picker + evidence hunt ----------
+  const THEMES=[
+    {t:'Facing and overcoming challenges can help individuals understand their true identity.',
+     look:[['The Minotaur (Ch. 4)','Before this fight, who did Percy think he was? What did he find out he could do?'],
+           ['Capture the flag (Ch. 8)','What happens to Percy at the creek, and what does everyone find out about him?'],
+           ['The beach fight with Ares (Ch. 20)','How does Percy see himself after standing up to a god?']]},
+    {t:'One’s identity can be influenced by friends and/or family relationships.',
+     look:[['Sally (Ch. 2–4)','What did Percy’s mom give up to keep him safe? How does that shape him?'],
+           ['Grover and Annabeth (Ch. 18–19)','How do his friends change the choices Percy makes in the Underworld?'],
+           ['Poseidon and Luke (Ch. 21–22)','How do his talk with his dad and Luke’s betrayal change how Percy sees himself?']]},
+    {t:'Being able to accept and learn from one’s own flaws/mistakes is essential for personal growth and self-understanding.',
+     look:[['Early at camp (Ch. 5–6)','Annabeth explains why school was always hard for Percy. What does he learn about the things he thought were his flaws?'],
+           ['The Lotus Hotel (Ch. 16–17)','What mistake do they make, and how does Percy fix it?'],
+           ['Trusting Luke (Ch. 22)','What does Percy learn from trusting the wrong person?']]}
+  ];
+  const tBox=document.getElementById('pjThemes'),hunt=document.getElementById('pjHunt');
+  function drawHunt(){const k=S.get('pjtheme',null);hunt.innerHTML='';
+    tBox.querySelectorAll('button').forEach((b,i)=>b.setAttribute('aria-pressed',i===k));
+    if(k==null){hunt.innerHTML='<p class="sub">Tap your theme to open your evidence hunt.</p>';return}
+    const th=THEMES[k];
+    hunt.innerHTML=`<h3 style="margin-top:8px">Your evidence hunt (Wednesday · 20 min)</h3><p class="sub">Pick the <b>2 strongest</b> moments. For each one, find a sentence to quote and write the page number. Sticky-note the page.</p>`;
+    th.look.forEach(([where,q],i)=>{const d=document.createElement('div');d.className='pj-hunt';
+      d.innerHTML=`<b>${where}</b><span>${q}</span><label class="lbl" for="ph${k}${i}">My quote + page · what it shows</label><textarea id="ph${k}${i}" placeholder="“…” (Riordan __). This shows …"></textarea>`;
+      const ta=d.querySelector('textarea');ta.value=S.get('ph'+k+i,'');ta.addEventListener('input',()=>S.set('ph'+k+i,ta.value));hunt.appendChild(d)})}
+  if(tBox){THEMES.forEach((th,i)=>{const b=document.createElement('button');b.type='button';b.innerHTML=`<span class="n">${i+1}</span><span>${th.t}</span>`;
+      b.addEventListener('click',()=>{S.set('pjtheme',i);drawHunt()});tBox.appendChild(b)});drawHunt()}
+
+  // ---------- RACER builder ----------
+  ['pr1','pr2','pr3','pr4','pr5'].forEach(id=>{const el=document.getElementById(id);if(!el)return;el.value=S.get(id,'');el.addEventListener('input',()=>S.set(id,el.value))});
+  ['prc1','prc2','prc3','prc4','prc5','prc6'].forEach(id=>{const el=document.getElementById(id);if(!el)return;el.checked=S.get(id,false);el.addEventListener('change',()=>S.set(id,el.checked))});
+  const prOut=document.getElementById('prOut'),prMsg=document.getElementById('prMsg');
+  function prBuild(){const parts=['pr1','pr2','pr3','pr4','pr5'].map(id=>document.getElementById(id).value.trim());
+    const miss=parts.map((t,i)=>t?null:['R','A','C','E','R'][i]+(i===4?' (recap)':'')).filter(Boolean);
+    if(miss.length){prMsg.textContent='Still empty: '+miss.join(', ')+'.';}else prMsg.textContent='All five parts are in. Now run the checklist.';
+    const txt=parts.filter(Boolean).join(' ');prOut.textContent=txt||'Your paragraph will show up here.';return txt}
+  if(prOut){document.getElementById('prBuild').addEventListener('click',prBuild);
+    document.getElementById('prRead').addEventListener('click',()=>{const t=prBuild();if(t)speak(t)})}
+
+  // ---------- Practice multiple-choice test ----------
+  // [round, question, [choices... first is correct], why]
+  const PQ=[
+    [1,'Where is Percy a student when the story begins?',['Yancy Academy','Camp Half-Blood','Goode High School','Westover Hall'],'Yancy Academy is a boarding school in New York, and Percy is about to be kicked out of another school.'],
+    [1,'On the way home, Percy sees three old women at a fruit stand. One snips a piece of yarn. Why does this scare Grover?',['It is a sign that someone is going to die','It means school is closed','It means Percy failed his exam','It means a storm is coming'],'The three women are the Fates. Cutting the yarn of a life means a death is coming.'],
+    [1,'Who is Gabe Ugliano?',['Percy’s stepdad, who treats Percy and Sally badly','Percy’s Latin teacher','A satyr at camp','A son of Ares'],'Gabe is Percy’s rude, lazy stepfather (“Smelly Gabe”).'],
+    [1,'Why did Sally stay married to Gabe?',['His strong human smell helped hide Percy from monsters','He was rich','Percy asked her to','Gabe was secretly a demigod'],'Gabe’s awful smell covered Percy’s demigod scent, so monsters had a harder time finding him.'],
+    [1,'Who is Mr. D?',['Dionysus, the camp director','Mr. Brunner in disguise','Percy’s father','A Fury'],'Mr. D is Dionysus, god of wine. Zeus is making him run Camp Half-Blood as a punishment.'],
+    [1,'Which cabin does Percy stay in before his godly parent claims him?',['Hermes cabin','Zeus cabin','Athena cabin','Ares cabin'],'Hermes, the god of travelers, takes in campers who haven’t been claimed yet. Luke runs that cabin.'],
+    [1,'During capture the flag, how does everyone find out Percy is a son of Poseidon?',['A glowing green trident appears over his head after the water heals him','Poseidon sends a letter','Chiron announces it at dinner','Percy wins a sword fight with Luke'],'Percy steps into the creek, the water heals him, and Poseidon’s trident sign appears over his head.'],
+    [1,'Who is Clarisse?',['A daughter of Ares who bullies Percy','Annabeth’s sister','Mrs. Dodds in disguise','The Oracle'],'Clarisse tries to dunk Percy’s head in a toilet, and the water blasts her instead.'],
+    [1,'Who is Annabeth’s godly parent?',['Athena, goddess of wisdom','Aphrodite','Hera','Artemis'],'Annabeth is a daughter of Athena, which is why she plans everything.'],
+    [2,'What is the goal of Percy’s quest?',['Find Zeus’s master bolt and return it to Olympus by the summer solstice','Rescue Grover from Las Vegas','Defeat Kronos','Find Medusa’s home'],'Zeus thinks Percy stole his master bolt. If it isn’t returned by the summer solstice, the gods could go to war.'],
+    [2,'Which part of the Oracle’s prophecy comes true when Luke turns on Percy?',['A friend will betray him','He will travel west to face a god','He will find what was stolen','He will fail to save what matters most'],'The prophecy warned that someone who calls Percy a friend would betray him. That turns out to be Luke.'],
+    [2,'What gift does Luke give Percy before the quest?',['Flying sneakers that turn out to be cursed','The sword Riptide','Three magic pearls','A cap of invisibility'],'The shoes were cursed to drag the wearer down to Tartarus. Percy gave them to Grover, which almost cost Grover.'],
+    [2,'Who turns out to be Aunty Em?',['Medusa','A Fury','Echidna','Athena'],'Aunty Em’s “statues” are people Medusa turned to stone.'],
+    [2,'What does Percy do with Medusa’s head?',['Mails it to the gods on Mount Olympus','Throws it in a river','Gives it to Ares','Buries it at camp'],'Percy sends it to Olympus as a bold message to the gods.'],
+    [2,'Who attacks Percy at the Gateway Arch?',['Echidna and the Chimera','The Minotaur','Three Furies','Procrustes'],'Trapped at the top, Percy jumps into the Mississippi River and survives because of the water.'],
+    [2,'In Denver, what does Ares ask the group to get for him?',['His shield from an abandoned water park','His motorcycle','Zeus’s master bolt','A bag of drachmas'],'The water park was a trap. In return, Ares gives them a ride and a backpack.'],
+    [2,'What do Percy, Annabeth and Grover do on the truck heading to Las Vegas?',['Free the animals locked in the back','Steal the truck','Sleep the whole way','Fight a hellhound'],'The animals were being treated badly, so the friends set them free.'],
+    [3,'Why is the Lotus Hotel and Casino dangerous?',['Time flies by inside, and they lose five days','It is full of monsters with swords','Hades owns it','It is on fire'],'It is so fun that nobody wants to leave. Percy realizes they lost five days of their quest.'],
+    [3,'Who is “Crusty” at the waterbed store?',['Procrustes, who stretches or cuts people to fit his beds','Ares in disguise','A Fury','A friendly satyr'],'Percy tricks Crusty into lying on his own bed and escapes.'],
+    [3,'What does the Nereid give Percy at Santa Monica?',['Three pearls to escape the Underworld','A new sword','A map to Olympus','Poseidon’s trident'],'Each pearl gets one person out of the Underworld. That number matters later.'],
+    [3,'How does Annabeth get the group past Cerberus?',['She plays fetch with him using a red rubber ball','She sings him to sleep','Percy fights him','Grover plays music on his pipes'],'Annabeth sees that Cerberus acts like a giant puppy.'],
+    [3,'What does Percy find in his backpack in Hades’s palace?',['Zeus’s master bolt','Medusa’s head','Luke’s shoes','Hades’s helm'],'Ares had hidden the bolt in the backpack he gave them.'],
+    [3,'Why does Percy leave his mom in the Underworld?',['There are only three pearls, and he has to finish the quest and save his friends','He forgot about her','Hades would not let him look for her','She asked to stay'],'It breaks his heart. It also matches the prophecy line about failing to save what matters most.'],
+    [3,'How does Percy beat Ares on the beach?',['The ocean helps him, and he wounds Ares in the heel','Zeus throws lightning','Annabeth uses her invisibility cap','Grover plays his pipes'],'Percy uses the power of the water to stand up to a god.'],
+    [3,'Who really stole the master bolt?',['Luke, working for Kronos','Ares, by himself','Percy','Hades'],'Luke admits it at the end. He wanted the gods to fight each other so Kronos could rise.'],
+    [3,'What does Sally decide to do with Medusa’s head?',['Use it to turn Gabe to stone','Send it back to Olympus','Bury it','Give it to Annabeth'],'Percy leaves the choice to his mom. She stands up for herself.'],
+    [3,'Who is Thalia?',['A daughter of Zeus who was turned into a pine tree that protects camp','Annabeth’s mom','A Fury','The Oracle'],'Zeus turned Thalia into a pine tree as she was dying. The tree guards Camp Half-Blood’s border.'],
+    [3,'What does Grover earn at the end of the book?',['His searcher’s license to look for Pan','A seat on Olympus','Cabin 3','A new sword'],'Grover finally gets to chase his dream of finding the lost god Pan.']
+  ];
+  const box=document.getElementById('pqBox'),sc=document.getElementById('pqScore');
+  if(box){
+    let list=[],qi=0,first=0,missed=[],total=0;
+    function start(r){list=shuffle(PQ.map((q,i)=>q[0]===+r?i:-1).filter(i=>i>=0));total=list.length;qi=0;first=0;missed=[];sc.textContent='';ask()}
+    function ask(){
+      if(qi>=list.length){
+        if(missed.length){sc.textContent=`${first} of ${total} on the first try. Your misses are next.`;list=missed;missed=[];qi=0;setTimeout(ask,900);return}
+        box.innerHTML='<span class="prompt">Round done. Nice reps.</span><span class="sub">Pick another round above.</span>';
+        if(!sc.textContent)sc.textContent=`${first} of ${total} on the first try.`;return}
+      const k=list[qi],[,stem,opts,why]=PQ[k];const order=shuffle(opts.map((_,i)=>i));
+      box.innerHTML=`<span class="prompt">${esc(stem)}</span><div class="row"><button type="button" class="speak">Read to me</button><span class="sub">${qi+1} of ${list.length}</span></div><div class="opts"></div><p class="sub fq-why" hidden></p>`;
+      box.querySelector('.speak').addEventListener('click',()=>speak(stem+'. '+order.map((o,i)=>'Choice '+(i+1)+': '+opts[o]).join('. ')));
+      let wrong=false;const el=box.querySelector('.opts');
+      order.forEach(o=>{const b=document.createElement('button');b.type='button';b.textContent=opts[o];
+        b.addEventListener('click',()=>{if(!box.querySelector('.fq-why').hidden)return;
+          if(o===0){b.classList.add('right');if(!wrong)first++;else missed.push(k);const w=box.querySelector('.fq-why');w.hidden=false;w.innerHTML='<b>Why:</b> '+esc(why);
+            const nx=document.createElement('button');nx.type='button';nx.className='gbtn';nx.textContent=qi+1<list.length||missed.length?'Next':'Finish';nx.addEventListener('click',()=>{qi++;ask()});box.appendChild(nx);nx.focus()}
+          else{b.classList.add('wrong');wrong=true}});
+        el.appendChild(b)});
+    }
+    document.querySelectorAll('#pqRound button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('#pqRound button').forEach(x=>x.setAttribute('aria-pressed',x===b));start(b.dataset.r)}));
+    start('1');
+  }
+
+  // ---------- Currents & Air flashcards ----------
+  const CC={
+    surf:[
+      ['What are ocean currents?','The continuous movement of ocean water from one place to another. They influence climate zones and weather patterns.'],
+      ['What 3 factors create ocean currents?','Winds, seawater density, and the Coriolis effect.'],
+      ['What are the 2 types of ocean currents?','Surface currents (the top 400 meters) and deep ocean currents.'],
+      ['What does the uneven heating of Earth by the sun cause?','Different air temperatures and air pressure at different latitudes. That forms global winds.'],
+      ['What are global winds?','Winds that blow over long distances.'],
+      ['How do surface currents form?','Global winds blow over the ocean. Energy from the wind transfers to the water and makes it move.'],
+      ['What 3 things affect the path of a surface current?','Global winds (most important), Earth’s rotation (the Coriolis effect), and where the continents are.'],
+      ['What is the Coriolis effect?','The curving path of air or ocean water because Earth rotates.'],
+      ['Which way are currents pushed in the Northern Hemisphere?','To the RIGHT, which is clockwise.'],
+      ['Which way are currents pushed in the Southern Hemisphere?','To the LEFT, which is counterclockwise.'],
+      ['What happens when a current hits a continent?','It turns to follow the coastline, or it changes direction and flows back out to sea.'],
+      ['What is a gyre?','A large system of circular ocean currents.'],
+      ['Where does warm current water come from?','Near the equator, where sunlight is most direct. Warm currents move from the equator toward the poles.'],
+      ['Where does cold current water come from?','Near the poles, where sunlight is indirect. Cold currents move from the poles toward the equator.'],
+      ['How do surface currents change the climate of a coast?','A warm current heats the air and wind carries that heat over the land. A cold current cools the air, so the coast is cooler.']
+    ],
+    deep:[
+      ['What are deep ocean currents?','Currents in the depths of the ocean. They move water from the surface down to the ocean floor in a continuous loop.'],
+      ['What makes deep ocean currents move?','Differences in the DENSITY of ocean water. Density depends on temperature and salinity.'],
+      ['What is density?','The amount of matter in a specific volume.'],
+      ['What is salinity?','The amount of dissolved salt in water.'],
+      ['What is thermohaline circulation?','The movement of deep ocean currents. Thermo = temperature, haline = salinity.'],
+      ['What is the global ocean conveyor belt?','The continuous loop of deep currents through all of Earth’s major oceans. It moves heat and nutrients and keeps climate stable.'],
+      ['Where does the conveyor belt start, and why does the water sink?','The North Atlantic near Iceland. Sea ice forms and leaves the salt behind, so the water gets colder, saltier, denser, and sinks.'],
+      ['What is upwelling?','Cold, nutrient-rich water rising UP from the ocean floor to the surface. It feeds algae, the start of ocean food chains.'],
+      ['What is downwelling?','Cold, salty water sinking DOWN. It carries oxygen (and carbon dioxide) to the deep ocean.'],
+      ['How do ocean currents affect Earth’s climate?','They spread heat more evenly between the equator and the poles, so climates don’t get too extreme.']
+    ],
+    air:[
+      ['What is wind?','Air moving from an area of high pressure to an area of low pressure.'],
+      ['What is air pressure?','The force of air pushing down on an area.'],
+      ['What are local winds?','Winds that blow over short distances.'],
+      ['What is a convection current in air?','Warm air rises, cool air sinks, and the air moves in a loop.'],
+      ['What is a sea breeze?','In the DAY, land heats up faster than water. Warm air over land rises, and cooler air blows in from the sea.'],
+      ['What is a land breeze?','At NIGHT, land cools faster than water. Cooler air blows from the land out to the sea.'],
+      ['What is latitude?','How far north or south a place is from the equator.'],
+      ['What is a hemisphere?','Half of Earth. The equator splits it into Northern and Southern.'],
+      ['What are the trade winds?','Global winds between the equator and 30°. They blow from the east toward the equator.'],
+      ['What are the prevailing westerlies?','Global winds between 30° and 60°. They blow from west to east and move weather across the U.S.'],
+      ['What are the polar easterlies?','Cold global winds near the poles (60°–90°) that blow from the east.'],
+      ['What are the doldrums?','A calm area near the equator with very little wind.'],
+      ['What are the horse latitudes?','Calm areas near 30° north and south of the equator.'],
+      ['What is the jet stream?','A band of very fast wind high up in the atmosphere.'],
+      ['What is El Niño?','A time when Pacific Ocean water near the equator is warmer than normal. It changes temperature and precipitation in many regions.']
+    ]
+  };
+  const NOTES={surf:'Answers come from Miss Moriello’s Surface Currents slides.',deep:'Answers come from Miss Moriello’s Deep Currents slides.',air:'From your vocab list. If your class notes say it a little differently, your notes win.',miss:'Cards you tapped “Not yet” on. Clear them by getting each one right.'};
+  const fr=document.getElementById('ccFront');
+  if(fr){
+    const bk=document.getElementById('ccBack'),hint=document.getElementById('ccHint'),cnt=document.getElementById('ccCount'),note=document.getElementById('ccNote');
+    const ALL={};Object.entries(CC).forEach(([d,cards])=>cards.forEach((c,i)=>ALL[d+i]=c));
+    let misses=new Set(S.get('ccmiss',[])),got=new Set(S.get('ccgot',[]));
+    let deck='surf',order=[],idx=0;
+    function build(){const keys=deck==='miss'?[...misses]:CC[deck].map((_,i)=>deck+i);order=shuffle(keys.filter(k=>deck==='miss'||!got.has(k)));if(!order.length&&deck!=='miss'){keys.forEach(k=>got.delete(k));S.set('ccgot',[...got]);order=shuffle(keys)}idx=0;note.textContent=NOTES[deck];show()}
+    function show(){if(!order.length){fr.textContent=deck==='miss'?'No misses right now. Nice work.':'Deck done!';bk.hidden=true;hint.textContent='';cnt.textContent='';return}
+      if(idx>=order.length){fr.textContent='Deck done! Tap “My misses” for the ones to redo.';bk.hidden=true;hint.textContent='';cnt.textContent='';return}
+      const [q,a]=ALL[order[idx]];fr.textContent=q;bk.textContent=a;bk.hidden=true;hint.textContent='Say it out loud, then tap to flip.';cnt.textContent=`${idx+1} of ${order.length}`}
+    document.getElementById('ccCard').addEventListener('click',()=>{if(idx<order.length){bk.hidden=!bk.hidden;hint.textContent=bk.hidden?'Say it out loud, then tap to flip.':'Did you get it?'}});
+    document.getElementById('ccGot').addEventListener('click',()=>{if(idx>=order.length)return;const k=order[idx];got.add(k);misses.delete(k);S.set('ccgot',[...got]);S.set('ccmiss',[...misses]);idx++;show()});
+    document.getElementById('ccAgain').addEventListener('click',()=>{if(idx>=order.length)return;const k=order[idx];misses.add(k);S.set('ccmiss',[...misses]);idx++;show()});
+    document.getElementById('ccSay').addEventListener('click',()=>{if(idx<order.length){const [q,a]=ALL[order[idx]];speak(bk.hidden?q:q+' '+a)}});
+    document.querySelectorAll('#ccDeck button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('#ccDeck button').forEach(x=>x.setAttribute('aria-pressed',x===b));deck=b.dataset.d;build()}));
+    build();
+  }
+})();
+</script>
 
 </body>
 </html>

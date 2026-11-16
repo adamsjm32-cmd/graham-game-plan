@@ -356,6 +356,26 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
 .wkq .mcrow button.right{background:var(--math);border-color:var(--math);color:#fff}
 .wkq .mcrow button.wrong{border-color:var(--due);color:var(--due);text-decoration:line-through}
 .wk-fixed{background:var(--math-soft);border-radius:12px;padding:8px 12px;font-size:15px}
+
+.sg-parts{display:flex;flex-direction:column;gap:10px}
+.sg{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--card)}
+.sg>summary{list-style:none;cursor:pointer;padding:12px 14px;display:flex;gap:12px;align-items:center}
+.sg>summary::-webkit-details-marker{display:none}
+.sg>summary .num{font-family:var(--display);font-weight:700;font-size:20px;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--sci-soft);color:var(--sci);flex-shrink:0}
+.sg>summary>span:last-child{display:flex;flex-direction:column}
+.sg>summary b{font-family:var(--display);font-size:17px}
+.sg-body{padding:0 14px 14px;display:flex;flex-direction:column;gap:10px}
+.sg-vocab{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}
+.sg-vocab div{background:var(--sci-soft);border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:4px}
+.sg-vocab b{font-family:var(--display);font-size:16px}
+.sg-vocab i{font-size:13.5px;color:var(--muted)}
+.sg-table{width:100%;border-collapse:collapse;font-size:15px}
+.sg-table th,.sg-table td{border:1px solid var(--line);padding:8px;text-align:left;vertical-align:top}
+.sg-table th{background:var(--sci-soft);font-family:var(--display)}
+.sg-pic{width:100%;max-width:420px;height:auto;align-self:center}
+.sg-list{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:5px}
+.sg-check{background:var(--math-soft);border-radius:10px;padding:8px 10px}
+.sg-check summary{cursor:pointer;font-weight:700}
 </style>
 
 <div class="wrap">
@@ -426,7 +446,7 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
           <option value="">Pick a coach…</option>
           <optgroup label="Use this week">
             <option value="pjtest">Percy Jackson test coach (study guide Tue · RACER Thu · test Fri)</option>
-            <option value="currents">Currents &amp; Air flashcards (science quiz Tue 11/17)</option>
+            <option value="currents">Ocean Currents quiz coach (science quiz Tue 11/17)</option>
           </optgroup>
           <optgroup label="Completed">
             <option value="percy">Percy Jackson reading</option>
@@ -576,13 +596,120 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
   <!-- CURRENTS & AIR COACH -->
   <section class="panel coach" id="currents" hidden>
     <div class="card">
-      <span class="tag">SCIENCE · MISS MORIELLO · QUIZ TUE 11/17</span>
-      <h2>Currents &amp; Air flashcards</h2>
-      <p>Miss Moriello’s own flashcard questions, with answers from her class slides. Say the answer out loud, then flip. Use your paper study guide from class too.</p>
-      <div class="sk-rep"><span>Sun · Surface Currents · 10 min</span><span>Mon · Deep Currents + misses · 15 min</span><span>Tue morning · Air &amp; Wind · 5 min</span></div>
+      <span class="tag">SCIENCE · MISS MORIELLO · OCEAN CURRENTS QUIZ TUE 11/17</span>
+      <h2>Ocean Currents quiz coach</h2>
+      <p>Your completed study guide is the game plan for this quiz. It’s organized below into 5 parts, with a picture for each model you drew. Read a part, then say it without looking. Then run the <b>Study Guide</b> flashcards.</p>
+      <div class="sk-rep"><span>Mon night · Parts 1–5 + Study Guide deck · 15 min</span><span>Tue morning · My misses · 5 min</span></div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">Your study guide, organized</span>
+      <h3>5 parts, 9 questions</h3>
+      <p class="sub">Tap a part to open it. Each one ends with a quick “say it without looking” check.</p>
+      <div class="sg-parts">
+
+      <details class="sg" open><summary><span class="num">1</span><span><b>The 5 vocab words</b><span class="sub">Question 1</span></span></summary>
+        <div class="sg-body">
+          <div class="sg-vocab">
+            <div><b>Density</b><span>How much matter (stuff) is packed into a space.</span><i>Hook: a crowded bus is dense; an empty bus isn’t.</i></div>
+            <div><b>Salinity</b><span>How much salt is dissolved in the water.</span><i>Hook: <b>sal</b>inity sounds like <b>sal</b>t.</i></div>
+            <div><b>Coriolis effect</b><span>Earth spinning makes winds and ocean water curve.</span><i>Hook: try throwing a ball while spinning on a merry-go-round. It curves.</i></div>
+            <div><b>Gyre</b><span>Ocean water moving in a giant circle.</span><i>Hook: gyre sounds like “gyro.” Both spin.</i></div>
+            <div><b>Thermohaline circulation</b><span>Changes in temperature and salinity make deep ocean water move.</span><i>Hook: <b>thermo</b> = temperature (thermometer), <b>haline</b> = salt.</i></div>
+          </div>
+          <details class="sg-check"><summary>✔ Say it without looking: cover the cards and define all 5. Then tap to check.</summary><p>Density = matter packed in a space · Salinity = dissolved salt · Coriolis = Earth’s spin curves winds and water · Gyre = water moving in a giant circle · Thermohaline = temperature + salt move deep water</p></details>
+        </div>
+      </details>
+
+      <details class="sg"><summary><span class="num">2</span><span><b>Surface currents vs. deep currents</b><span class="sub">Question 2</span></span></summary>
+        <div class="sg-body">
+          <table class="sg-table">
+            <tr><th></th><th>Surface currents</th><th>Deep ocean currents</th></tr>
+            <tr><td><b>Where?</b></td><td>The top 400 meters of the ocean</td><td>The deep ocean</td></tr>
+            <tr><td><b>What drives it?</b></td><td><b>Winds</b></td><td><b>Temperature</b> and <b>salinity</b></td></tr>
+            <tr><td><b>How it moves warm and cold water</b></td><td>Winds blow warm water away from the equator and cold water away from the poles.</td><td>Cold, dense water sinks to the bottom. Warmer water gets pulled in to replace it.</td></tr>
+          </table>
+          <p class="sub">Quick memory: <b>surface = wind</b> · <b>deep = density</b> (temperature + salt).</p>
+          <details class="sg-check"><summary>✔ Say it without looking: what drives each type? Then tap to check.</summary><p>Surface currents are driven by wind. Deep currents are driven by temperature and salinity (density): cold, salty water sinks and warmer water flows in to take its place.</p></details>
+        </div>
+      </details>
+
+      <details class="sg"><summary><span class="num">3</span><span><b>Which way gyres spin</b><span class="sub">Question 3</span></span></summary>
+        <div class="sg-body">
+          <svg class="sg-pic" viewBox="0 0 380 180" role="img" aria-label="Gyres spin clockwise in the Northern Hemisphere and counterclockwise in the Southern Hemisphere">
+            <circle cx="170" cy="90" r="72" fill="var(--sci-soft)" stroke="var(--line)" stroke-width="2"/>
+            <line x1="98" y1="90" x2="242" y2="90" stroke="var(--ink)" stroke-width="2" stroke-dasharray="6 4"/>
+            <text x="92" y="94" text-anchor="end" font-size="12" fill="var(--ink)">equator</text>
+            <path d="M150 58 a22 16 0 1 1 6 16" fill="none" stroke="var(--sci)" stroke-width="3"/>
+            <path d="M156 74 l-9 1 l5 -8" fill="var(--sci)"/>
+            <path d="M190 122 a22 16 0 1 0 -6 16" fill="none" stroke="var(--sci)" stroke-width="3"/>
+            <path d="M184 138 l9 1 l-5 -8" fill="var(--sci)"/>
+            <text x="252" y="52" font-size="12.5" font-weight="700" fill="var(--ink)">NORTH</text>
+            <text x="252" y="68" font-size="12.5" fill="var(--ink)">clockwise ↻</text>
+            <text x="252" y="124" font-size="12.5" font-weight="700" fill="var(--ink)">SOUTH</text>
+            <text x="252" y="140" font-size="12.5" fill="var(--ink)">counterclockwise ↺</text>
+          </svg>
+          <ul class="sg-list"><li><b>Northern Hemisphere:</b> clockwise ↻</li><li><b>Southern Hemisphere:</b> counterclockwise ↺</li><li><b>What causes it?</b> The Coriolis effect (Earth’s spin curves the water).</li></ul>
+          <details class="sg-check"><summary>✔ Say it without looking: which way in the north, which way in the south, and why? Then tap to check.</summary><p>North = clockwise, south = counterclockwise, caused by the Coriolis effect.</p></details>
+        </div>
+      </details>
+
+      <details class="sg"><summary><span class="num">4</span><span><b>Density models: temperature and salt</b><span class="sub">Questions 4 and 5</span></span></summary>
+        <div class="sg-body">
+          <svg class="sg-pic" viewBox="0 0 330 150" role="img" aria-label="Cold water molecules are close together and sink. Warm water molecules spread apart and rise.">
+            <rect x="5" y="10" width="150" height="110" rx="6" fill="var(--sci-soft)" stroke="var(--line)" stroke-width="2"/>
+            <text x="80" y="27" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">COLD water</text>
+            <g fill="var(--sci)"><circle cx="66" cy="102" r="4"/><circle cx="76" cy="102" r="4"/><circle cx="86" cy="102" r="4"/><circle cx="71" cy="94" r="4"/><circle cx="81" cy="94" r="4"/><circle cx="91" cy="102" r="4"/></g>
+            <path d="M40 40 v50" stroke="var(--ink)" stroke-width="2.5"/><path d="M33 84 l7 12 l7 -12" fill="var(--ink)"/>
+            <text x="80" y="140" text-anchor="middle" font-size="11" fill="var(--ink)">slow, close together → SINKS</text>
+            <rect x="175" y="10" width="150" height="110" rx="6" fill="var(--due-soft, #fdeceb)" stroke="var(--line)" stroke-width="2"/>
+            <text x="250" y="27" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">WARM water</text>
+            <g fill="var(--due, #c0392b)"><circle cx="205" cy="45" r="4"/><circle cx="240" cy="60" r="4"/><circle cx="280" cy="42" r="4"/><circle cx="225" cy="85" r="4"/><circle cx="295" cy="75" r="4"/><circle cx="260" cy="100" r="4"/></g>
+            <path d="M310 100 v-50" stroke="var(--ink)" stroke-width="2.5"/><path d="M303 56 l7 -12 l7 12" fill="var(--ink)"/>
+            <text x="250" y="140" text-anchor="middle" font-size="11" fill="var(--ink)">fast, spread apart → RISES</text>
+          </svg>
+          <ul class="sg-list">
+            <li><b>Cold water</b> is <b>MORE</b> dense: its molecules slow down and pack close together, so it sinks.</li>
+            <li><b>Warm water</b> is <b>LESS</b> dense: its molecules speed up and move far apart, so it rises.</li>
+            <li><b>Saltier water</b> is <b>MORE</b> dense, so it sinks. <b>Water with less salt</b> is <b>LESS</b> dense, so it floats.</li>
+            <li>Your guide’s tip: <b>think about convection currents.</b> Dense sinks, less dense rises, and it keeps going around in a loop.</li>
+          </ul>
+          <p class="sub">One rule covers it all: <b>cold + salty = dense = sinks.</b> Warm + less salt = less dense = rises.</p>
+          <details class="sg-check"><summary>✔ Say it without looking: explain cold vs. warm using the word “molecules,” then salty vs. less salty. Then tap to check.</summary><p>Cold water molecules slow down and get close together, so cold water is more dense and sinks. Warm water molecules speed up and spread apart, so warm water is less dense and rises. Saltier water is more dense and sinks; water with less salt is less dense and floats.</p></details>
+        </div>
+      </details>
+
+      <details class="sg"><summary><span class="num">5</span><span><b>The sun, the air, and warm vs. cold water</b><span class="sub">Questions 6–9</span></span></summary>
+        <div class="sg-body">
+          <svg class="sg-pic" viewBox="0 0 380 180" role="img" aria-label="The sun hits the equator directly and the poles at a slant, spreading the energy out">
+            <text x="10" y="16" font-size="12" fill="var(--ink)"><tspan font-weight="700">Poles:</tspan> slanted rays, spread out = cooler</text>
+            <circle cx="40" cy="95" r="22" fill="var(--gold)"/>
+            <text x="40" y="134" text-anchor="middle" font-size="11" fill="var(--ink)">sun</text>
+            <circle cx="260" cy="95" r="62" fill="var(--sci-soft)" stroke="var(--line)" stroke-width="2"/>
+            <line x1="198" y1="95" x2="322" y2="95" stroke="var(--ink)" stroke-dasharray="5 4"/>
+            <text x="326" y="99" font-size="11" font-weight="700" fill="var(--ink)">equator</text>
+            <path d="M68 95 H194" stroke="var(--due)" stroke-width="3"/><path d="M188 89 l10 6 l-10 6" fill="var(--due)"/>
+            <text x="80" y="88" font-size="11" fill="var(--ink)"><tspan font-weight="700">Equator:</tspan> direct = warmest</text>
+            <path d="M66 80 L232 40" stroke="var(--sci)" stroke-width="2"/>
+            <path d="M66 110 L232 150" stroke="var(--sci)" stroke-width="2"/>
+            <circle cx="232" cy="40" r="3" fill="var(--sci)"/><circle cx="232" cy="150" r="3" fill="var(--sci)"/>
+          </svg>
+          <p><b>How the sun heats the air (2 steps):</b></p>
+          <ol class="sg-list"><li>The sun heats the surface (land and water) through <b>radiation</b>.</li><li>The warm land and sea <b>transfer that energy to the air</b> above them.</li></ol>
+          <p><b>Why some places are warmer:</b></p>
+          <ul class="sg-list">
+            <li><b>Equator:</b> the sun hits <b>directly</b>, so it’s the warmest.</li>
+            <li><b>Poles:</b> the sun hits at a slant (<b>indirectly</b>), so the energy is spread out and it’s cooler.</li>
+            <li>So water moving <b>from the equator is warm</b>, and water moving <b>from the poles is cooler</b>.</li>
+          </ul>
+          <details class="sg-check"><summary>✔ Say it without looking: the 2 steps for heating the air, and why the equator is warmer than the poles. Then tap to check.</summary><p>1) The sun heats the land and water by radiation. 2) The land and water pass that energy to the air. The equator gets direct sun, so it’s warmest and sends out warm water; the poles get slanted, spread-out sun, so they’re cooler and send out cold water.</p></details>
+        </div>
+      </details>
+
+      </div>
     </div>
     <div class="card">
-      <div class="row"><div class="seg" id="ccDeck"><button type="button" data-d="surf" aria-pressed="true">Surface Currents</button><button type="button" data-d="deep" aria-pressed="false">Deep Currents</button><button type="button" data-d="air" aria-pressed="false">Air &amp; Wind</button><button type="button" data-d="miss" aria-pressed="false">My misses</button></div></div>
+      <div class="row"><div class="seg" id="ccDeck"><button type="button" data-d="guide" aria-pressed="true">Study Guide</button><button type="button" data-d="surf" aria-pressed="false">Surface Currents</button><button type="button" data-d="deep" aria-pressed="false">Deep Currents</button><button type="button" data-d="air" aria-pressed="false">Air &amp; Wind</button><button type="button" data-d="miss" aria-pressed="false">My misses</button></div></div>
       <button type="button" class="flip" id="ccCard" aria-live="polite"><span class="front" id="ccFront"></span><span class="back cc-back" id="ccBack" hidden></span><span class="hint" id="ccHint">Say it out loud, then tap to flip.</span></button>
       <div class="row">
         <button type="button" class="gbtn ghost" id="ccSay">Read to me</button>
@@ -1169,11 +1296,11 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
       ['k7','read','Sun night · Block 8: Mom or Dad checks it with you, then Turn in',10,0,'#pjtest'],
       ['k3','sci','Sun · Science flashcards: Surface Currents deck',10,0,'#currents'],
       ['k4','read','Sun · Tell Mom or Dad which RACER theme you picked. Tap it in the coach.',2,0,'#pjtest']]},
-     bigs:[['TUE 11/17','Science quiz: Currents & Air','Miss Moriello · early dismissal day','#currents'],['TUE 11/17','Percy Jackson Ch. 21–22 check','Mrs. Pacelli · in class'],['TUE 11/17','Percy Jackson study guide','Mrs. Pacelli · 30 pts · Turn in by 8:00 PM','#pjtest'],['THU 11/19','Percy Jackson RACER theme response','Mrs. Pacelli · 25 pts · in class','#pjtest'],['FRI 11/20','Percy Jackson multiple-choice test','Mrs. Pacelli · Google Form · 75 pts','#pjtest'],['FRI 11/20','Math: November Extra Credit','Mr. DeNuzzo · by 11:59 PM']],
+     bigs:[['TUE 11/17','Science: Ocean Currents quiz','Miss Moriello · early dismissal day','#currents'],['TUE 11/17','Percy Jackson Ch. 21–22 check','Mrs. Pacelli · in class'],['TUE 11/17','Percy Jackson study guide','Mrs. Pacelli · 30 pts · Turn in by 8:00 PM','#pjtest'],['THU 11/19','Percy Jackson RACER theme response','Mrs. Pacelli · 25 pts · in class','#pjtest'],['FRI 11/20','Percy Jackson multiple-choice test','Mrs. Pacelli · Google Form · 75 pts','#pjtest'],['FRI 11/20','Math: November Extra Credit','Mr. DeNuzzo · by 11:59 PM']],
      days:[
       ['2026-11-16','Mon 11/16',[['x16a','read','Percy Jackson Ch. 22 reading finished (Pacelli)',0,1]],
-        [['x16f','read','NEW from Mrs. Pacelli: Ch. 22 question + Ch. 21–22 vocab practice, both due tomorrow',25,0],['x16b','read','Study guide not turned in yet? Finish your open blocks, then Turn in. (Done? Skip this.)',0,0,'#pjtest'],['x16c','sci','Science flashcards: Deep Currents deck + redo your misses (quiz tomorrow)',15,0,'#currents'],['x16d','read','Ch. 21–22 check tomorrow: say out loud what happens in each chapter',5,0],['x16e','skill','Optional: Mrs. Pacelli’s Extra Help is usually Monday after school. Bring one study guide question.',0,0]]],
-      ['2026-11-17','Tue 11/17',[['x17a','sci','SCIENCE QUIZ: Currents & Air (Moriello)',0,1,'#currents'],['x17b','read','Percy Jackson Ch. 21–22 Comprehension Check, in class (Pacelli)',0,1],['x17c','read','PERCY JACKSON STUDY GUIDE, Turn in by 8:00 PM (Pacelli, 30 pts)',0,1,'#pjtest'],['x17g','read','Percy Jackson Ch. 22 Question (Pacelli, posted Mon 11/16)',0,1],['x17h','read','Percy Jackson Ch. 21–22 Vocab Practice (Pacelli, posted Mon 11/16)',0,1]],
+        [['x16f','read','NEW from Mrs. Pacelli: Ch. 22 question + Ch. 21–22 vocab practice, both due tomorrow',25,0],['x16b','read','Study guide not turned in yet? Finish your open blocks, then Turn in. (Done? Skip this.)',0,0,'#pjtest'],['x16c','sci','Science quiz tomorrow: study guide Parts 1–5 + Study Guide flashcards',15,0,'#currents'],['x16d','read','Ch. 21–22 check tomorrow: say out loud what happens in each chapter',5,0],['x16e','skill','Optional: Mrs. Pacelli’s Extra Help is usually Monday after school. Bring one study guide question.',0,0]]],
+      ['2026-11-17','Tue 11/17',[['x17a','sci','SCIENCE QUIZ: Ocean Currents (Moriello)',0,1,'#currents'],['x17b','read','Percy Jackson Ch. 21–22 Comprehension Check, in class (Pacelli)',0,1],['x17c','read','PERCY JACKSON STUDY GUIDE, Turn in by 8:00 PM (Pacelli, 30 pts)',0,1,'#pjtest'],['x17g','read','Percy Jackson Ch. 22 Question (Pacelli, posted Mon 11/16)',0,1],['x17h','read','Percy Jackson Ch. 21–22 Vocab Practice (Pacelli, posted Mon 11/16)',0,1]],
         [['x17e','read','Open Classroom: does the study guide say Turned in? If not, Turn in before 8:00 PM',2,0],['x17f','skill','Early dismissal day (district calendar). Light night: you finished the guide this weekend.',0,0]]],
       ['2026-11-18','Wed 11/18',[],
         [['x18a','read','RACER Rep 1: evidence hunt. Find 2 moments for your theme + page numbers. Sticky-note them.',20,0,'#pjtest'],['x18b','read','RACER Rep 2: write one practice RACER (20-min timer), then run the checklist',20,0,'#pjtest'],['x18c',...CHECK]]],
@@ -1312,7 +1439,7 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
   // coaching library
   const COACHES=[
     ['pjtest','Percy Jackson test coach','Mrs. Pacelli · Reading','active','Use this week: study guide Tue · RACER Thu · test Fri'],
-    ['currents','Currents & Air flashcards','Miss Moriello · Science','active','Use this week: quiz Tue 11/17'],
+    ['currents','Ocean Currents quiz coach','Miss Moriello · Science','active','Use this week: quiz Tue 11/17 · study guide + flashcards'],
     ['percy','Percy Jackson reading','Mrs. Pacelli + Mrs. Marini','done','Completed · all chapter questions turned in'],
     ['spanish','Spanish quiz: Classroom expressions','Ms. Bedoya · Spanish','done','Completed · quiz Oct 28'],
     ['fishquiz','Fish in a Tree practice quiz','Mrs. Heffernan · ELA','done','Completed · test Oct 27'],
@@ -1778,6 +1905,24 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
 
   // ---------- Currents & Air flashcards ----------
   const CC={
+    guide:[
+      ['What is density?','The amount of matter (stuff) in a specific volume.'],
+      ['What is salinity?','The amount of dissolved salt in water.'],
+      ['What is the Coriolis effect?','The curving path of air or ocean water caused by Earth’s rotation.'],
+      ['What is a gyre?','Ocean water moving in a circular pattern.'],
+      ['What is thermohaline circulation?','Changes in temperature and salinity cause deep ocean water to move.'],
+      ['Where are surface currents? Where are deep currents?','Surface currents: the top 400 meters of the ocean. Deep currents: the deep ocean.'],
+      ['What drives surface currents?','Winds.'],
+      ['What drives deep ocean currents?','Temperature and salinity (they change the water’s density).'],
+      ['How do surface currents move warm and cold water?','Winds blow warm water away from the equator and cold water away from the poles.'],
+      ['How do deep currents move water?','Cold, dense water sinks to the bottom, and warmer water gets pulled in to replace it.'],
+      ['Which way do gyres spin in each hemisphere, and why?','Northern: clockwise. Southern: counterclockwise. Caused by the Coriolis effect.'],
+      ['Is cold water more or less dense than warm water? Why?','MORE dense. Its molecules slow down and come close together, so it sinks. Warm water molecules speed up and spread apart, so it rises.'],
+      ['Is saltier water more or less dense?','MORE dense, so it sinks. Water with less salt is less dense, so it floats.'],
+      ['What are the 2 steps for how the sun heats the air?','1) The sun heats the land and water by radiation. 2) The land and water transfer that energy to the air.'],
+      ['How does the sun’s angle change temperature?','At the equator the sun hits directly, so it’s warmest. At the poles it hits at a slant and spreads out, so it’s cooler.'],
+      ['What temperature water moves from the equator? From the poles?','Warm water from the equator (direct sun). Cooler water from the poles (indirect sun).']
+    ],
     surf:[
       ['What are ocean currents?','The continuous movement of ocean water from one place to another. They influence climate zones and weather patterns.'],
       ['What 3 factors create ocean currents?','Winds, seawater density, and the Coriolis effect.'],
@@ -1825,13 +1970,13 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
       ['What is El Niño?','A time when Pacific Ocean water near the equator is warmer than normal. It changes temperature and precipitation in many regions.']
     ]
   };
-  const NOTES={surf:'Answers come from Miss Moriello’s Surface Currents slides.',deep:'Answers come from Miss Moriello’s Deep Currents slides.',air:'From your vocab list. If your class notes say it a little differently, your notes win.',miss:'Cards you tapped “Not yet” on. Clear them by getting each one right.'};
+  const NOTES={guide:'Straight from your completed study guide. These are the most likely quiz questions.',surf:'Answers come from Miss Moriello’s Surface Currents slides.',deep:'Answers come from Miss Moriello’s Deep Currents slides.',air:'From your vocab list. If your class notes say it a little differently, your notes win.',miss:'Cards you tapped “Not yet” on. Clear them by getting each one right.'};
   const fr=document.getElementById('ccFront');
   if(fr){
     const bk=document.getElementById('ccBack'),hint=document.getElementById('ccHint'),cnt=document.getElementById('ccCount'),note=document.getElementById('ccNote');
     const ALL={};Object.entries(CC).forEach(([d,cards])=>cards.forEach((c,i)=>ALL[d+i]=c));
     let misses=new Set(S.get('ccmiss',[])),got=new Set(S.get('ccgot',[]));
-    let deck='surf',order=[],idx=0;
+    let deck='guide',order=[],idx=0;
     function build(){const keys=deck==='miss'?[...misses]:CC[deck].map((_,i)=>deck+i);order=shuffle(keys.filter(k=>deck==='miss'||!got.has(k)));if(!order.length&&deck!=='miss'){keys.forEach(k=>got.delete(k));S.set('ccgot',[...got]);order=shuffle(keys)}idx=0;note.textContent=NOTES[deck];show()}
     function show(){if(!order.length){fr.textContent=deck==='miss'?'No misses right now. Nice work.':'Deck done!';bk.hidden=true;hint.textContent='';cnt.textContent='';return}
       if(idx>=order.length){fr.textContent='Deck done! Tap “My misses” for the ones to redo.';bk.hidden=true;hint.textContent='';cnt.textContent='';return}

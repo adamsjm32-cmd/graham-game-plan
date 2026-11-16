@@ -599,7 +599,7 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
       <span class="tag">SCIENCE · MISS MORIELLO · OCEAN CURRENTS QUIZ WED 11/18 (MOVED)</span>
       <h2>Ocean Currents quiz coach</h2>
       <p>Your completed study guide is the game plan for this quiz. It’s organized below into 5 parts, with a picture for each model you drew. Read a part, then say it without looking. Then run the <b>Study Guide</b> flashcards.</p>
-      <div class="sk-rep"><span>Mon night · Parts 1–3 + Study Guide deck · 10 min</span><span>Tue night · Parts 4–5 + My misses · 15 min</span><span>Wed morning · one last run · 5 min</span></div>
+      <div class="sk-rep"><span>Mon night · Parts 1–3 + Study Guide deck · 10 min</span><span>Tue night · Parts 4–5 + practice quiz · 20 min</span><span>Wed morning · Study Guide flashcards · 5 min</span></div>
     </div>
 
     <div class="card">
@@ -708,6 +708,15 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
 
       </div>
     </div>
+    <div class="card" id="sq">
+      <span class="lbl">Practice quiz · study guide Parts 1–5 · about 10 min</span>
+      <h3>Ocean Currents practice quiz</h3>
+      <p class="sub">20 questions, 4 from each part. Answer without looking at the study guide. You’ll see why after each one, then your score for every part.</p>
+      <div class="row"><button type="button" class="gbtn" id="sqStart">Start the quiz</button><span class="sub" id="sqLast"></span></div>
+      <div class="qbox" id="sqBox" aria-live="polite" hidden></div>
+      <div id="sqResults" hidden></div>
+    </div>
+
     <div class="card">
       <div class="row"><div class="seg" id="ccDeck"><button type="button" data-d="guide" aria-pressed="true">Study Guide</button><button type="button" data-d="surf" aria-pressed="false">Surface Currents</button><button type="button" data-d="deep" aria-pressed="false">Deep Currents</button><button type="button" data-d="air" aria-pressed="false">Air &amp; Wind</button><button type="button" data-d="miss" aria-pressed="false">My misses</button></div></div>
       <button type="button" class="flip" id="ccCard" aria-live="polite"><span class="front" id="ccFront"></span><span class="back cc-back" id="ccBack" hidden></span><span class="hint" id="ccHint">Say it out loud, then tap to flip.</span></button>
@@ -1301,7 +1310,7 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
       ['2026-11-16','Mon 11/16',[['x16a','read','Percy Jackson Ch. 22 reading finished (Pacelli)',0,1]],
         [['x16f','read','NEW from Mrs. Pacelli: Ch. 22 question + Ch. 21–22 vocab practice, both due tomorrow',25,0],['x16b','read','Study guide not turned in yet? Finish your open blocks, then Turn in. (Done? Skip this.)',0,0,'#pjtest'],['x16c','sci','Science (quiz now Wed): study guide Parts 1–3 + Study Guide flashcards',10,0,'#currents'],['x16d','read','Ch. 21–22 check tomorrow: say out loud what happens in each chapter',5,0],['x16e','skill','Optional: Mrs. Pacelli’s Extra Help is usually Monday after school. Bring one study guide question.',0,0]]],
       ['2026-11-17','Tue 11/17',[['x17a','sci','Science: in-class study day (quiz moved to Wed 11/18)',0,1,'#currents'],['x17b','read','Percy Jackson Ch. 21–22 Comprehension Check, in class (Pacelli)',0,1],['x17c','read','PERCY JACKSON STUDY GUIDE, Turn in by 8:00 PM (Pacelli, 30 pts)',0,1,'#pjtest'],['x17g','read','Percy Jackson Ch. 22 Question (Pacelli, posted Mon 11/16)',0,1],['x17h','read','Percy Jackson Ch. 21–22 Vocab Practice (Pacelli, posted Mon 11/16)',0,1]],
-        [['x17s','sci','Science quiz tomorrow: study guide Parts 4–5 + My misses flashcards',15,0,'#currents'],['x17e','read','Open Classroom: does the study guide say Turned in? If not, Turn in before 8:00 PM',2,0],['x17f','skill','Early dismissal day (district calendar). Light night: you finished the guide this weekend.',0,0]]],
+        [['x17s','sci','Science quiz tomorrow: study guide Parts 4–5, then the 20-question practice quiz (redo misses)',20,0,'#currents'],['x17e','read','Open Classroom: does the study guide say Turned in? If not, Turn in before 8:00 PM',2,0],['x17f','skill','Early dismissal day (district calendar). Light night: you finished the guide this weekend.',0,0]]],
       ['2026-11-18','Wed 11/18',[['x18q','sci','SCIENCE QUIZ: Ocean Currents (Moriello)',0,1,'#currents']],
         [['x18a','read','RACER Rep 1: evidence hunt. Find 2 moments for your theme + page numbers. Sticky-note them.',20,0,'#pjtest'],['x18b','read','RACER Rep 2: write one practice RACER (20-min timer), then run the checklist',20,0,'#pjtest'],['x18c',...CHECK]]],
       ['2026-11-19','Thu 11/19',[['x19a','read','PERCY JACKSON RACER THEME RESPONSE, in class (Pacelli, 25 pts)',0,1,'#pjtest'],['x19b','skill','Picture Retake Day (only if you need a retake)',0,1]],
@@ -2152,6 +2161,75 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
       body.appendChild(q)});
     box.appendChild(d)});
   tally();
+})();
+</script>
+<script>
+// Ocean Currents practice quiz: study guide Parts 1–5 (added Nov 16)
+(function(){
+  const S={get(k,d){try{const v=localStorage.getItem('ggp:'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('ggp:'+k,JSON.stringify(v))}catch(e){}}};
+  function speak(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.rate=.92;speechSynthesis.speak(u)}catch(e){}}
+  function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+  const PARTS={1:'The 5 vocab words',2:'Surface vs. deep currents',3:'Which way gyres spin',4:'Density models',5:'The sun, the air, and warm vs. cold water'};
+  // [part, question, [correct first, then wrong], why]
+  const Q=[
+    [1,'What is density?',['How much matter (stuff) is packed into a space','How hot or cold the water is','How much salt is in the water','How fast the water is moving'],'Density is how much matter is packed into a space. Think of a crowded bus.'],
+    [1,'What is salinity?',['How much salt is dissolved in the water','How deep the water is','How warm the water is','How fast a current moves'],'Salinity sounds like salt: it’s the amount of dissolved salt.'],
+    [1,'What is the Coriolis effect?',['Earth’s spin making winds and ocean water curve','Salt making water sink','The sun heating the equator','Wind pushing water onto a beach'],'Earth spins under moving air and water, so their paths curve.'],
+    [1,'What is a gyre?',['Ocean water moving in a giant circle','A deep current that sinks near the poles','A strong wind near the equator','A warm current that flows straight north'],'A gyre is a huge circle of moving ocean water.'],
+    [2,'What drives (powers) surface currents?',['Winds','Temperature and salinity','The ocean floor','Earthquakes'],'Surface = wind. Wind energy moves into the water and makes it move.'],
+    [2,'What drives deep ocean currents?',['Temperature and salinity (differences in density)','Winds blowing across the top of the ocean','The moon only','Boats and ships'],'Deep = density. Temperature and salt change how dense the water is.'],
+    [2,'Where are surface currents found?',['In the top 400 meters of the ocean','On the ocean floor','Only near the North Pole','Only in rivers and lakes'],'Surface currents are in the upper part of the ocean, the top 400 meters.'],
+    [2,'How do deep currents move water?',['Cold, dense water sinks, and warmer water gets pulled in to replace it','Wind pushes the deep water along the bottom','Warm water sinks and cold water rises','Deep water never moves'],'Cold, dense water sinks to the bottom, and warmer water flows in to take its place.'],
+    [3,'Which way do gyres spin in the Northern Hemisphere?',['Clockwise','Counterclockwise','Straight north','They don’t spin'],'Northern Hemisphere = clockwise, like a normal clock.'],
+    [3,'Which way do gyres spin in the Southern Hemisphere?',['Counterclockwise','Clockwise','Straight south','They don’t spin'],'Southern Hemisphere = counterclockwise, the opposite of a clock.'],
+    [3,'What causes gyres to spin in a circle?',['The Coriolis effect','Salt in the water','The angle of the sun','Sea ice melting'],'Earth’s spin (the Coriolis effect) curves the currents into circles.'],
+    [3,'The Coriolis effect happens because…',['Earth rotates (spins)','The ocean is salty','The moon pulls on the water','Land is warmer than water'],'Coriolis is caused by Earth’s rotation.'],
+    [4,'Compared to warm water, cold water is…',['MORE dense, because its molecules slow down and pack close together','LESS dense, because its molecules speed up and spread apart','MORE dense, because its molecules speed up','The same density'],'Cold molecules slow down and get close together, so cold water is more dense.'],
+    [4,'What does warm water do in the ocean?',['It rises, because it is less dense','It sinks, because it is more dense','It turns into salt','It stops moving'],'Warm water molecules spread apart, so it is less dense and rises.'],
+    [4,'Saltier water is…',['MORE dense, so it sinks','LESS dense, so it floats','The same density as fresh water','Always warmer'],'More salt packs more matter into the same space, so it sinks.'],
+    [4,'Which water would sink to the bottom the fastest?',['Cold and salty','Warm and fresh (less salt)','Warm and salty','Cold and fresh (less salt)'],'Cold + salty = the most dense = sinks.'],
+    [5,'How does the sun heat the air?',['The sun heats the land and water by radiation, then they pass the energy to the air','The sun heats the air first, then the air heats the land','Wind carries heat straight from the sun','Ocean currents heat the sun'],'Two steps: radiation heats the surface, then the surface warms the air.'],
+    [5,'Why is the equator warmer than the poles?',['The sun hits the equator directly','The equator is closer to the moon','The poles have more salt','The equator has more wind'],'Direct sunlight at the equator = most energy = warmest.'],
+    [5,'Why are the poles cooler?',['The sun hits at a slant, so the energy is spread out','The poles are farther from the ocean','The poles get no sunlight at all','Cold currents come from the equator'],'Slanted (indirect) sunlight spreads the energy out, so it’s cooler.'],
+    [5,'A current that starts near the equator carries…',['Warm water','Cold water','Only fresh water','No water, just wind'],'Equator = direct sun = warm water. Currents from the poles carry cooler water.']
+  ];
+  const box=document.getElementById('sqBox'),res=document.getElementById('sqResults'),last=document.getElementById('sqLast'),startBtn=document.getElementById('sqStart');
+  if(!box)return;
+  const prev=S.get('sqlast',null);if(prev)last.textContent=`Last time: ${prev.score} of 20 (${prev.date})`;
+  let order=[],i=0,firstTry={},retry=[],round=1;
+  function start(list){order=shuffle(list.slice());i=0;box.hidden=false;res.hidden=true;ask()}
+  function ask(){
+    if(i>=order.length){return finish()}
+    const k=order[i],[part,stem,opts,why]=Q[k];const sh=shuffle(opts.map((_,n)=>n));
+    box.innerHTML=`<span class="sub">${round===1?'Question':'Redo'} ${i+1} of ${order.length} · Part ${part}: ${PARTS[part]}</span><span class="prompt">${stem}</span><div class="row"><button type="button" class="speak">Read to me</button></div><div class="opts"></div><p class="sub fq-why" hidden></p>`;
+    box.querySelector('.speak').addEventListener('click',()=>speak(stem+'. '+sh.map((o,n)=>'Choice '+(n+1)+': '+opts[o]).join('. ')));
+    const el=box.querySelector('.opts');let missed=false,done=false;
+    sh.forEach(o=>{const b=document.createElement('button');b.type='button';b.textContent=opts[o];
+      b.addEventListener('click',()=>{if(done)return;
+        if(o===0){done=true;b.classList.add('right');if(round===1)firstTry[k]=!missed;
+          const w=box.querySelector('.fq-why');w.hidden=false;w.innerHTML=(missed?'<b>Got it now.</b> ':'<b>Yes!</b> ')+why;
+          const nx=document.createElement('button');nx.type='button';nx.className='gbtn';nx.textContent=i+1<order.length?'Next':'See my score';nx.addEventListener('click',()=>{i++;ask()});box.appendChild(nx);nx.focus()}
+        else{b.classList.add('wrong');missed=true}});
+      el.appendChild(b)});
+  }
+  function finish(){
+    box.hidden=true;res.hidden=false;
+    if(round===1){
+      const score=Object.values(firstTry).filter(Boolean).length;
+      const d=new Date();S.set('sqlast',{score,date:`${d.getMonth()+1}/${d.getDate()}`});last.textContent=`Last time: ${score} of 20 (${d.getMonth()+1}/${d.getDate()})`;
+      const rows=[1,2,3,4,5].map(p=>{const ks=Q.map((q,n)=>q[0]===p?n:-1).filter(n=>n>=0);const ok=ks.filter(n=>firstTry[n]).length;return {p,ok,n:ks.length}});
+      retry=Object.keys(firstTry).filter(k=>!firstTry[k]).map(Number);
+      res.innerHTML=`<h3 style="margin:8px 0 4px">${score} of 20 right on the first try${score>=18?' — game ready!':score>=15?' — almost there.':' — good reps, keep going.'}</h3>
+        <table class="sg-table"><tr><th>Part</th><th>First try</th><th></th></tr>${rows.map(r=>`<tr><td>${r.p}. ${PARTS[r.p]}</td><td>${r.ok} of ${r.n}</td><td>${r.ok===r.n?'✔ Solid':`<a href="#" data-part="${r.p}">Review Part ${r.p}</a>`}</td></tr>`).join('')}</table>
+        <div class="row" style="margin-top:8px">${retry.length?`<button type="button" class="gbtn" id="sqRetry">Redo my ${retry.length} miss${retry.length>1?'es':''}</button>`:''}<button type="button" class="gbtn ghost" id="sqAgain">Take it again</button></div>`;
+      res.querySelectorAll('[data-part]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();const d=document.querySelectorAll('#currents details.sg')[+a.dataset.part-1];if(d){d.open=true;d.scrollIntoView({behavior:'smooth',block:'start'})}}));
+      const rb=res.querySelector('#sqRetry');if(rb)rb.addEventListener('click',()=>{round=2;start(retry)});
+    }else{
+      res.innerHTML=`<h3 style="margin:8px 0 4px">Misses redone. Nice work.</h3><p class="sub">Tomorrow, take the full quiz once more to lock it in.</p><div class="row"><button type="button" class="gbtn ghost" id="sqAgain">Take the full quiz again</button></div>`;
+    }
+    res.querySelector('#sqAgain').addEventListener('click',()=>{round=1;firstTry={};start(Q.map((_,n)=>n))});
+  }
+  startBtn.addEventListener('click',()=>{round=1;firstTry={};start(Q.map((_,n)=>n))});
 })();
 </script>
 </body>

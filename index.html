@@ -376,6 +376,9 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
 .sg-list{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:5px}
 .sg-check{background:var(--math-soft);border-radius:10px;padding:8px 10px}
 .sg-check summary{cursor:pointer;font-weight:700}
+.sq-hint{background:var(--gold-soft);border-radius:10px;padding:8px 10px;margin:4px 0 0}
+.sq-send{display:flex;flex-direction:column;gap:6px;background:var(--math-soft);border:2px solid var(--math);border-radius:14px;padding:12px;margin:6px 0}
+.sq-send a.gbtn{align-self:flex-start;text-decoration:none}
 </style>
 
 <div class="wrap">
@@ -2193,30 +2196,31 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
     [5,'Why are the poles cooler?',['The sun hits at a slant, so the energy is spread out','The poles are farther from the ocean','The poles get no sunlight at all','Cold currents come from the equator'],'Slanted (indirect) sunlight spreads the energy out, so it’s cooler.'],
     [5,'A current that starts near the equator carries…',['Warm water','Cold water','Only fresh water','No water, just wind'],'Equator = direct sun = warm water. Currents from the poles carry cooler water.']
   ];
+  const HINTS=["Think of a crowded bus vs. an empty bus. Which word is about how packed in something is?", "Say the word slowly: SAL-inity. What does it sound like?", "Picture throwing a ball while spinning on a merry-go-round. What makes the ball curve?", "Gyre sounds like “gyro.” What do gyros do?", "Surface currents get their push from something blowing across the top of the ocean.", "Deep = Density. What two things change how dense water is?", "Surface means the top part of the ocean. Look for the answer about the upper ocean.", "Which water is heavier: cold or warm? Heavy water goes down, and something has to fill its spot.", "Northern Hemisphere: think of how the hands on a normal clock move.", "The Southern Hemisphere spins the opposite way from the north.", "It’s one of your 5 vocab words, the one about Earth spinning.", "What is Earth always doing, every single day and night?", "Cold molecules move slowly. Do slow molecules spread out or huddle close together?", "Is warm water more or less dense than cold water? Less dense things go up.", "More salt means more stuff packed into the same space. Is that more or less dense?", "Cold + salty is the heaviest combo. Which choice has both?", "Two steps: the sun warms the ground and the ocean first. Then what gets warmed?", "Think about the sun-angle picture. Where do the sun’s rays hit straight on?", "At the poles, the sun’s rays come in at a slant. What happens to the energy?", "Where does the sun hit directly? Water that starts there will be…"];
   const box=document.getElementById('sqBox'),res=document.getElementById('sqResults'),last=document.getElementById('sqLast'),startBtn=document.getElementById('sqStart');
   if(!box)return;
-  const prev=S.get('sqlast',null);if(prev)last.textContent=`Last time: ${prev.score} of 20 (${prev.date})`;
-  let order=[],i=0,firstTry={},retry=[],round=1;
+  const prev=S.get('sqlast2',null);if(prev)last.textContent=`Last time: ${prev.score} of 20 (${prev.date})`;
+  let order=[],i=0,firstTry={},retry=[],round=1,hintsUsed=0;
   function start(list){order=shuffle(list.slice());i=0;box.hidden=false;res.hidden=true;ask()}
   function ask(){
     if(i>=order.length){return finish()}
     const k=order[i],[part,stem,opts,why]=Q[k];const sh=shuffle(opts.map((_,n)=>n));
-    box.innerHTML=`<span class="sub">${round===1?'Question':'Redo'} ${i+1} of ${order.length} · Part ${part}: ${PARTS[part]}</span><span class="prompt">${stem}</span><div class="row"><button type="button" class="speak">Read to me</button></div><div class="opts"></div><p class="sub fq-why" hidden></p>`;
+    box.innerHTML=`<span class="sub">${round===1?'Question':'Redo'} ${i+1} of ${order.length} · Part ${part}: ${PARTS[part]}</span><span class="prompt">${stem}</span><div class="row"><button type="button" class="speak">Read to me</button></div><div class="opts"></div><p class="sq-hint" hidden></p><p class="sub fq-why" hidden></p>`;
     box.querySelector('.speak').addEventListener('click',()=>speak(stem+'. '+sh.map((o,n)=>'Choice '+(n+1)+': '+opts[o]).join('. ')));
     const el=box.querySelector('.opts');let missed=false,done=false;
     sh.forEach(o=>{const b=document.createElement('button');b.type='button';b.textContent=opts[o];
       b.addEventListener('click',()=>{if(done)return;
-        if(o===0){done=true;b.classList.add('right');if(round===1)firstTry[k]=!missed;
+        if(o===0){done=true;b.classList.add('right');box.querySelector('.sq-hint').hidden=true;if(round===1)firstTry[k]=!missed;
           const w=box.querySelector('.fq-why');w.hidden=false;w.innerHTML=(missed?'<b>Got it now.</b> ':'<b>Yes!</b> ')+why;
           const nx=document.createElement('button');nx.type='button';nx.className='gbtn';nx.textContent=i+1<order.length?'Next':'See my score';nx.addEventListener('click',()=>{i++;ask()});box.appendChild(nx);nx.focus()}
-        else{b.classList.add('wrong');missed=true}});
+        else{b.classList.add('wrong');if(!missed&&round===1)hintsUsed++;missed=true;const h=box.querySelector('.sq-hint');h.hidden=false;h.innerHTML='💡 <b>Hint:</b> '+HINTS[k]+' <span class="sub">Try again.</span>'}});
       el.appendChild(b)});
   }
   function finish(){
     box.hidden=true;res.hidden=false;
     if(round===1){
       const score=Object.values(firstTry).filter(Boolean).length;
-      const d=new Date();S.set('sqlast',{score,date:`${d.getMonth()+1}/${d.getDate()}`});last.textContent=`Last time: ${score} of 20 (${d.getMonth()+1}/${d.getDate()})`;
+      const d=new Date();S.set('sqlast2',{score,date:`${d.getMonth()+1}/${d.getDate()}`});last.textContent=`Last time: ${score} of 20 (${d.getMonth()+1}/${d.getDate()})`;
       const rows=[1,2,3,4,5].map(p=>{const ks=Q.map((q,n)=>q[0]===p?n:-1).filter(n=>n>=0);const ok=ks.filter(n=>firstTry[n]).length;return {p,ok,n:ks.length}});
       retry=Object.keys(firstTry).filter(k=>!firstTry[k]).map(Number);
       res.innerHTML=`<h3 style="margin:8px 0 4px">${score} of 20 right on the first try${score>=18?' — game ready!':score>=15?' — almost there.':' — good reps, keep going.'}</h3>
@@ -2224,12 +2228,21 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
         <div class="row" style="margin-top:8px">${retry.length?`<button type="button" class="gbtn" id="sqRetry">Redo my ${retry.length} miss${retry.length>1?'es':''}</button>`:''}<button type="button" class="gbtn ghost" id="sqAgain">Take it again</button></div>`;
       res.querySelectorAll('[data-part]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();const d=document.querySelectorAll('#currents details.sg')[+a.dataset.part-1];if(d){d.open=true;d.scrollIntoView({behavior:'smooth',block:'start'})}}));
       const rb=res.querySelector('#sqRetry');if(rb)rb.addEventListener('click',()=>{round=2;start(retry)});
+      const to=['adamsjm32','gmail.com'].join('@');
+      const when=new Date().toLocaleString('en-US',{weekday:'short',month:'numeric',day:'numeric',hour:'numeric',minute:'2-digit'});
+      const lines=[`Graham's Ocean Currents practice quiz (${when})`,'',`First-try score: ${score} of 20`,`Needed a hint on: ${hintsUsed} question${hintsUsed===1?'':'s'}`,'','By part:',...rows.map(r=>`  Part ${r.p}. ${PARTS[r.p]}: ${r.ok} of ${r.n}`)];
+      if(retry.length){lines.push('','Missed on the first try:');retry.forEach(k=>lines.push(`  - (Part ${Q[k][0]}) ${Q[k][1]}  Answer: ${Q[k][2][0]}`))}else{lines.push('','No misses!')}
+      lines.push('','Sent from Graham\'s Game Plan.');
+      const href=`mailto:${to}?subject=${encodeURIComponent(`Graham's science practice quiz: ${score} of 20`)}&body=${encodeURIComponent(lines.join('\n'))}`;
+      const sendBox=document.createElement('div');sendBox.className='sq-send';
+      sendBox.innerHTML=`<b>Last step: send your results to Dad.</b><span class="sub">Tap the button, then tap Send in your email.</span><a class="gbtn" href="${href}">📧 Send my results to Dad</a>`;
+      res.insertBefore(sendBox,res.firstChild);
     }else{
       res.innerHTML=`<h3 style="margin:8px 0 4px">Misses redone. Nice work.</h3><p class="sub">Tomorrow, take the full quiz once more to lock it in.</p><div class="row"><button type="button" class="gbtn ghost" id="sqAgain">Take the full quiz again</button></div>`;
     }
-    res.querySelector('#sqAgain').addEventListener('click',()=>{round=1;firstTry={};start(Q.map((_,n)=>n))});
+    res.querySelector('#sqAgain').addEventListener('click',()=>{round=1;firstTry={};hintsUsed=0;start(Q.map((_,n)=>n))});
   }
-  startBtn.addEventListener('click',()=>{round=1;firstTry={};start(Q.map((_,n)=>n))});
+  startBtn.addEventListener('click',()=>{round=1;firstTry={};hintsUsed=0;start(Q.map((_,n)=>n))});
 })();
 </script>
 </body>

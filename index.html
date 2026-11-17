@@ -377,6 +377,10 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
 .sg-check{background:var(--math-soft);border-radius:10px;padding:8px 10px}
 .sg-check summary{cursor:pointer;font-weight:700}
 .sq-hint{background:var(--gold-soft);border-radius:10px;padding:8px 10px;margin:4px 0 0}
+#currents details.sg,#sqBox{scroll-margin-top:120px}
+.sq-back{position:fixed;right:14px;bottom:14px;z-index:50;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.sq-back[hidden]{display:none}
+.sq-hint .row{margin:6px 0}
 .sq-send{display:flex;flex-direction:column;gap:6px;background:var(--math-soft);border:2px solid var(--math);border-radius:14px;padding:12px;margin:6px 0}
 .sq-send a.gbtn{align-self:flex-start;text-decoration:none}
 </style>
@@ -2196,11 +2200,13 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
     [5,'Why are the poles cooler?',['The sun hits at a slant, so the energy is spread out','The poles are farther from the ocean','The poles get no sunlight at all','Cold currents come from the equator'],'Slanted (indirect) sunlight spreads the energy out, so it’s cooler.'],
     [5,'A current that starts near the equator carries…',['Warm water','Cold water','Only fresh water','No water, just wind'],'Equator = direct sun = warm water. Currents from the poles carry cooler water.']
   ];
-  const HINTS=["Think of a crowded bus vs. an empty bus. Which word is about how packed in something is?", "Say the word slowly: SAL-inity. What does it sound like?", "Picture throwing a ball while spinning on a merry-go-round. What makes the ball curve?", "Gyre sounds like “gyro.” What do gyros do?", "Surface currents get their push from something blowing across the top of the ocean.", "Deep = Density. What two things change how dense water is?", "Surface means the top part of the ocean. Look for the answer about the upper ocean.", "Which water is heavier: cold or warm? Heavy water goes down, and something has to fill its spot.", "Northern Hemisphere: think of how the hands on a normal clock move.", "The Southern Hemisphere spins the opposite way from the north.", "It’s one of your 5 vocab words, the one about Earth spinning.", "What is Earth always doing, every single day and night?", "Cold molecules move slowly. Do slow molecules spread out or huddle close together?", "Is warm water more or less dense than cold water? Less dense things go up.", "More salt means more stuff packed into the same space. Is that more or less dense?", "Cold + salty is the heaviest combo. Which choice has both?", "Two steps: the sun warms the ground and the ocean first. Then what gets warmed?", "Think about the sun-angle picture. Where do the sun’s rays hit straight on?", "At the poles, the sun’s rays come in at a slant. What happens to the energy?", "Where does the sun hit directly? Water that starts there will be…"];
+  const HINTS=["Go to <b>Part 1</b>. Find the <b>Density</b> card and read its definition.", "Go to <b>Part 1</b>. Find the <b>Salinity</b> card and read its definition.", "Go to <b>Part 1</b>. Find the <b>Coriolis effect</b> card and read its definition.", "Go to <b>Part 1</b>. Find the <b>Gyre</b> card and read its definition.", "Go to <b>Part 2</b>. In the table, find the <b>“What drives it?”</b> row and read the <b>Surface currents</b> column.", "Go to <b>Part 2</b>. In the table, find the <b>“What drives it?”</b> row and read the <b>Deep ocean currents</b> column.", "Go to <b>Part 2</b>. In the table, find the <b>“Where?”</b> row and read the <b>Surface currents</b> column.", "Go to <b>Part 2</b>. In the table, find the bottom row, <b>“How it moves warm and cold water,”</b> and read the <b>Deep ocean currents</b> column.", "Go to <b>Part 3</b>. Look at the swirl <b>above</b> the equator line in the picture, or read the first bullet.", "Go to <b>Part 3</b>. Look at the swirl <b>below</b> the equator line in the picture, or read the second bullet.", "Go to <b>Part 3</b>. Read the third bullet, <b>“What causes it?”</b>", "Go to <b>Part 1</b>. Read the <b>Coriolis effect</b> card again. What is doing the spinning?", "Go to <b>Part 4</b>. Look at the <b>COLD water</b> box in the picture, then read the first bullet.", "Go to <b>Part 4</b>. Look at the <b>WARM water</b> box in the picture, then read the second bullet.", "Go to <b>Part 4</b>. Read the third bullet, the one about <b>saltier water</b>.", "Go to <b>Part 4</b>. Find the line that starts <b>“One rule covers it all.”</b>", "Go to <b>Part 5</b>. Read <b>“How the sun heats the air (2 steps)”</b> in order: step 1, then step 2.", "Go to <b>Part 5</b>. Under <b>“Why some places are warmer,”</b> read the <b>Equator</b> bullet.", "Go to <b>Part 5</b>. Under <b>“Why some places are warmer,”</b> read the <b>Poles</b> bullet.", "Go to <b>Part 5</b>. Under <b>“Why some places are warmer,”</b> read the last bullet."];
   const box=document.getElementById('sqBox'),res=document.getElementById('sqResults'),last=document.getElementById('sqLast'),startBtn=document.getElementById('sqStart');
   if(!box)return;
   const prev=S.get('sqlast2',null);if(prev)last.textContent=`Last time: ${prev.score} of 20 (${prev.date})`;
   let order=[],i=0,firstTry={},retry=[],round=1,hintsUsed=0;
+  const back=document.createElement('button');back.type='button';back.className='gbtn sq-back';back.textContent='↩ Back to my question';back.hidden=true;document.body.appendChild(back);
+  back.addEventListener('click',()=>{back.hidden=true;box.scrollIntoView({behavior:'smooth',block:'center'})});
   function start(list){order=shuffle(list.slice());i=0;box.hidden=false;res.hidden=true;ask()}
   function ask(){
     if(i>=order.length){return finish()}
@@ -2213,7 +2219,7 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
         if(o===0){done=true;b.classList.add('right');box.querySelector('.sq-hint').hidden=true;if(round===1)firstTry[k]=!missed;
           const w=box.querySelector('.fq-why');w.hidden=false;w.innerHTML=(missed?'<b>Got it now.</b> ':'<b>Yes!</b> ')+why;
           const nx=document.createElement('button');nx.type='button';nx.className='gbtn';nx.textContent=i+1<order.length?'Next':'See my score';nx.addEventListener('click',()=>{i++;ask()});box.appendChild(nx);nx.focus()}
-        else{b.classList.add('wrong');if(!missed&&round===1)hintsUsed++;missed=true;const h=box.querySelector('.sq-hint');h.hidden=false;h.innerHTML='💡 <b>Hint:</b> '+HINTS[k]+' <span class="sub">Try again.</span>'}});
+        else{b.classList.add('wrong');if(!missed&&round===1)hintsUsed++;missed=true;const h=box.querySelector('.sq-hint');h.hidden=false;h.innerHTML='💡 <b>Go find it:</b> '+HINTS[k]+'<span class="row"><button type="button" class="gbtn sq-look">📖 Open Part '+part+'</button></span><span class="sub">Find it in the study guide, then come back and try again.</span>';h.querySelector('.sq-look').addEventListener('click',()=>{const d=document.querySelectorAll('#currents details.sg')[part-1];if(d){d.open=true;d.scrollIntoView({behavior:'smooth',block:'start'});back.hidden=false}})}});
       el.appendChild(b)});
   }
   function finish(){
@@ -2233,9 +2239,11 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
       const lines=[`Graham's Ocean Currents practice quiz (${when})`,'',`First-try score: ${score} of 20`,`Needed a hint on: ${hintsUsed} question${hintsUsed===1?'':'s'}`,'','By part:',...rows.map(r=>`  Part ${r.p}. ${PARTS[r.p]}: ${r.ok} of ${r.n}`)];
       if(retry.length){lines.push('','Missed on the first try:');retry.forEach(k=>lines.push(`  - (Part ${Q[k][0]}) ${Q[k][1]}  Answer: ${Q[k][2][0]}`))}else{lines.push('','No misses!')}
       lines.push('','Sent from Graham\'s Game Plan.');
-      const href=`mailto:${to}?subject=${encodeURIComponent(`Graham's science practice quiz: ${score} of 20`)}&body=${encodeURIComponent(lines.join('\n'))}`;
+      const subj=`Graham's science practice quiz: ${score} of 20`,bodyTxt=lines.join('\n');
+      const href=`mailto:${to}?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(bodyTxt)}`;
+      const gmail=`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}&su=${encodeURIComponent(subj)}&body=${encodeURIComponent(bodyTxt)}`;
       const sendBox=document.createElement('div');sendBox.className='sq-send';
-      sendBox.innerHTML=`<b>Last step: send your results to Dad.</b><span class="sub">Tap the button, then tap Send in your email.</span><a class="gbtn" href="${href}">📧 Send my results to Dad</a>`;
+      sendBox.innerHTML=`<b>Last step: send your results to Dad.</b><span class="sub">Tap the button. Gmail opens with the email already written. Just tap Send.</span><a class="gbtn" href="${gmail}" target="_blank" rel="noopener">📧 Send my results to Dad (Gmail)</a><a class="sub" href="${href}">Not using Gmail? Use my email app instead.</a>`;
       res.insertBefore(sendBox,res.firstChild);
     }else{
       res.innerHTML=`<h3 style="margin:8px 0 4px">Misses redone. Nice work.</h3><p class="sub">Tomorrow, take the full quiz once more to lock it in.</p><div class="row"><button type="button" class="gbtn ghost" id="sqAgain">Take the full quiz again</button></div>`;

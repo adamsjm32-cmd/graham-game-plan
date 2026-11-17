@@ -378,6 +378,12 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
 .sg-check summary{cursor:pointer;font-weight:700}
 .sq-hint{background:var(--gold-soft);border-radius:10px;padding:8px 10px;margin:4px 0 0}
 #currents details.sg,#sqBox{scroll-margin-top:120px}
+.pj-modelbox>summary{list-style:none;cursor:pointer;margin:6px 0}
+.pj-modelbox>summary::-webkit-details-marker{display:none}
+.pr-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:8px}
+.pr-head .lbl{margin:0}
+.pr-mic{padding:6px 12px;font-size:.9rem}
+.pr-mic.on{background:var(--due,#c0392b);color:#fff;border-color:var(--due,#c0392b)}
 .sq-back{position:fixed;right:14px;bottom:14px;z-index:50;box-shadow:0 4px 14px rgba(0,0,0,.25)}
 .sq-back[hidden]{display:none}
 .sq-hint .row{margin:6px 0}
@@ -521,6 +527,8 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
 
     <div class="card">
       <span class="lbl">Film study · a model RACER on a different story</span>
+      <details class="pj-modelbox" id="pjModelBox">
+      <summary><span class="gbtn ghost">🎬 Show the model RACER</span> <span class="sub">Watch how the play works, then close it.</span></summary>
       <h3>Watch how the play works first</h3>
       <div class="pj-story" id="pjStory">
         <b>“The Save”</b>
@@ -539,12 +547,14 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
       </div>
       <p class="sub">Page numbers: Mrs. Pacelli’s class PDF counts pages differently from a paper copy. Ask her which page numbers she wants in your citation.</p>
       <p class="sub">See it? The quote is the <b>proof</b>. The explain part says <b>why</b> the proof connects to the theme. In your book quote, end with (Riordan + page number).</p>
+      <button type="button" class="gbtn" id="pjModelClose">✕ Close the model</button>
+      </details>
     </div>
 
     <div class="card">
       <span class="lbl">Wednesday · practice rep · 20-minute timer</span>
       <h3>Write your practice RACER</h3>
-      <p class="sub">Your own words, your theme, your evidence. It saves on this device. Voice typing works: say one sentence, then stop.</p>
+      <p class="sub">Your own words, your theme, your evidence. It saves on this device. <b>Tap 🎤 Talk</b> next to a part, say it out loud, then tap Stop. Read it over and fix any words it heard wrong.</p>
       <label class="lbl" for="pr1">R · Restate</label><textarea id="pr1" placeholder="In The Lightning Thief by Rick Riordan, …"></textarea>
       <label class="lbl" for="pr2">A · Answer</label><textarea id="pr2" placeholder="One theme is that …"></textarea>
       <label class="lbl" for="pr3">C · Cite</label><textarea id="pr3" placeholder="For example, in Chapter __, … “ … ” (Riordan __)."></textarea>
@@ -1860,6 +1870,31 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
     const miss=parts.map((t,i)=>t?null:['R','A','C','E','R'][i]+(i===4?' (recap)':'')).filter(Boolean);
     if(miss.length){prMsg.textContent='Still empty: '+miss.join(', ')+'.';}else prMsg.textContent='All five parts are in. Now run the checklist.';
     const txt=parts.filter(Boolean).join(' ');prOut.textContent=txt||'Your paragraph will show up here.';return txt}
+  // model open/close
+  const mBox=document.getElementById('pjModelBox'),mClose=document.getElementById('pjModelClose');
+  if(mBox&&mClose){mClose.addEventListener('click',()=>{mBox.open=false;mBox.scrollIntoView({behavior:'smooth',block:'center'})});
+    mBox.addEventListener('toggle',()=>{const t=mBox.querySelector('summary .gbtn');t.textContent=mBox.open?'🎬 Hide the model RACER':'🎬 Show the model RACER'})}
+  // speech to text for each RACER part
+  (function(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;let rec=null,activeBtn=null;
+    function stop(){if(rec){try{rec.stop()}catch(e){}}}
+    ['pr1','pr2','pr3','pr4','pr5'].forEach(id=>{const ta=document.getElementById(id);if(!ta)return;const lab=document.querySelector('label[for="'+id+'"]');
+      const wrap=document.createElement('div');wrap.className='pr-head';lab.parentNode.insertBefore(wrap,lab);wrap.appendChild(lab);
+      const btn=document.createElement('button');btn.type='button';btn.className='gbtn ghost pr-mic';btn.textContent='🎤 Talk';wrap.appendChild(btn);
+      btn.addEventListener('click',()=>{
+        if(!SR){prMsg.textContent='Talk-to-type isn’t available in this browser. Open the dashboard in Chrome, or tap the 🎤 on your keyboard.';ta.focus();return}
+        if(activeBtn===btn){stop();return}
+        stop();rec=new SR();rec.lang='en-US';rec.interimResults=true;rec.continuous=true;
+        const base=ta.value.trim();let finalTxt='';
+        rec.onresult=e=>{let interim='';for(let i=e.resultIndex;i<e.results.length;i++){const r=e.results[i];if(r.isFinal)finalTxt+=r[0].transcript+' ';else interim+=r[0].transcript}
+          let said=(finalTxt+interim).trim();if(said)said=said.charAt(0).toUpperCase()+said.slice(1);
+          ta.value=(base?base+' ':'')+said;S.set(id,ta.value)};
+        rec.onerror=e=>{prMsg.textContent=e.error==='not-allowed'?'Allow the microphone (tap Allow when the browser asks), then try again.':'Didn’t catch that. Tap 🎤 Talk and try again.'};
+        rec.onend=()=>{if(activeBtn===btn){btn.textContent='🎤 Talk';btn.classList.remove('on');activeBtn=null;
+          let v=ta.value.trim();if(v&&!/[.!?”"]$/.test(v)){v+='.';ta.value=v;S.set(id,v)}}};
+        activeBtn=btn;btn.textContent='⏹ Stop';btn.classList.add('on');prMsg.textContent='Listening… say your '+lab.textContent.split('·')[1].trim()+' sentence.';
+        try{rec.start()}catch(e){}
+      })});
+  })();
   if(prOut){document.getElementById('prBuild').addEventListener('click',prBuild);
     document.getElementById('prRead').addEventListener('click',()=>{const t=prBuild();if(t)speak(t)})}
 

@@ -508,8 +508,9 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
     <!-- 2. RACER -->
     <div class="card" id="pj-racer">
       <span class="lbl">Play 2 · RACER theme response · Thu 11/19 · 25 pts</span>
-      <h3>Which theme did you pick on Mrs. Pacelli’s form?</h3>
-      <p class="sub">You chose one of these three. Tap yours. If you don’t remember, ask Mrs. Pacelli on Monday.</p>
+      <h3>Your theme: #2 (from Mrs. Pacelli)</h3>
+      <p class="sub">On her form you picked <b>“One’s identity can be influenced by friends and/or family relationships.”</b> Use her words for your theme. You may switch to #1 or #3 if your evidence fits one of those better.</p>
+      <p class="sub"><b>Theme rule:</b> a theme is a life lesson for <b>everyone</b>, not just Percy. Your Answer and Recap talk about people in general. Your Cite and Explain are where Percy goes.</p>
       <div class="pj-themes" id="pjThemes"></div>
       <div id="pjHunt"></div>
     </div>
@@ -556,10 +557,10 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
       <h3>Write your practice RACER</h3>
       <p class="sub">Your own words, your theme, your evidence. It saves on this device. <b>Tap 🎤 Talk</b> next to a part, say it out loud, then tap Stop. Read it over and fix any words it heard wrong.</p>
       <label class="lbl" for="pr1">R · Restate</label><textarea id="pr1" placeholder="In The Lightning Thief by Rick Riordan, …"></textarea>
-      <label class="lbl" for="pr2">A · Answer</label><textarea id="pr2" placeholder="One theme is that …"></textarea>
+      <label class="lbl" for="pr2">A · Answer</label><textarea id="pr2" placeholder="One theme is that one’s identity can be influenced by … (no character names)"></textarea>
       <label class="lbl" for="pr3">C · Cite</label><textarea id="pr3" placeholder="For example, in Chapter __, … “ … ” (Riordan __)."></textarea>
       <label class="lbl" for="pr4">E · Explain</label><textarea id="pr4" placeholder="This shows … because …"></textarea>
-      <label class="lbl" for="pr5">R · Recap</label><textarea id="pr5" placeholder="Clearly, …"></textarea>
+      <label class="lbl" for="pr5">R · Recap</label><textarea id="pr5" placeholder="Clearly, the people in our lives … (no character names)"></textarea>
       <div class="row">
         <button class="gbtn" id="prBuild" type="button">Put it together</button>
         <button class="gbtn ghost" id="prRead" type="button">Read it to me</button>
@@ -568,10 +569,10 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
       <p class="sub" id="prMsg" aria-live="polite"></p>
       <div class="checks">
         <label><input type="checkbox" id="prc1"><span>My first sentence names the book (<i>The Lightning Thief</i>) and the author (Rick Riordan).</span></label>
-        <label><input type="checkbox" id="prc2"><span>My answer says my theme as a full sentence about life.</span></label>
+        <label><input type="checkbox" id="prc2"><span>My Answer uses Mrs. Pacelli’s theme and is about <b>people in general</b>. No “Percy” in it.</span></label>
         <label><input type="checkbox" id="prc3"><span>My quote is in “quotation marks” and ends with (Riordan + page).</span></label>
         <label><input type="checkbox" id="prc4"><span>My explain part says <b>how</b> the quote proves the theme. No retelling.</span></label>
-        <label><input type="checkbox" id="prc5"><span>My recap says the theme again in new words.</span></label>
+        <label><input type="checkbox" id="prc5"><span>My Recap says the theme again in new words, still about everyone. No “Percy” in it.</span></label>
         <label><input type="checkbox" id="prc6"><span>Every sentence starts with a capital and ends with a period.</span></label>
       </div>
       <div class="pj-sc" data-sc="racer"></div>
@@ -1851,7 +1852,7 @@ textarea{font:inherit;width:100%;min-height:70px;padding:10px 12px;border-radius
            ['Trusting Luke (Ch. 22)','What does Percy learn from trusting the wrong person?']]}
   ];
   const tBox=document.getElementById('pjThemes'),hunt=document.getElementById('pjHunt');
-  function drawHunt(){const k=S.get('pjtheme',null);hunt.innerHTML='';
+  function drawHunt(){const k=S.get('pjtheme',1);hunt.innerHTML='';
     tBox.querySelectorAll('button').forEach((b,i)=>b.setAttribute('aria-pressed',i===k));
     if(k==null){hunt.innerHTML='<p class="sub">Tap your theme to open your evidence hunt.</p>';return}
     const th=THEMES[k];
